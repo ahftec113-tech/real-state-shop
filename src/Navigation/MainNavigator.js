@@ -41,6 +41,7 @@ function MainNavigator() {
          
           </>
         )} */}
+
         <Stack.Screen
           name="ProjectsScreen"
           component={Screens.ProjectsScreen}

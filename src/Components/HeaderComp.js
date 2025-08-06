@@ -94,7 +94,7 @@ export const HeaderComponent = ({
           <Image
             source={rightIconImg ?? saveReset}
             style={{ ...styles.filterIcon, rightIconStyle }}
-            tintColor={'black'}
+            // tintColor={'black'}
           />
           {isAnotherRightChildern}
           {/* <TextComponent

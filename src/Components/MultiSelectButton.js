@@ -83,7 +83,7 @@ export const MultiSelectButton = ({
                   item?.id,
               ),
         ),
-        ...(isPrimaryColorStyle
+        ...(isPrimaryColorStyle || isGrayBg || isFixWidth
           ? styles.primaryColorStye(
               isMultipule
                 ? Boolean(selectedAlter?.find(res => res?.id == item.id))
@@ -96,7 +96,28 @@ export const MultiSelectButton = ({
         ...textStyle,
         fontSize: textSize ? hp(textSize) : hp('1.5'),
       }}
+      image={item?.image}
       isDisable={isDisable}
+      imageStyle={{
+        ...styles.imageStyle(
+          isMultipule
+            ? Boolean(selectedAlter?.find(res => res?.id == item.id))
+            : Boolean(
+                (selectedAlter?.alternates?.id ?? selectedAlter?.id) ==
+                  item?.id,
+              ),
+        ),
+        ...(isPrimaryColorStyle || isGrayBg || isFixWidth
+          ? styles.imageStyle(
+              isMultipule
+                ? Boolean(selectedAlter?.find(res => res?.id == item.id))
+                : Boolean(
+                    (selectedAlter?.alternates?.id ?? selectedAlter?.id) ==
+                      item?.id,
+                  ),
+            )
+          : {}),
+      }}
     />
   ));
 };
@@ -150,5 +171,10 @@ export const styles = StyleSheet.create({
   primaryColorStye: isSelected => ({
     fontSize: hp('1.2'),
     color: isSelected ? 'white' : Colors.primaryColor,
+  }),
+  imageStyle: isSelected => ({
+    width: wp('4'),
+    height: wp('4'),
+    tintColor: isSelected ? 'white' : Colors.primaryColor,
   }),
 });

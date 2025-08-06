@@ -51,6 +51,7 @@ const HomeHeaderComp = () => {
             { id: 2, label: 'Buy' },
           ]}
           isPrimaryColorStyle={true}
+          selectedAlter={{ id: 1 }}
         />
       </View>
 

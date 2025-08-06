@@ -83,6 +83,8 @@ export { default as cardSend } from './Icons/cardSend.png';
 export { default as cardReceive } from './Icons/cardReceive.png';
 export { default as arrowRight } from './Icons/arrowRight.png';
 
+export { default as filterIcon } from './Icons/filterIcon.png';
+
 export { default as whatappIcon } from './Icons/whatappIcon.png';
 export { default as callWhite } from './Icons/callWhite.png';
 export { default as shareIcon } from './Icons/shareIcon.png';
