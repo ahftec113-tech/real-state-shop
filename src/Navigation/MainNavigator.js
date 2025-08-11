@@ -4,6 +4,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import NavigationService from '../Services/NavigationService';
 import * as Screens from '../Screens/index';
 import useReduxStore from '../Hooks/UseReduxStore';
+import MybottomTabs from './BottomNavigation';
+import Drawernavigation from './Drawernavigation';
 
 const Stack = createNativeStackNavigator();
 
@@ -42,6 +44,9 @@ function MainNavigator() {
           </>
         )} */}
 
+        <Stack.Screen name="MybottomTabs" component={MybottomTabs} />
+        <Stack.Screen name="FilterScreen" component={Screens.FilterScreen} />
+        <Stack.Screen name="Drawernavigation" component={Drawernavigation} />
         <Stack.Screen
           name="ProjectsScreen"
           component={Screens.ProjectsScreen}

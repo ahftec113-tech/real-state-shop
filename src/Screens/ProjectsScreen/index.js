@@ -21,8 +21,10 @@ import { MultiSelectButton } from '../../Components/MultiSelectButton';
 import { Colors } from '../../Theme/Variables';
 import { HeaderComponent } from '../../Components/HeaderComp';
 import { styles } from './styles';
+import useProjectsScreen from './useProjectsScreen';
 
-const ProjectsScreen = () => {
+const ProjectsScreen = ({ navigation, route }) => {
+  const {} = useProjectsScreen(navigation, route);
   return (
     <View style={styles.container}>
       <HeaderComponent headerTitle={'New Projects'} rightIconImg={PakFlag} />

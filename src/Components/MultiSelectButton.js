@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import ThemeButton from './ThemeButton';
-import { StyleSheet } from 'react-native';
+import { Image, StyleSheet } from 'react-native';
 import { Colors } from '../Theme/Variables';
 import { hp, wp } from '../Hooks/useResponsive';
 
@@ -25,100 +25,140 @@ export const MultiSelectButton = ({
   const handlePress = allergy => {};
 
   return items?.map((item, index) => (
-    <ThemeButton
-      key={index}
-      onPress={() => {
-        onSelectVal(objId, item);
-        // setDummy(pre => pre + 1);
-      }}
-      title={item?.name ?? item?.title ?? item?.label ?? item}
-      style={{
-        ...styles.btnMain(
-          isMultipule
-            ? Boolean(selectedAlter?.find(res => res?.id == item.id))
-            : Boolean(
-                (selectedAlter?.alternates?.id ?? selectedAlter?.id) ==
-                  item?.id,
-              ),
-          selectedBgColor,
-        ),
-        ...btnStyle,
-        ...(isPrimaryColorStyle
-          ? styles.priceMultiView(
-              isMultipule
-                ? Boolean(selectedAlter?.find(res => res?.id == item.id))
-                : Boolean(
-                    (selectedAlter?.alternates?.id ?? selectedAlter?.id) ==
-                      item?.id,
-                  ),
-            )
-          : {}),
-        ...(isGrayBg
-          ? styles.grayBgView(
-              isMultipule
-                ? Boolean(selectedAlter?.find(res => res?.id == item.id))
-                : Boolean(
-                    (selectedAlter?.alternates?.id ?? selectedAlter?.id) ==
-                      item?.id,
-                  ),
-            )
-          : {}),
-        ...(isFixWidth
-          ? styles.fixwidth(
-              isMultipule
-                ? Boolean(selectedAlter?.find(res => res?.id == item.id))
-                : Boolean(
-                    (selectedAlter?.alternates?.id ?? selectedAlter?.id) ==
-                      item?.id,
-                  ),
-            )
-          : {}),
-      }}
-      textStyle={{
-        ...styles.btnText(
-          isMultipule
-            ? Boolean(selectedAlter?.find(res => res?.id == item.id))
-            : Boolean(
-                (selectedAlter?.alternates?.id ?? selectedAlter?.id) ==
-                  item?.id,
-              ),
-        ),
-        ...(isPrimaryColorStyle || isGrayBg || isFixWidth
-          ? styles.primaryColorStye(
-              isMultipule
-                ? Boolean(selectedAlter?.find(res => res?.id == item.id))
-                : Boolean(
-                    (selectedAlter?.alternates?.id ?? selectedAlter?.id) ==
-                      item?.id,
-                  ),
-            )
-          : {}),
-        ...textStyle,
-        fontSize: textSize ? hp(textSize) : hp('1.5'),
-      }}
-      image={item?.image}
-      isDisable={isDisable}
-      imageStyle={{
-        ...styles.imageStyle(
-          isMultipule
-            ? Boolean(selectedAlter?.find(res => res?.id == item.id))
-            : Boolean(
-                (selectedAlter?.alternates?.id ?? selectedAlter?.id) ==
-                  item?.id,
-              ),
-        ),
-        ...(isPrimaryColorStyle || isGrayBg || isFixWidth
-          ? styles.imageStyle(
-              isMultipule
-                ? Boolean(selectedAlter?.find(res => res?.id == item.id))
-                : Boolean(
-                    (selectedAlter?.alternates?.id ?? selectedAlter?.id) ==
-                      item?.id,
-                  ),
-            )
-          : {}),
-      }}
-    />
+    <>
+      <ThemeButton
+        key={index}
+        onPress={() => {
+          onSelectVal(objId, item);
+          // setDummy(pre => pre + 1);
+        }}
+        isTopImg={item?.isTopImg}
+        title={
+          item?.name ??
+          item?.title ??
+          item?.label ??
+          item?.area_name ??
+          item?.sqYd ??
+          item
+        }
+        style={{
+          ...styles.btnMain(
+            isMultipule
+              ? Boolean(selectedAlter?.find(res => res?.id == item.id))
+              : Boolean(
+                  (selectedAlter?.alternates?.id ??
+                    selectedAlter?.id ??
+                    selectedAlter?.slug) == (item?.id ?? item?.slug),
+                ),
+            selectedBgColor,
+          ),
+          ...btnStyle,
+          ...(isPrimaryColorStyle
+            ? styles.priceMultiView(
+                isMultipule
+                  ? Boolean(selectedAlter?.find(res => res?.id == item.id))
+                  : Boolean(
+                      (selectedAlter?.alternates?.id ??
+                        selectedAlter?.id ??
+                        selectedAlter?.slug) == (item?.id ?? item?.slug),
+                    ),
+              )
+            : {}),
+          ...(isGrayBg
+            ? styles.grayBgView(
+                isMultipule
+                  ? Boolean(selectedAlter?.find(res => res?.id == item.id))
+                  : Boolean(
+                      (selectedAlter?.alternates?.id ??
+                        selectedAlter?.id ??
+                        selectedAlter?.slug) == (item?.id ?? item?.slug),
+                    ),
+              )
+            : {}),
+          ...(isFixWidth
+            ? styles.fixwidth(
+                isMultipule
+                  ? Boolean(selectedAlter?.find(res => res?.id == item.id))
+                  : Boolean(
+                      (selectedAlter?.alternates?.id ??
+                        selectedAlter?.id ??
+                        selectedAlter?.slug) == (item?.id ?? item?.slug),
+                    ),
+              )
+            : {}),
+        }}
+        textStyle={{
+          ...styles.btnText(
+            isMultipule
+              ? Boolean(selectedAlter?.find(res => res?.id == item.id))
+              : Boolean(
+                  (selectedAlter?.alternates?.id ??
+                    selectedAlter?.id ??
+                    selectedAlter?.slug) == (item?.id ?? item?.slug),
+                ),
+          ),
+          ...(isPrimaryColorStyle || isGrayBg || isFixWidth
+            ? styles.primaryColorStye(
+                isMultipule
+                  ? Boolean(selectedAlter?.find(res => res?.id == item.id))
+                  : Boolean(
+                      (selectedAlter?.alternates?.id ??
+                        selectedAlter?.id ??
+                        selectedAlter?.slug) == (item?.id ?? item?.slug),
+                    ),
+              )
+            : {}),
+          ...textStyle,
+          fontSize: textSize ? hp(textSize) : hp('1.5'),
+        }}
+        image={item?.image}
+        isDisable={isDisable}
+        topImgStyles={{
+          ...styles.imageStyle(
+            isMultipule
+              ? Boolean(selectedAlter?.find(res => res?.id == item.id))
+              : Boolean(
+                  (selectedAlter?.alternates?.id ??
+                    selectedAlter?.id ??
+                    selectedAlter?.slug) == (item?.id ?? item?.slug),
+                ),
+          ),
+          ...(isPrimaryColorStyle || isGrayBg || isFixWidth
+            ? styles.imageStyle(
+                isMultipule
+                  ? Boolean(selectedAlter?.find(res => res?.id == item.id))
+                  : Boolean(
+                      (selectedAlter?.alternates?.id ??
+                        selectedAlter?.id ??
+                        selectedAlter?.slug) == (item?.id ?? item?.slug),
+                    ),
+              )
+            : {}),
+        }}
+        imageStyle={{
+          ...styles.imageStyle(
+            isMultipule
+              ? Boolean(selectedAlter?.find(res => res?.id == item.id))
+              : Boolean(
+                  (selectedAlter?.alternates?.id ??
+                    selectedAlter?.id ??
+                    selectedAlter?.slug) == (item?.id ?? item?.slug),
+                ),
+          ),
+          ...(isPrimaryColorStyle || isGrayBg || isFixWidth
+            ? styles.imageStyle(
+                isMultipule
+                  ? Boolean(selectedAlter?.find(res => res?.id == item.id))
+                  : Boolean(
+                      (selectedAlter?.alternates?.id ??
+                        selectedAlter?.id ??
+                        selectedAlter?.slug) == (item?.id ?? item?.slug),
+                    ),
+              )
+            : {}),
+        }}
+      />
+    </>
   ));
 };
 export const styles = StyleSheet.create({
@@ -173,8 +213,8 @@ export const styles = StyleSheet.create({
     color: isSelected ? 'white' : Colors.primaryColor,
   }),
   imageStyle: isSelected => ({
-    width: wp('4'),
-    height: wp('4'),
+    width: wp('6'),
+    height: hp('3'),
     tintColor: isSelected ? 'white' : Colors.primaryColor,
   }),
 });

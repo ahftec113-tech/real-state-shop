@@ -12,6 +12,9 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import FlashMessage from 'react-native-flash-message';
 
 import { store, persistor } from './src/Redux/Reducer';
+import CustomDrawerComp from './src/Components/CustomDrawerComp';
+import { DrawerProvider } from './src/Context/DrawerContext';
+import drawerContentComp from './src/Components/DrawerContentComp'; // ✅ Use your own drawer
 
 // ✅ Initialize React Query client
 const queryClient = new QueryClient();
@@ -19,7 +22,7 @@ const queryClient = new QueryClient();
 // ✅ Disable font scaling globally
 [Text, TextInput, View].forEach(component => {
   if (component.defaultProps == null) component.defaultProps = {};
-     component.defaultProps.allowFontScaling = false;
+  component.defaultProps.allowFontScaling = false;
 });
 
 // ✅ App component wrapped with all providers
@@ -27,7 +30,11 @@ const RealStateShop = () => (
   <QueryClientProvider client={queryClient}>
     <Provider store={store}>
       <PersistGate persistor={persistor} loading={null}>
-        <App />
+        <DrawerProvider>
+          <CustomDrawerComp drawerContent={drawerContentComp}>
+            <App />
+          </CustomDrawerComp>
+        </DrawerProvider>
         <FlashMessage position="top" />
       </PersistGate>
     </Provider>

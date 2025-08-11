@@ -83,6 +83,31 @@ export { default as cardSend } from './Icons/cardSend.png';
 export { default as cardReceive } from './Icons/cardReceive.png';
 export { default as arrowRight } from './Icons/arrowRight.png';
 
+export { default as mapIcon } from './Icons/mapIcon.png';
+export { default as priceTagIcon } from './Icons/priceTagIcon.png';
+
+export { default as discoverGray } from './Icons/discoverGray.png';
+export { default as discoverGreen } from './Icons/discoverGreen.png';
+export { default as homeGray } from './Icons/homeGray.png';
+export { default as homeGreen } from './Icons/homeGreen.png';
+export { default as heartGray } from './Icons/heartGray.png';
+export { default as heartGreen } from './Icons/heartGreen.png';
+export { default as ProjectGreen } from './Icons/ProjectGreen.png';
+export { default as ProjectGray } from './Icons/ProjectGray.png';
+export { default as ProfileGray } from './Icons/profileGray.png';
+export { default as ProfileGreen } from './Icons/profileGreen.png';
+
+export { default as callGray } from './Icons/callGray.png';
+export { default as logOutGray } from './Icons/logOutGray.png';
+export { default as buildingGray } from './Icons/buildingGray.png';
+export { default as plusGray } from './Icons/plusGray.png';
+export { default as saveGray } from './Icons/saveGray.png';
+export { default as settingGray } from './Icons/settingGray.png';
+export { default as termGray } from './Icons/termGray.png';
+export { default as myPropertyGray } from './Icons/myPropertyGray.png';
+export { default as aboutGray } from './Icons/aboutGray.png';
+export { default as draftGray } from './Icons/draftGray.png';
+
 export { default as filterIcon } from './Icons/filterIcon.png';
 
 export { default as whatappIcon } from './Icons/whatappIcon.png';

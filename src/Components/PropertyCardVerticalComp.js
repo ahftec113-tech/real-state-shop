@@ -3,6 +3,8 @@ import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import {
   callWhite,
   checkBoxIcon,
+  heart,
+  heartFilledLike,
   locationGray,
   propertyIcon,
   shareIcon,
@@ -14,6 +16,16 @@ import { hp, wp } from '../Hooks/useResponsive';
 import { Colors } from '../Theme/Variables';
 import { TextComponent } from './TextComponent';
 import { Touchable } from './Touchable';
+import { imageUrl } from '../Utils/Urls';
+import useReduxStore from '../Hooks/UseReduxStore';
+import { favProject } from '../Redux/Action/FavProjectAction';
+import {
+  formatPrice,
+  formatPriceToPKStandard,
+  makeCall,
+  sendSMS,
+  sendWhatsApp,
+} from '../Services/GlobalFunctions';
 
 const PropertyCardVerticalComp = ({
   image,
@@ -27,15 +39,50 @@ const PropertyCardVerticalComp = ({
   onCallPress,
   onWhatsappPress,
   onSharePress,
+  mainViewStyles,
+  refetchKeys,
+  refetch,
+  item,
 }) => {
+  const { dispatch, getState, queryClient } = useReduxStore();
+
+  const { favProjects } = getState('favProjects');
   return (
-    <View style={styles.container}>
-      <Image source={{ uri: image }} style={styles.image} />
+    <View style={{ ...styles.container, ...mainViewStyles }}>
+      <Image source={{ uri: imageUrl(image) }} style={styles.image} />
       <View style={styles.infoContainer}>
-        <Image source={logo} resizeMode="contain" style={styles.logo} />
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}
+        >
+          <Image source={logo} resizeMode="contain" style={styles.logo} />
+          <TouchableOpacity
+            onPress={() => {
+              dispatch(favProject(item?.id));
+              setTimeout(() => {
+                if (refetch) refetch();
+                if (refetchKeys) queryClient.invalidateQueries(['countries']);
+              }, 1000);
+            }}
+          >
+            <Image
+              source={
+                favProjects.find(id => id == item?.id) ? heartFilledLike : heart
+              }
+              style={styles.icon}
+            />
+          </TouchableOpacity>
+        </View>
         <View style={styles.priceRow}>
           <TextComponent text="PKR " size={1.3} />
-          <TextComponent text={price} size={1.5} family="bold" />
+          <TextComponent
+            text={formatPriceToPKStandard(price)}
+            size={1.5}
+            family="bold"
+          />
         </View>
         <TextComponent text={title} size={1.3} />
         <View style={styles.row}>
@@ -78,21 +125,29 @@ const PropertyCardVerticalComp = ({
             style={styles.callButton}
             textStyle={styles.callButtonText}
             imageStyle={styles.callButtonIcon}
+            onPress={() => makeCall(item?.phone_1)}
           />
-          <Touchable>
+          <ThemeButton
+            title={'SMS'}
+            isTransparent
+            style={{ ...styles.callButton, width: wp('10') }}
+            textStyle={styles.callButtonText}
+            onPress={() => sendSMS(item?.phone_1)}
+          />
+          <Touchable onPress={() => sendWhatsApp(item?.phone_1)}>
             <Image
               source={whatappIcon}
               resizeMode="contain"
               style={styles.socialIcon}
             />
           </Touchable>
-          <Touchable>
+          {/* <Touchable onPress={() => sendSMS(item?.phone_1)}>
             <Image
               source={shareIcon}
               resizeMode="contain"
               style={styles.socialIcon}
             />
-          </Touchable>
+          </Touchable> */}
         </View>
       </View>
     </View>
@@ -109,7 +164,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: wp('35'),
-    height: hp('25'),
+    height: hp('28'),
     borderRadius: 20,
   },
   infoContainer: {
@@ -126,18 +181,23 @@ const styles = StyleSheet.create({
   priceRow: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginBottom: hp('0.5'),
   },
   row: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginTop: hp('0.5'),
   },
   rowIcon: {
     width: wp('5'),
     height: hp('2'),
+    // backgroundColor: 'red',
+    left: wp('-1'),
   },
   tagRow: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginVertical: hp('0.5'),
   },
   tag: {
     flexDirection: 'row',

@@ -29,4 +29,6 @@ export const types = {
   isNotifyTrue: 'isNotifyTrue',
   isChatNotifyTrue: 'isChatNotifyTrue',
   isChatNotifyFalse: 'isChatNotifyFalse',
+  clearFavorites: 'clearFavorites',
+  toggleFavorite: 'toggleFavorite',
 };

@@ -15,7 +15,13 @@ const ThemeButton = ({
   isDisable,
   isTheme,
   isTransparent,
+  isTopImg,
+  topImgStyles,
 }) => {
+  const topImgStyle = {
+    alignItems: 'center',
+    flexDirection: 'colume',
+  };
   return (
     // <ShadowButton>
     <Touchable
@@ -33,10 +39,22 @@ const ThemeButton = ({
             : Colors.backgroundTheme,
           borderColor: isTransparent ? Colors.primaryColor : 'transperent',
           borderWidth: isTransparent ? 1 : 0,
+          ...(isTopImg && topImgStyle),
           ...style,
         },
       ]}
     >
+      {isTopImg && (
+        <Image
+          source={isTopImg}
+          style={{
+            ...styles.image,
+            // marginRight: isTopImg ? wp('1') : 0,
+            ...topImgStyles,
+          }}
+          resizeMode="contain"
+        />
+      )}
       {image && (
         <Image
           source={image}
@@ -81,7 +99,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: wp('8'),
-    height: hp('8'),
+    // height: hp('8'),
     // marginBottom: 5,
     resizeMode: 'contain',
   },

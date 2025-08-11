@@ -962,6 +962,24 @@ const formatPrice = (amount, locale = 'en-US', currency = 'USD') => {
   }).format(amount);
 };
 
+function formatPriceToPKStandard(price) {
+  // input : 1000.00
+
+  if (price === null || price === undefined || isNaN(price)) return '';
+
+  const num = Number(price);
+
+  if (num >= 10000000) {
+    return (num / 10000000).toFixed(2).replace(/\.00$/, '') + ' crore';
+  } else if (num >= 100000) {
+    return (num / 100000).toFixed(2).replace(/\.00$/, '') + ' lakh';
+  } else if (num >= 1000) {
+    return (num / 1000).toFixed(2).replace(/\.00$/, '') + ' thousand';
+  } else {
+    return num.toString();
+  }
+  // output : 1000.00 -> 1.00 thousand
+}
 const checkImageOrientation = imageUrl => {
   return new Promise((resolve, reject) => {
     Image.getSize(
@@ -1038,6 +1056,45 @@ function getCustom12HourTime(dateStr) {
   // output: "12.21 .AM"
 }
 
+function removeArryAndReturnDirectUrl(projectIds) {
+  //[1,2,3,45 ] input
+  // Validate array
+  if (!Array.isArray(projectIds) || projectIds.length === 0) {
+    return ''; // or null, depending on what you need
+  }
+
+  // Join IDs with commas
+  const idsString = projectIds.join(',');
+
+  // Return final URL (example)
+  return idsString;
+  // output: "1,2,3,45"
+}
+
+// 📞 Call
+const makeCall = phoneNumber => {
+  if (!phoneNumber) return;
+  let url = `tel:${phoneNumber}`;
+  Linking.openURL(url).catch(err => console.error('Error opening call', err));
+};
+
+// 💬 SMS
+const sendSMS = phoneNumber => {
+  if (!phoneNumber) return;
+  let separator = Platform.OS === 'ios' ? '&' : '?';
+  let url = `sms:${phoneNumber}${separator}`;
+  Linking.openURL(url).catch(err => console.error('Error opening SMS', err));
+};
+
+// 📱 WhatsApp
+const sendWhatsApp = phoneNumber => {
+  if (!phoneNumber) return;
+  let url = `whatsapp://send?phone=${phoneNumber}`;
+  Linking.openURL(url).catch(err => {
+    console.error('Make sure WhatsApp is installed', err);
+  });
+};
+
 export {
   getSingleCharacter,
   getProperLocation,
@@ -1091,4 +1148,9 @@ export {
   formatDateToLong,
   getFormattedTime,
   getCustom12HourTime,
+  removeArryAndReturnDirectUrl,
+  makeCall,
+  sendSMS,
+  sendWhatsApp,
+  formatPriceToPKStandard,
 };

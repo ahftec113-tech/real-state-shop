@@ -16,6 +16,12 @@ buildscript {
         classpath("com.facebook.react:react-native-gradle-plugin")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin")
     }
+  //     externalNativeBuild {
+  //   cmake {
+  //     version "3.22.1" // match your CMake version
+  //   }
+  // }
 }
+
 
 apply plugin: "com.facebook.react.rootproject"

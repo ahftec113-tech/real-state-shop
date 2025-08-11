@@ -25,12 +25,34 @@ import { styles } from './styles';
 import HomeHeaderComp from './HomeHeaderComp';
 import PropertyCardComp from '../../Components/PropertyCardComp';
 import { keyExtractor } from '../../Utils';
+import useHoemScreen from './useHomeScreen';
+import BtnModalComponent from '../../Components/BtnModalComp';
 const sizes = [
   { id: 1, sqYd: 120 },
   { id: 2, sqYd: 250 },
   { id: 3, sqYd: 500 },
 ];
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }) => {
+  const {
+    homeData,
+    modalState,
+    setModalState,
+    countries,
+    fetchAreas,
+    fetchCountries,
+    selectedCity,
+    arrySelector,
+    selectedCountry,
+    fetchCities,
+    selectTag,
+    setSelectedArea,
+    selectedArea,
+    setSelectedCity,
+    setSelectedCountry,
+    type,
+    setType,
+  } = useHoemScreen(navigation);
+
   const renderItem = ({ item, index }) => {
     // const isEven = index % 2 === 0;
     // const isLastItem = index === yourData.length - 1;
@@ -38,24 +60,43 @@ const HomeScreen = () => {
 
     return (
       <PropertyCardComp
+        item={item}
         key={index}
         image={item.image}
-        logo={item.logo}
+        logo={homeIcon}
         price={item.price}
-        title={item.title}
-        beds={item.beds}
-        baths={item.baths}
-        area={item.area}
-        tag1={item.tag1}
-        tag2={item.tag2}
+        title={item.project_name}
+        beds={item.total_bedrooms}
+        baths={item.total_bathrooms}
+        area={'1.2'}
+        tag1={item.area_name}
+        tag2={item.type_and_purpose}
       />
     );
   };
-  const [selectedId, setSelectedId] = useState(1);
   return (
-    <View style={styles.mainContainer}>
-      <HomeHeaderComp />
-      <ScrollView style={styles.innerContainer}>
+    <ScrollView
+      contentContainerStyle={styles.mainContainer}
+      showsVerticalScrollIndicator={false}
+    >
+      <HomeHeaderComp
+        onOpenModal={() => {
+          setModalState(1);
+        }}
+        city={selectedCity}
+        area={selectedArea}
+        onCityPress={() => {
+          setModalState(2);
+        }}
+        onAreaPress={() => {
+          console.log('kjbcjkskjcbsdjkbcjkdsbcjksdjdb');
+          // setModalState(3);
+          navigation.navigate('FilterScreen');
+        }}
+        type={type}
+        setType={e => setType(e)}
+      />
+      <View style={styles.innerContainer}>
         <TextComponent text={'Search by Budget'} fade />
         <View style={styles.buttonWrap}>
           <MultiSelectButton
@@ -85,36 +126,33 @@ const HomeScreen = () => {
           keyExtractor={keyExtractor}
           renderItem={renderItem}
           contentContainerStyle={styles.flatListContainer}
-          data={[
-            {
-              image:
-                'https://images.pexels.com/photos/8417743/pexels-photo-8417743.jpeg',
-              logo: homeIcon,
-              price: '2.75 - 4 Crore',
-              title: 'GOHAR GOLF VISTA - Luxury...',
-              beds: 5,
-              baths: 4,
-              area: 1750,
-              tag1: 'Flats For Sale',
-              tag2: 'Malir 15',
-            },
-
-            {
-              image:
-                'https://images.pexels.com/photos/8417743/pexels-photo-8417743.jpeg',
-              logo: homeIcon,
-              price: '2.75 - 4 Crore',
-              title: 'GOHAR GOLF VISTA - Luxury...',
-              beds: 5,
-              baths: 4,
-              area: 1750,
-              tag1: 'Flats For Sale',
-              tag2: 'Malir 15',
-            },
-          ]}
+          data={homeData?.project_details}
+          showsVerticalScrollIndicator={false}
+          showsHorizontalScrollIndicator={false}
+          scrollEnabled={false}
         />
-      </ScrollView>
-    </View>
+      </View>
+      {modalState && (
+        <BtnModalComponent
+          activeTags={selectTag[modalState]}
+          allData={arrySelector[modalState]}
+          //   heading={onPressKey}
+          // activeTitle={'select Diet'}
+          isModal={modalState}
+          onPress={() => setModalState(null)}
+          onSelect={e => {
+            if (modalState == 1) {
+              fetchCities(e);
+            } else if (modalState == 2) {
+              fetchAreas(e);
+            } else if (modalState == 3) {
+              setSelectedArea(e);
+            }
+          }}
+          onBackPress={() => setModalState(null)}
+        />
+      )}
+    </ScrollView>
   );
 };
 

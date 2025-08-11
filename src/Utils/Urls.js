@@ -1,14 +1,14 @@
 const getCredentials = () => {
   if (__DEV__)
     return {
-      baseURL: 'http://realstateshop.com/api/',
-      imageURL: 'https://tac-app-bucket.s3.us-east-2.amazonaws.com/',
+      baseURL: 'https://www.realstateshop.com/api/',
+      imageURL: 'https://www.realstateshop.com/assets/img/user_project_images/',
     };
   else {
     console.log = () => {};
     return {
-      baseURL: 'https://realstateshop.com/api/',
-      imageURL: 'https://tac-app-bucket.s3.us-east-2.amazonaws.com/',
+      baseURL: 'https://www.realstateshop.com/api/',
+      imageURL: 'https://www.realstateshop.com/assets/img/user_project_images/',
     };
   }
 };
@@ -33,6 +33,11 @@ export const MapAPIKey = 'AIzaSyAu-nEBbiOahfUyeMc8Lc1gTTKfete_wnQ';
 
 export const registerUrl = '/user_login_process';
 export const loginUrl = '/user_login_process';
+
+export const homeDataUrl = '/home';
+export const getCountryDataUrl = '/indexProcess';
+export const searchByLocationUrl = '/search-by-location/';
+export const getFavByLocalIdUrl = '/get-favourite?project_ids=';
 
 export const createGoalUrl = '/goals/store';
 

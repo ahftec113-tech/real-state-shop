@@ -25,6 +25,7 @@ export const styles = StyleSheet.create({
   flatListContainer: {
     justifyContent: 'space-between',
     marginTop: hp('1'),
+    // paddingBottom: hp('100'),
   },
   container: {
     alignSelf: 'center',

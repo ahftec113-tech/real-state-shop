@@ -22,36 +22,52 @@ import {
   PakFlag,
   searchIcon,
 } from '../../Assets';
+import { Touchable } from '../../Components/Touchable';
+import NavigationService from '../../Services/NavigationService';
+import { useDrawer } from '../../Context/DrawerContext';
+import { sizes } from '../../Utils/localDB';
 
-const sizes = [
-  { id: 1, sqYd: 120 },
-  { id: 2, sqYd: 250 },
-  { id: 3, sqYd: 500 },
-];
-
-const HomeHeaderComp = () => {
+const HomeHeaderComp = ({
+  onOpenModal,
+  city,
+  area,
+  onCityPress,
+  onAreaPress,
+  type,
+  setType,
+}) => {
   const [selectedId, setSelectedId] = useState(null);
+  const { openDrawer } = useDrawer();
 
   return (
     <ImageBackground source={homeBg} resizeMode="contain" style={styles.bg}>
       <View style={styles.headerBar}>
-        <Image
-          source={drawerIcon}
-          resizeMode="contain"
-          style={styles.iconSmall}
-        />
+        <Touchable onPress={openDrawer}>
+          <Image
+            source={drawerIcon}
+            resizeMode="contain"
+            style={styles.iconSmall}
+          />
+        </Touchable>
         <Image source={homeIcon} resizeMode="contain" style={styles.homeIcon} />
-        <Image source={PakFlag} resizeMode="contain" style={styles.iconSmall} />
+        <Touchable onPress={onOpenModal}>
+          <Image
+            source={PakFlag}
+            resizeMode="contain"
+            style={styles.iconSmall}
+          />
+        </Touchable>
       </View>
 
       <View style={styles.tabRow}>
         <MultiSelectButton
           items={[
-            { id: 1, label: 'Rent' },
-            { id: 2, label: 'Buy' },
+            { id: 'Rent', label: 'Rent' },
+            { id: 'Buy', label: 'Buy' },
           ]}
           isPrimaryColorStyle={true}
-          selectedAlter={{ id: 1 }}
+          selectedAlter={type}
+          onSelectVal={(_, e) => setType(e)}
         />
       </View>
 
@@ -62,9 +78,18 @@ const HomeHeaderComp = () => {
           style={styles.searchIcon}
           resizeMode="contain"
         />
-        <TextInput style={styles.input} />
+        <TextComponent
+          text={area?.area_name ?? '...'}
+          onPress={onAreaPress}
+          styles={styles.input}
+          size={'1.5'}
+        />
         <TextComponent text={'|'} family={'bold'} />
-        <TextComponent text={'Karachi'} />
+        <TextComponent
+          text={city?.name ?? 'karachi'}
+          onPress={onCityPress}
+          size={'1.5'}
+        />
         <Image
           source={arrowGreen}
           resizeMode="contain"
@@ -168,6 +193,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     backgroundColor: Colors.lightInnerColor,
     marginBottom: hp('1.5'),
+    paddingVertical: hp('1'),
   },
   searchIcon: {
     width: wp('4'),
