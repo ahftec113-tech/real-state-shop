@@ -85,6 +85,11 @@ export { default as arrowRight } from './Icons/arrowRight.png';
 
 export { default as mapIcon } from './Icons/mapIcon.png';
 export { default as priceTagIcon } from './Icons/priceTagIcon.png';
+export { default as sortIcon } from './Icons/sortIcon.png';
+
+export { default as drawerEmpty } from './Icons/drawerEmpty.png';
+export { default as boxesfilled } from './Icons/boxesfilled.png';
+export { default as boxesEmpty } from './Icons/boxesEmpty.png';
 
 export { default as discoverGray } from './Icons/discoverGray.png';
 export { default as discoverGreen } from './Icons/discoverGreen.png';

@@ -1,5 +1,8 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import {
+  getAreasUrl,
+  getCitriesUrl,
+  getCountriesUrl,
   getCountryDataUrl,
   homeDataUrl,
   searchByLocationUrl,
@@ -33,74 +36,165 @@ const useHoemScreen = ({ navigate }) => {
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [selectedCity, setSelectedCity] = useState(null);
   const [selectedArea, setSelectedArea] = useState(null);
-  const [type, setType] = useState({ id: 'Rent' });
+  const [type, setType] = useState({ id: 1, label: 'Rent' });
 
   const { mutateAsync, isPending } = useLocationMutation();
-  useEffect(() => {
-    fetchCountries();
-  }, []);
 
   // 1️⃣ Load countries on mount
+  const {
+    data: countriesData,
+    refetch: refetchCountries,
+    error: countriesError,
+  } = useQuery({
+    queryKey: ['countries'],
+    queryFn: () => API.get(getCountriesUrl),
+    enabled: true,
+    onError: error => console.error('Error fetching countries:', error),
+  });
 
-  const fetchCountries = async () => {
-    const res = await mutateAsync({ index_process_val: 'get_countries' });
-    console.log('res.data?.datares.data?.datares.data?.data', res);
-    if (res?.ok) {
-      setCountries(res.data?.data || []);
-      setSelectedCountry(
-        res?.data?.data?.filter(res => res?.slug == 'pakistan')[0],
-      );
+  useEffect(() => {
+    if (countriesData?.data?.data) {
+      setCountries(countriesData?.data?.data || []);
+      const pakistan = countriesData?.data?.data?.filter(
+        res => res?.slug === 'pakistan',
+      )[0];
+      setSelectedCountry(pakistan);
+      if (pakistan?.slug) {
+        refetchCities(pakistan?.slug);
+      }
+    } else if (countriesError) {
+      console.error('Countries fetch failed:', countriesError);
     }
-  };
+  }, [countriesData, countriesError]);
 
   // 2️⃣ Load cities when country selected
-  const fetchCities = async country => {
-    // setSelectedCountry(country);
-    setSelectedCountry(country);
-    setCities([]);
-    setAreas([]);
-    const res = await mutateAsync({
-      index_process_val: 'get_cities',
-      country: country?.slug,
-    });
-    if (res?.ok) {
-      setCities(res.data?.data || []);
-      setSelectedCity(
-        res?.data?.data?.filter(res => res?.slug == 'karachi')[0],
-      );
+  const {
+    data: citiesData,
+    refetch: refetchCities,
+    error: citiesError,
+  } = useQuery({
+    queryKey: ['cities', selectedCountry?.slug],
+    queryFn: () => API.get(`${getCitriesUrl}${selectedCountry?.id}`),
+    enabled: !!selectedCountry?.slug,
+    onError: error => console.error('Error fetching cities:', error),
+  });
+
+  useEffect(() => {
+    if (citiesData?.data?.data) {
+      setCities(citiesData.data?.data || []);
+      const karachi = citiesData?.data?.data?.filter(
+        res => res?.slug === 'karachi',
+      )[0];
+      setSelectedCity(karachi);
+    } else if (citiesError) {
+      console.error('Cities fetch failed:', citiesError);
     }
-  };
+  }, [citiesData, citiesError]);
 
   // 3️⃣ Load areas when city selected
-  const fetchAreas = async city => {
-    setSelectedCity(city);
-    // setSelectedCity(city);
-    console.log('kjasbkasbckasbckabskcbaskcbask', city);
-    setAreas([]);
-    const res = await mutateAsync({
-      index_process_val: 'get_areas',
-      city: city?.slug,
-    });
-    if (res?.ok) {
-      setAreas(res.data?.data || []);
-      navigate('ProjectsScreen', {
-        country: selectedCountry,
-        city: selectedCity,
-        area: selectedArea,
-        type,
-        url:
-          searchByLocationUrl +
-          type +
-          '/' +
-          selectedCountry +
-          '/' +
-          selectedCity +
-          '/' +
-          selectedArea,
-        title: 'Search Results',
-      });
+  const {
+    data: areasData,
+    refetch: refetchAreas,
+    error: areasError,
+  } = useQuery({
+    queryKey: ['areas', selectedCity?.slug],
+    queryFn: () => API.get(`${getAreasUrl}${selectedCity?.id}`),
+    enabled: !!selectedCity?.slug,
+    onError: error => console.error('Error fetching areas:', error),
+  });
+
+  useEffect(() => {
+    if (areasData?.data?.data) {
+      setAreas(areasData.data?.data || []);
+      // navigate('ProjectsScreen', {
+      //   selectedCountry,
+      //   selectedCity,
+      //   selectedArea,
+      //   selectedType: type,
+      //   url:
+      //     searchByLocationUrl +
+      //     type +
+      //     '/' +
+      //     selectedCountry +
+      //     '/' +
+      //     selectedCity +
+      //     '/' +
+      //     selectedArea,
+      //   title: 'Search Results',
+      // });
+    } else if (areasError) {
+      console.error('Areas fetch failed:', areasError);
     }
-  };
+  }, [areasData, areasError]);
+
+  useEffect(() => {
+    refetchCountries();
+  }, []);
+
+  // // 1️⃣ Load countries on mount
+
+  // const fetchCountries = async () => {
+  //   const res = await mutateAsync({ index_process_val: 'get_countries' });
+  //   console.log('res.data?.datares.data?.datares.data?.data', res);
+  //   if (res?.ok) {
+  //     setCountries(res.data?.data || []);
+  //     setSelectedCountry(
+  //       res?.data?.data?.filter(res => res?.slug == 'pakistan')[0],
+  //     );
+  //     fetchCities(
+  //       res?.data?.data?.filter(res => res?.slug == 'pakistan')[0]?.slug,
+  //     );
+  //   }
+  // };
+
+  // // 2️⃣ Load cities when country selected
+  // const fetchCities = async country => {
+  //   // setSelectedCountry(country);
+  //   setSelectedCountry(country);
+  //   setCities([]);
+  //   setAreas([]);
+  //   const res = await mutateAsync({
+  //     index_process_val: 'get_cities',
+  //     country: country?.slug,
+  //   });
+  //   if (res?.ok) {
+  //     setCities(res.data?.data || []);
+  //     setSelectedCity(
+  //       res?.data?.data?.filter(res => res?.slug == 'karachi')[0],
+  //     );
+  //   }
+  // };
+
+  // // 3️⃣ Load areas when city selected
+  // const fetchAreas = async city => {
+  //   setSelectedCity(city);
+  //   // setSelectedCity(city);
+  //   console.log('kjasbkasbckasbckabskcbaskcbask', city);
+  //   setAreas([]);
+  //   const res = await mutateAsync({
+  //     index_process_val: 'get_areas',
+  //     city: city?.slug,
+  //   });
+  //   if (res?.ok) {
+  //     setAreas(res.data?.data || []);
+  //     navigate('ProjectsScreen', {
+  //       selectedCountry,
+  //       selectedCity,
+  //       selectedArea,
+  //       selectedType: type,
+  //       url:
+  //         searchByLocationUrl +
+  //         type +
+  //         '/' +
+  //         selectedCountry +
+  //         '/' +
+  //         selectedCity +
+  //         '/' +
+  //         selectedArea,
+  //       title: 'Search Results',
+  //     });
+  //   }
+  // };
 
   const arrySelector = {
     1: countries,
@@ -114,18 +208,28 @@ const useHoemScreen = ({ navigate }) => {
     3: selectedArea,
   };
 
+  const onTypePress = () => {
+    navigate('ProjectListScreen', {
+      url: `${getSearchProjectsUrl}country_id=${selectedCountry?.id}&city_id=${selectedCity?.id}&purpose_id=${type?.id}`,
+      country,
+      city,
+      type,
+      area,
+    });
+  };
+
   return {
     homeData: data?.data?.data,
     modalState,
     setModalState,
     countries,
-    fetchAreas,
+    fetchAreas: refetchAreas,
     selectedCity,
-    fetchCountries,
+    fetchCountries: refetchCountries,
     arrySelector,
     selectedCountry,
     selectTag,
-    fetchCities,
+    fetchCities: refetchCities,
     setSelectedArea,
     selectedArea,
     setSelectedCity,

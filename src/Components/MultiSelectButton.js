@@ -52,7 +52,6 @@ export const MultiSelectButton = ({
                 ),
             selectedBgColor,
           ),
-          ...btnStyle,
           ...(isPrimaryColorStyle
             ? styles.priceMultiView(
                 isMultipule
@@ -213,7 +212,7 @@ export const styles = StyleSheet.create({
     color: isSelected ? 'white' : Colors.primaryColor,
   }),
   imageStyle: isSelected => ({
-    width: wp('6'),
+    width: wp('4'),
     height: hp('3'),
     tintColor: isSelected ? 'white' : Colors.primaryColor,
   }),

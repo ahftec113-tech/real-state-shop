@@ -106,7 +106,7 @@ const BtnModalComponent = ({
           <View
             style={{
               ...styles.modalData,
-              paddingBottom: !onPress ? hp('5') : 0,
+              paddingBottom: onPress ? hp('2') : 0,
             }}
           >
             <View style={styles.upperIconView}>

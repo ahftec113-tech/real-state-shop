@@ -62,8 +62,9 @@ const HomeHeaderComp = ({
       <View style={styles.tabRow}>
         <MultiSelectButton
           items={[
-            { id: 'Rent', label: 'Rent' },
-            { id: 'Buy', label: 'Buy' },
+            { id: 1, label: 'Rent' },
+            { id: 2, label: 'Sell' },
+            { id: 3, label: 'Buy' },
           ]}
           isPrimaryColorStyle={true}
           selectedAlter={type}

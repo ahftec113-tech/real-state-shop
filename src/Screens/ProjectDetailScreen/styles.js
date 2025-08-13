@@ -1,0 +1,133 @@
+import { StyleSheet } from 'react-native';
+import { hp, wp } from '../../Hooks/useResponsive';
+import { Colors } from '../../Theme/Variables';
+
+export const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: Colors.white,
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: wp('4'),
+    paddingVertical: hp('1'),
+  },
+  headerRight: {
+    flexDirection: 'row',
+  },
+  headerIcon: {
+    paddingHorizontal: wp('2'),
+  },
+  scrollContent: {
+    paddingBottom: hp('12'),
+  },
+  imageWrapper: {
+    width: '100%',
+    height: hp('30'),
+    position: 'relative',
+  },
+  mainImage: {
+    width: '100%',
+    height: '100%',
+  },
+  overlayCounter: {
+    position: 'absolute',
+    bottom: hp('1'),
+    left: wp('2'),
+    backgroundColor: '#00000088',
+    borderRadius: 4,
+    paddingHorizontal: wp('2'),
+    paddingVertical: hp('0.5'),
+  },
+  overlayCamera: {
+    position: 'absolute',
+    bottom: hp('1'),
+    right: wp('2'),
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: wp('1'),
+    backgroundColor: '#00000088',
+    borderRadius: 4,
+    paddingHorizontal: wp('2'),
+    paddingVertical: hp('0.5'),
+  },
+  priceWrapper: {
+    paddingHorizontal: wp('4'),
+    paddingTop: hp('2'),
+  },
+  priceBadge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: Colors.primaryColor,
+    paddingHorizontal: wp('2'),
+    paddingVertical: hp('0.5'),
+    borderRadius: 4,
+    marginBottom: hp('1'),
+    gap: wp('1'),
+  },
+  location: {
+    paddingHorizontal: wp('4'),
+    marginTop: hp('1'),
+  },
+  statsRow: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    gap: wp('5'),
+    paddingHorizontal: wp('4'),
+    marginTop: hp('1'),
+  },
+  statItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: wp('1'),
+  },
+  description: {
+    paddingHorizontal: wp('4'),
+    marginTop: hp('2'),
+  },
+  linkText: {
+    color: Colors.primaryColor,
+    paddingHorizontal: wp('4'),
+    marginTop: hp('1'),
+  },
+  featuresWrapper: {
+    borderWidth: 1,
+    borderColor: Colors.primaryColor,
+    borderRadius: 8,
+    marginHorizontal: wp('4'),
+    marginTop: hp('3'),
+    padding: wp('3'),
+  },
+  featuresRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginVertical: hp('2'),
+  },
+  featureCol: {
+    flex: 1,
+    gap: hp('1'),
+  },
+  bottomButtons: {
+    position: 'absolute',
+    bottom: hp('2'),
+    left: wp('4'),
+    right: wp('4'),
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  callBtn: {
+    flex: 1,
+    marginRight: wp('2'),
+  },
+  smsBtn: {
+    flex: 1,
+    marginHorizontal: wp('2'),
+  },
+  whatsappBtn: {
+    width: wp('12'),
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});

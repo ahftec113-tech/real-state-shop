@@ -39,6 +39,16 @@ export const getCountryDataUrl = '/indexProcess';
 export const searchByLocationUrl = '/search-by-location/';
 export const getFavByLocalIdUrl = '/get-favourite?project_ids=';
 
+export const getCountriesUrl = '/get-countries';
+export const getCitriesUrl = '/get-cities?country_id=';
+export const getAreasUrl = '/get-areas?city_id=';
+export const getSubAreasUrl = '/get-sub-areas?area_id=';
+export const getSubChildAreaUrl = '/get-sub-child-areas?sub_area_id=';
+
+export const getSearchProjectsUrl = '/search-project?';
+
+export const getFilterAttibutesUrl = '/get-misc-data';
+
 export const createGoalUrl = '/goals/store';
 
 export const VerifyUserUrl = '/verify';

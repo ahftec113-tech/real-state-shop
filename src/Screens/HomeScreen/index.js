@@ -89,9 +89,13 @@ const HomeScreen = ({ navigation }) => {
           setModalState(2);
         }}
         onAreaPress={() => {
-          console.log('kjbcjkskjcbsdjkbcjkdsbcjksdjdb');
           // setModalState(3);
-          navigation.navigate('FilterScreen');
+          navigation.navigate('FilterScreen', {
+            selectedType: type,
+            selectedCountry,
+            selectedCity,
+            selectedArea,
+          });
         }}
         type={type}
         setType={e => setType(e)}

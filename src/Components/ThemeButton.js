@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   image: {
-    width: wp('8'),
+    width: wp('4'),
     // height: hp('8'),
     // marginBottom: 5,
     resizeMode: 'contain',

@@ -44,8 +44,20 @@ function MainNavigator() {
           </>
         )} */}
 
+        <Stack.Screen
+          name="ProjectDetailScreen"
+          component={Screens.ProjectDetailScreen}
+        />
         <Stack.Screen name="MybottomTabs" component={MybottomTabs} />
+        <Stack.Screen
+          name="ProjectListScreen"
+          component={Screens.ProjectListScreen}
+        />
         <Stack.Screen name="FilterScreen" component={Screens.FilterScreen} />
+        <Stack.Screen
+          name="ListViewScreen"
+          component={Screens.ListViewScreen}
+        />
         <Stack.Screen name="Drawernavigation" component={Drawernavigation} />
         <Stack.Screen
           name="ProjectsScreen"

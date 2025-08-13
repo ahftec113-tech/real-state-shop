@@ -1095,6 +1095,16 @@ const sendWhatsApp = phoneNumber => {
   });
 };
 
+function formatKeyName(key) {
+  return (
+    key
+      // insert a space before all caps
+      .replace(/([A-Z])/g, ' $1')
+      // trim and capitalize first letter
+      .replace(/^./, str => str.toUpperCase())
+  );
+}
+
 export {
   getSingleCharacter,
   getProperLocation,
@@ -1153,4 +1163,5 @@ export {
   sendSMS,
   sendWhatsApp,
   formatPriceToPKStandard,
+  formatKeyName,
 };

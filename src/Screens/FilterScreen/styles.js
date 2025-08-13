@@ -16,7 +16,6 @@ export const styles = StyleSheet.create({
   topHomeCompContainer: {
     backgroundColor: 'white',
     flexDirection: 'row',
-    overflow: 'scroll',
     paddingTop: hp('2'),
   },
   locationRow: {
@@ -33,7 +32,7 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginTop: hp('1'),
-    marginLeft: wp('47'),
+    marginLeft: wp('35'),
   },
   cityRow: {
     flexDirection: 'row',
@@ -56,8 +55,8 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
   mapContainer: {
-    height: hp('20'),
-    backgroundColor: 'red',
+    height: hp('15'),
+    // backgroundColor: 'red',
     marginTop: hp('2'),
   },
   priceRangeRow: {

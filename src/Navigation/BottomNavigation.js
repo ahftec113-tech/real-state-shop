@@ -149,9 +149,9 @@ function MybottomTabs() {
       />
 
       <Tab.Screen
-        name="SettingScreen"
-        options={tabarComponent('Settings', ProfileGray, ProfileGreen)}
-        component={Screens.ProjectsScreen}
+        name="Profile"
+        options={tabarComponent('Profile', ProfileGray, ProfileGreen)}
+        component={Screens.ProfileScreen}
       />
     </Tab.Navigator>
   );

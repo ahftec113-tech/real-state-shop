@@ -16,6 +16,7 @@ import {
   arrRight,
   bathRoomIcon,
   bedIcon,
+  buildingGray,
   home,
   location,
   mapIcon,
@@ -27,57 +28,92 @@ import DividerLine from '../../Components/DividerLine';
 import DynamicTopBarNavigator from '../../Navigation/TopBarTabsNavigation';
 import { Colors } from '../../Theme/Variables';
 import RangeSlider from 'react-native-sticky-range-slider';
-import { bathrooms, bedrooms, sizes } from '../../Utils/localDB';
+import { bathroomsArry, bedroomsArry, sizes } from '../../Utils/localDB';
 import ThemeButton from '../../Components/ThemeButton';
 import { styles } from './styles';
+import useFilterScreen from './useFilterScreen';
+import { Touchable } from '../../Components/Touchable';
+import {
+  getAreasUrl,
+  getCitriesUrl,
+  getCountriesUrl,
+  getSubAreasUrl,
+  getSubChildAreaUrl,
+} from '../../Utils/Urls';
+import FilterREsetModal from './filterReaetModal';
+import FilterResetModal from './filterReaetModal';
+import BtnModalComponent from '../../Components/BtnModalComp';
 
-const FilterScreen = () => {
-  const MIN_AGE = 18;
-  const MAX_AGE = 60;
-
+const FilterScreen = ({ navigation, route }) => {
+  const {
+    onChangeVal,
+    area,
+    bathRoom,
+    bedRooms,
+    country,
+    city,
+    type,
+    disableRange,
+    handleValueChange,
+    handleToggle,
+    MIN_AGE,
+    MAX_AGE,
+    subChildArea,
+    subArea,
+    minPrice,
+    maxPrice,
+    MAX_PRICE,
+    MIN_PRICE,
+    areaRange,
+    minArea,
+    maxArea,
+    MIN_AREA,
+    MAX_AREA,
+    filters,
+    onSearchFilter,
+    handleValueChangeOfArea,
+    setModalVisible,
+    modalVisible,
+    resetAll,
+    modalState,
+    setModalState,
+    arrySelector,
+    selectTag,
+    attributesData,
+    propertyType,
+    AreaUnits,
+  } = useFilterScreen(navigation, route);
   const Thumb = type => <View style={styles.thumb} />;
   const Rail = () => <View style={styles.rail} />;
   const RailSelected = () => <View style={styles.railSelected} />;
 
-  const [min, setMin] = useState(MIN_AGE);
-  const [max, setMax] = useState(MAX_AGE);
-  const [disableRange, setDisableRange] = useState(false);
+  const TopHomeComp = useCallback(
+    ({ arryList }) => {
+      return (
+        <ScrollView
+          contentContainerStyle={styles.topHomeCompContainer}
+          showsHorizontalScrollIndicator={false}
+          horizontal
+        >
+          <MultiSelectButton
+            items={arryList}
+            isPrimaryColorStyle={true}
+            selectedAlter={propertyType}
+            onSelectVal={(_, e) => onChangeVal('propertyType', e)}
+          />
+        </ScrollView>
+      );
+    },
+    [propertyType],
+  );
 
-  const handleValueChange = useCallback((newLow, newHigh) => {
-    setMin(newLow);
-    setMax(newHigh);
-  }, []);
-
-  const handleToggle = () => {
-    setDisableRange(prev => !prev);
-  };
-
-  const TopHomeComp = () => {
-    return (
-      <View style={styles.topHomeCompContainer}>
-        <MultiSelectButton
-          items={[
-            { id: 'Rent', name: 'Rent', isTopImg: home },
-            { id: 'Buy', name: 'Buy' },
-          ]}
-          isPrimaryColorStyle={true}
-          isDisable
-        />
-      </View>
-    );
-  };
-  const TopPlotsComp = () => {
-    return <TextComponent text={'sdklnn'} />;
-  };
-  const TopCommercialComp = () => {
-    return <TextComponent text={'sdklnn'} />;
-  };
-
-  const myScreens = [
-    { name: 'Homes', component: TopHomeComp },
-    { name: 'Plots', component: TopPlotsComp },
-    { name: 'Commercial', component: TopCommercialComp },
-  ];
+  const myScreens = useCallback(
+    Object.entries(attributesData?.ProopertyType ?? {}).map(([key, value]) => ({
+      name: key,
+      component: () => <TopHomeComp arryList={value} />,
+    })),
+    [attributesData?.ProopertyType, propertyType],
+  );
 
   return (
     <View style={styles.container}>
@@ -87,6 +123,9 @@ const FilterScreen = () => {
         // style={{ backgroundColor: 'red' }}
         rightText={'Reset'}
         rightTextStyle={{ color: 'red' }}
+        onRightPress={() => {
+          setModalVisible(true);
+        }}
       />
       <ScrollView
         contentContainerStyle={styles.scrollContent}
@@ -103,16 +142,59 @@ const FilterScreen = () => {
           <View style={styles.multiSelectContainer}>
             <MultiSelectButton
               items={[
-                { id: 'Rent', label: 'Rent' },
-                { id: 'Buy', label: 'Buy' },
+                { id: 1, label: 'Rent' },
+                { id: 2, label: 'Sell' },
+                { id: 3, label: 'Buy' },
               ]}
               isPrimaryColorStyle={true}
-              isDisable
+              selectedAlter={type}
+              onSelectVal={(_, item) => onChangeVal('type', item)}
             />
           </View>
         </View>
         <DividerLine />
-        <View style={styles.cityRow}>
+        <Touchable
+          style={styles.cityRow}
+          onPress={() => {
+            navigation.navigate('ListViewScreen', {
+              urlName: getCountriesUrl,
+              onSelectValue: item => onChangeVal('country', item),
+              selectedValue: [country],
+            });
+          }}
+        >
+          <Image
+            source={location}
+            resizeMode="contain"
+            tintColor={'black'}
+            style={styles.locationIcon}
+          />
+          <View style={styles.cityTextContainer}>
+            <TextComponent text={'Country'} family={'400'} size={'1.8'} />
+            <TextComponent
+              text={country?.name ?? 'Not selected'}
+              fade
+              size={'1.5'}
+            />
+          </View>
+          <Image
+            source={arrowRight}
+            resizeMode="contain"
+            tintColor={'black'}
+            style={styles.arrowIcon}
+          />
+        </Touchable>
+        <DividerLine />
+        <Touchable
+          style={styles.cityRow}
+          onPress={() => {
+            navigation.navigate('ListViewScreen', {
+              urlName: getCitriesUrl + country?.id,
+              onSelectValue: item => onChangeVal('city', item),
+              selectedValue: [city],
+            });
+          }}
+        >
           <Image
             source={location}
             resizeMode="contain"
@@ -121,7 +203,11 @@ const FilterScreen = () => {
           />
           <View style={styles.cityTextContainer}>
             <TextComponent text={'City'} family={'400'} size={'1.8'} />
-            <TextComponent text={'karachi'} fade size={'1.5'} />
+            <TextComponent
+              text={city?.name ?? 'Not selected'}
+              fade
+              size={'1.5'}
+            />
           </View>
           <Image
             source={arrowRight}
@@ -129,28 +215,128 @@ const FilterScreen = () => {
             tintColor={'black'}
             style={styles.arrowIcon}
           />
-        </View>
+        </Touchable>
+        <DividerLine />
+        <Touchable
+          style={styles.cityRow}
+          onPress={() => {
+            navigation.navigate('ListViewScreen', {
+              urlName: getAreasUrl + city?.id,
+              onSelectValue: item => onChangeVal('area', item),
+              selectedValue: [area],
+            });
+          }}
+        >
+          <Image
+            source={location}
+            resizeMode="contain"
+            tintColor={'black'}
+            style={styles.locationIcon}
+          />
+          <View style={styles.cityTextContainer}>
+            <TextComponent text={'Areas'} family={'400'} size={'1.8'} />
+            <TextComponent
+              text={area?.name ?? 'Not selected'}
+              fade
+              size={'1.5'}
+            />
+          </View>
+          <Image
+            source={arrowRight}
+            resizeMode="contain"
+            tintColor={'black'}
+            style={styles.arrowIcon}
+          />
+        </Touchable>
+        <DividerLine />
+        <Touchable
+          style={styles.cityRow}
+          onPress={() => {
+            navigation.navigate('ListViewScreen', {
+              urlName: getSubAreasUrl + area?.id,
+              onSelectValue: item => onChangeVal('subArea', item),
+              selectedValue: [subArea],
+            });
+          }}
+        >
+          <Image
+            source={location}
+            resizeMode="contain"
+            tintColor={'black'}
+            style={styles.locationIcon}
+          />
+          <View style={styles.cityTextContainer}>
+            <TextComponent
+              text={'Search Sub Location'}
+              family={'400'}
+              size={'1.8'}
+            />
+            <TextComponent
+              text={subArea?.name ?? 'Not selected'}
+              fade
+              size={'1.5'}
+            />
+          </View>
+          <Image
+            source={arrowRight}
+            resizeMode="contain"
+            tintColor={'black'}
+            style={styles.arrowIcon}
+          />
+        </Touchable>
+        <DividerLine />
+        <Touchable
+          style={styles.cityRow}
+          onPress={() => {
+            navigation.navigate('ListViewScreen', {
+              urlName: getSubChildAreaUrl + subArea?.id,
+              onSelectValue: item => onChangeVal('subChildArea', item),
+              selectedValue: [subChildArea],
+            });
+          }}
+        >
+          <Image
+            source={location}
+            resizeMode="contain"
+            tintColor={'black'}
+            style={styles.locationIcon}
+          />
+          <View style={styles.cityTextContainer}>
+            <TextComponent
+              text={'Search Child Location'}
+              family={'400'}
+              size={'1.8'}
+            />
+            <TextComponent
+              text={subChildArea?.name ?? 'Not selected'}
+              fade
+              size={'1.5'}
+            />
+          </View>
+          <Image
+            source={arrowRight}
+            resizeMode="contain"
+            tintColor={'black'}
+            style={styles.arrowIcon}
+          />
+        </Touchable>
         <DividerLine />
         <View style={styles.selectLocationContainer}>
           <View style={styles.selectLocationRow}>
             <Image
-              source={mapIcon}
+              source={buildingGray}
               resizeMode="contain"
               tintColor={'black'}
               style={styles.locationIcon}
             />
-            <TextComponent
-              text={'Select Location'}
-              family={'400'}
-              size={'1.8'}
-            />
+            <TextComponent text={'Property Type'} family={'400'} size={'1.8'} />
           </View>
           <View style={styles.mapContainer}>
             <DynamicTopBarNavigator
               screens={myScreens}
               navigatorProps={{
-                initialRouteName: 'Homes',
                 screenOptions: {
+                  swipeEnabled: false, // 🚫 disables swipe gestures
                   tabBarIndicatorStyle: {
                     backgroundColor: Colors.primaryColor,
                     alignItem: 'center',
@@ -187,6 +373,9 @@ const FilterScreen = () => {
               placeholder="0"
               style={styles.input}
               placeholderTextColor={'gray'}
+              value={minPrice === '' ? '' : String(minPrice)}
+              onChangeText={e => onChangeVal('minPrice', e)}
+              keyboardType="decimal-pad"
             />
           </View>
           <TextComponent text={'TO'} family={'400'} size={'1.5'} />
@@ -195,24 +384,26 @@ const FilterScreen = () => {
               placeholder="Any"
               style={styles.input}
               placeholderTextColor={'gray'}
+              value={maxPrice === '' ? '' : String(maxPrice)}
+              onChangeText={e => onChangeVal('maxPrice', e)}
+              keyboardType="decimal-pad"
             />
           </View>
         </View>
         <RangeSlider
           style={styles.slider}
-          min={MIN_AGE}
-          max={MAX_AGE}
+          min={MIN_PRICE}
+          max={MAX_PRICE}
           step={1}
           minRange={5}
-          low={min}
-          high={max}
+          low={minPrice}
+          high={maxPrice ?? 10000000}
           onValueChanged={handleValueChange}
           renderLowValue={value => <Text style={styles.valueText}></Text>}
           renderHighValue={value => <Text style={styles.valueText}></Text>}
           renderThumb={Thumb}
           renderRail={Rail}
           renderRailSelected={RailSelected}
-          disableRange={disableRange}
         />
         <DividerLine />
         <View style={styles.areaRangeRow}>
@@ -225,7 +416,11 @@ const FilterScreen = () => {
             <TextComponent text={'Area range'} family={'400'} size={'1.8'} />
           </View>
           <View style={styles.areaRangeRight}>
-            <TextComponent text={'Sq. Yd'} family={'400'} size={'1.8'} />
+            <TextComponent
+              text={AreaUnits?.value}
+              family={'400'}
+              size={'1.8'}
+            />
             <Image
               source={arrDown}
               resizeMode="contain"
@@ -239,6 +434,9 @@ const FilterScreen = () => {
               placeholder="0"
               style={styles.input}
               placeholderTextColor={'gray'}
+              value={minArea === '' ? '' : String(minArea)}
+              onChangeText={e => onChangeVal('minArea', e)}
+              // value={}
             />
           </View>
           <TextComponent text={'TO'} family={'400'} size={'1.5'} />
@@ -247,30 +445,32 @@ const FilterScreen = () => {
               placeholder="Any"
               style={styles.input}
               placeholderTextColor={'gray'}
+              value={maxArea === '' ? '' : String(maxArea)}
+              onChangeText={e => onChangeVal('maxArea', e)}
             />
           </View>
         </View>
         <RangeSlider
           style={styles.slider}
-          min={MIN_AGE}
-          max={MAX_AGE}
+          min={MIN_AREA}
+          max={MAX_AREA}
           step={1}
           minRange={5}
-          low={min}
-          high={max}
-          onValueChanged={handleValueChange}
+          low={minArea}
+          high={maxArea ?? 400}
+          onValueChanged={handleValueChangeOfArea}
           renderLowValue={value => <Text style={styles.valueText}></Text>}
           renderHighValue={value => <Text style={styles.valueText}></Text>}
           renderThumb={Thumb}
           renderRail={Rail}
           renderRailSelected={RailSelected}
-          disableRange={disableRange}
         />
         <View style={styles.sizesContainer}>
           <MultiSelectButton
             items={sizes}
             isPrimaryColorStyle={true}
-            isDisable
+            selectedAlter={areaRange}
+            onSelectVal={(_, e) => onChangeVal('areaRange', e)}
           />
         </View>
         <DividerLine />
@@ -284,9 +484,10 @@ const FilterScreen = () => {
         </View>
         <View style={styles.bedroomsButtonContainer}>
           <MultiSelectButton
-            items={bedrooms}
+            items={bedroomsArry}
             isPrimaryColorStyle={true}
-            isDisable
+            selectedAlter={bedRooms}
+            onSelectVal={(_, e) => onChangeVal('bedRooms', e)}
           />
         </View>
         <DividerLine />
@@ -300,13 +501,38 @@ const FilterScreen = () => {
         </View>
         <View style={styles.bathroomsButtonContainer}>
           <MultiSelectButton
-            items={bathrooms}
+            items={bathroomsArry}
             isPrimaryColorStyle={true}
-            isDisable
+            selectedAlter={bathRoom}
+            onSelectVal={(_, e) => onChangeVal('bathRoom', e)}
           />
         </View>
-        <ThemeButton title={'Show Ads'} isTheme style={styles.showAdsButton} />
+        <ThemeButton
+          title={'Show Ads'}
+          isTheme
+          style={styles.showAdsButton}
+          onPress={onSearchFilter}
+        />
       </ScrollView>
+      <FilterResetModal
+        visible={modalVisible}
+        onClose={() => setModalVisible(false)}
+        data={filters}
+        onConfirm={resetAll}
+      />
+
+      {modalState && (
+        <BtnModalComponent
+          activeTags={selectTag[modalState]}
+          allData={arrySelector[modalState]}
+          //   heading={onPressKey}
+          // activeTitle={'select Diet'}
+          isModal={modalState}
+          onPress={() => setModalState(null)}
+          onSelect={e => {}}
+          onBackPress={() => setModalState(null)}
+        />
+      )}
     </View>
   );
 };

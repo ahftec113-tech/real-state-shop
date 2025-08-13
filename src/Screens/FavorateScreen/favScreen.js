@@ -34,20 +34,6 @@ const favScreen = ({ navigation, route }) => {
           refetch={refetch}
           item={item}
         />
-        // <PropertyCardComp
-        //   key={index}
-        //   image={item?.image}
-        //   logo={homeIcon}
-        //   price={item?.price}
-        //   title={item?.project_name}
-        //   beds={item?.total_bedrooms}
-        //   baths={item?.total_bathrooms}
-        //   area={'1.2'}
-        //   tag1={item?.area_name}
-        //   tag2={item?.type_and_purpose}
-        //   item={item}
-        //   refetch={refetch}
-        // />
       );
     },
     [favList],
