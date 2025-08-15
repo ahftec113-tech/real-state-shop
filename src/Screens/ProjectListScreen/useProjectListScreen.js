@@ -16,15 +16,15 @@ const useProjectListScreen = ({ navigate }, { params }) => {
     hasNextPage,
     isPending,
     isFetching,
-    isRefetching,
+    isLoading,
     refetch,
   } = useInfiniteQuery({
     queryKey: [params?.url],
-    queryFn: async ({ pageParam = 10 }) => {
+    queryFn: async ({ pageParam = 1 }) => {
       //   setTimeout(() => {
       //     dispatch(loadingFalse());
       //   }, 100);
-      return API.get(`${params?.url}&per_page=${pageParam}`);
+      return API.get(`${params?.url}&page=${pageParam}`);
     },
     initialPageParam: 1,
     getNextPageParam: (lastPage, pages) => (pages?.length ?? 0) + 1,
@@ -35,7 +35,7 @@ const useProjectListScreen = ({ navigate }, { params }) => {
   console.log(
     'sdjjvblskdvbklsdbvksdbklvbsdklvbdsklvbkldsvbkldvbkld',
     data?.pages.flatMap(page => page),
-    `${params?.url}&per_page=${1}`,
+    `${params?.url}&per_page=${100}`,
     data?.pages,
   );
 
@@ -43,6 +43,13 @@ const useProjectListScreen = ({ navigate }, { params }) => {
     projectList: list ?? [],
     listType,
     setListType,
+    isFetchingNextPage,
+    fetchNextPage,
+    hasNextPage,
+    isPending,
+    isFetching,
+    isLoading,
+    refetch,
   };
 };
 

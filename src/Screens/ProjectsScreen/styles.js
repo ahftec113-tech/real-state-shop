@@ -30,6 +30,12 @@ export const styles = StyleSheet.create({
   scrollContent: {
     alignItems: 'center',
     paddingHorizontal: wp('4'),
-    marginBottom: hp('1'),
+  },
+  flatListContainer: {
+    flexGrow: 1,
+    // alignSelf: 'center',
+    paddingTop: hp('2'),
+    paddingHorizontal: wp('2'),
+    paddingBottom: hp('10'),
   },
 });

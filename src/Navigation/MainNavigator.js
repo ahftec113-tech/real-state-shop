@@ -44,11 +44,11 @@ function MainNavigator() {
           </>
         )} */}
 
+        <Stack.Screen name="MybottomTabs" component={MybottomTabs} />
         <Stack.Screen
           name="ProjectDetailScreen"
           component={Screens.ProjectDetailScreen}
         />
-        <Stack.Screen name="MybottomTabs" component={MybottomTabs} />
         <Stack.Screen
           name="ProjectListScreen"
           component={Screens.ProjectListScreen}

@@ -2,13 +2,13 @@ const getCredentials = () => {
   if (__DEV__)
     return {
       baseURL: 'https://www.realstateshop.com/api/',
-      imageURL: 'https://www.realstateshop.com/assets/img/user_project_images/',
+      imageURL: 'https://www.realstateshop.com/assets/img/',
     };
   else {
     console.log = () => {};
     return {
       baseURL: 'https://www.realstateshop.com/api/',
-      imageURL: 'https://www.realstateshop.com/assets/img/user_project_images/',
+      imageURL: 'https://www.realstateshop.com/assets/img/',
     };
   }
 };
@@ -25,8 +25,10 @@ export const imageUrl = url => {
   // : 'https://res.cloudinary.com/dd6tdswt5/image/upload/v1684830799/UserImages/mhysa2zj0sbmvnw69b35.jpg';
 };
 
-export const privacyUrl = 'https://theappforcowboys.com/privacy_policy';
-export const termsUrl = 'https://theappforcowboys.com/terms_and_conditions ';
+export const privacyUrl =
+  'https://www.realstateshop.com/privacy/privacy-policy.html';
+export const termsUrl =
+  'https://www.realstateshop.com/privacy/terms-of-service.html';
 export const aboutUrl = 'https://theappforcowboys.com/about_us';
 
 export const MapAPIKey = 'AIzaSyAu-nEBbiOahfUyeMc8Lc1gTTKfete_wnQ';
@@ -49,7 +51,11 @@ export const getSearchProjectsUrl = '/search-project?';
 
 export const getFilterAttibutesUrl = '/get-misc-data';
 
+export const getProjectDetailUrl = '/projectDetail/';
+
 export const createGoalUrl = '/goals/store';
+
+export const newProjectsUrl = 'newProjects';
 
 export const VerifyUserUrl = '/verify';
 export const allAssociatesUrl = '/setup/associations';

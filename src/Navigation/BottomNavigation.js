@@ -137,22 +137,22 @@ function MybottomTabs() {
         options={tabarComponent('Projects', ProjectGray, ProjectGreen)}
         component={Screens.ProjectsScreen}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="MyLocationScreen"
         options={tabarComponent('Locations', discoverGray, discoverGreen)}
         component={Screens.ProjectsScreen}
-      />
+      /> */}
       <Tab.Screen
-        name="OrderScreen"
+        name="FavouriteScreen"
         options={tabarComponent('Favourite', heartGray, heartGreen)}
         component={Screens.FavorateScreen}
       />
 
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Profile"
         options={tabarComponent('Profile', ProfileGray, ProfileGreen)}
         component={Screens.ProfileScreen}
-      />
+      /> */}
     </Tab.Navigator>
   );
 }

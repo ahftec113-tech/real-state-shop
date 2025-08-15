@@ -5,6 +5,7 @@ import {
   TextInput,
   TouchableOpacity,
   FlatList,
+  ActivityIndicator,
 } from 'react-native';
 import React, { memo, useCallback } from 'react';
 import { HeaderComponent } from '../../Components/HeaderComp';
@@ -12,7 +13,9 @@ import { MultiSelectButton } from '../../Components/MultiSelectButton';
 import {
   arrDown,
   boxesEmpty,
+  boxesfilled,
   drawerEmpty,
+  drawerFilled,
   filterIcon,
   homeIcon,
   searchIcon,
@@ -25,12 +28,22 @@ import { DataNotFound } from '../../Components/DataNotFound';
 import { keyExtractor } from '../../Utils';
 import useProjectListScreen from './useProjectListScreen';
 import PropertyCardComp from '../../Components/PropertyCardComp';
+import ThemeButton from '../../Components/ThemeButton';
+import { TextComponent } from '../../Components/TextComponent';
 
 const ProjectListScreen = ({ navigation, route }) => {
-  const { projectList, listType, setListType } = useProjectListScreen(
-    navigation,
-    route,
-  );
+  const {
+    projectList,
+    listType,
+    setListType,
+    isFetchingNextPage,
+    fetchNextPage,
+    hasNextPage,
+    isPending,
+    isFetching,
+    isLoading,
+    refetch,
+  } = useProjectListScreen(navigation, route);
   console.log('dsbklsdbvklsdbvbsdklvbsdlbvlds', route?.params);
 
   const filterArry = [
@@ -38,12 +51,12 @@ const ProjectListScreen = ({ navigation, route }) => {
       image: filterIcon,
       name: 'Filter',
     },
+    // {
+    //   image: sortIcon,
+    //   name: 'Sort',
+    // },
     {
-      image: sortIcon,
-      name: 'Sort',
-    },
-    {
-      name: route?.params?.city?.name ?? '',
+      name: route?.params?.city?.name ?? 'Not Selected',
       image: arrDown,
     },
   ];
@@ -92,7 +105,7 @@ const ProjectListScreen = ({ navigation, route }) => {
 
   return (
     <View style={{ flex: 1, backgroundColor: 'white' }}>
-      <HeaderComponent headerTitle={'filter screen '} isBack />
+      <HeaderComponent headerTitle={'Projects'} isBack />
       <View
         style={{
           flexDirection: 'row',
@@ -102,9 +115,16 @@ const ProjectListScreen = ({ navigation, route }) => {
       >
         <MultiSelectButton
           items={filterArry}
-          isDisable
           isPrimaryColorStyle
           btnStyle={{ backgroundColor: 'white' }}
+          onSelectVal={() =>
+            navigation.navigate('FilterScreen', {
+              selectedType: {},
+              selectedCountry: {},
+              selectedCity: {},
+              selectedArea: {},
+            })
+          }
         />
         <View style={{ flexDirection: 'row', alignItems: 'center' }}></View>
       </View>
@@ -120,29 +140,30 @@ const ProjectListScreen = ({ navigation, route }) => {
             source={searchIcon} // Search icon
             style={styles.icon}
           />
-          <TextInput
-            style={styles.input}
-            placeholder={route.params?.area?.name}
+          <TextComponent
+            styles={styles.input}
+            text={route.params?.area?.name}
             placeholderTextColor="#aaa"
           />
         </View>
 
         {/* Clear All */}
-        <TouchableOpacity>
+        {/* <TouchableOpacity>
           <Text style={styles.clearText}>Clear All</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
         {/* View Toggle */}
         <View style={styles.toggleContainer}>
           <TouchableOpacity onPress={() => setListType(1)}>
             <Image
-              source={drawerEmpty} // List icon
+              source={listType == 1 ? drawerFilled : drawerEmpty} // List icon
               style={styles.toggleIcon}
+              resizeMode="contain"
             />
           </TouchableOpacity>
           <TouchableOpacity onPress={() => setListType(2)}>
             <Image
-              source={boxesEmpty} // Grid icon
+              source={listType == 2 ? boxesfilled : boxesEmpty} // Grid icon
               style={styles.toggleIcon}
             />
           </TouchableOpacity>
@@ -157,18 +178,65 @@ const ProjectListScreen = ({ navigation, route }) => {
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
           ListEmptyComponent={<DataNotFound />}
+          ListFooterComponent={
+            projectList.length >= 9 &&
+            (isFetchingNextPage ? (
+              <ActivityIndicator size="small" color="gray" />
+            ) : (
+              <ThemeButton
+                title={'Load More'}
+                style={{
+                  marginTop: hp('2'),
+                  width: wp('30'),
+                  height: hp('4'),
+                  alignSelf: 'center',
+                  marginBottom: hp('5'),
+                }}
+                textStyle={{ fontSize: hp('1.5') }}
+                onPress={async () => {
+                  await fetchNextPage();
+                  // afterFetchNextPage();
+                }}
+              />
+            )) // Show loading spinner at the bottom
+          }
         />
       )}
       {listType == 2 && (
         <FlatList
           keyExtractor={keyExtractor}
           renderItem={renderItem}
-          contentContainerStyle={styles.flatListContainer}
+          contentContainerStyle={{
+            ...styles.flatListContainer,
+            paddingHorizontal: wp('5'),
+          }}
           data={projectList}
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
           ListEmptyComponent={<DataNotFound />}
           numColumns={2}
+          ListFooterComponent={
+            projectList.length >= 9 &&
+            (isFetchingNextPage ? (
+              <ActivityIndicator size="small" color="gray" />
+            ) : (
+              <ThemeButton
+                title={'Load More'}
+                style={{
+                  marginTop: hp('2'),
+                  width: wp('30'),
+                  height: hp('4'),
+                  alignSelf: 'center',
+                  marginBottom: hp('5'),
+                }}
+                textStyle={{ fontSize: hp('1.5') }}
+                onPress={async () => {
+                  await fetchNextPage();
+                  // afterFetchNextPage();
+                }}
+              />
+            )) // Show loading spinner at the bottom
+          }
         />
       )}
     </View>

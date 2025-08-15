@@ -82,6 +82,8 @@ const FilterScreen = ({ navigation, route }) => {
     attributesData,
     propertyType,
     AreaUnits,
+    setModalStateFilter,
+    modalStateFilter,
   } = useFilterScreen(navigation, route);
   const Thumb = type => <View style={styles.thumb} />;
   const Rail = () => <View style={styles.rail} />;
@@ -360,11 +362,11 @@ const FilterScreen = ({ navigation, route }) => {
           </View>
           <View style={styles.priceRangeRight}>
             <TextComponent text={'PKR'} family={'400'} size={'1.8'} />
-            <Image
+            {/* <Image
               source={arrDown}
               resizeMode="contain"
               style={styles.arrowIcon}
-            />
+            /> */}
           </View>
         </View>
         <View style={styles.priceInputRow}>
@@ -415,56 +417,61 @@ const FilterScreen = ({ navigation, route }) => {
             />
             <TextComponent text={'Area range'} family={'400'} size={'1.8'} />
           </View>
-          <View style={styles.areaRangeRight}>
-            <TextComponent
-              text={AreaUnits?.value}
-              family={'400'}
-              size={'1.8'}
-            />
+          <Touchable
+            style={styles.areaRangeRight}
+            onPress={() => {
+              setModalState(1);
+            }}
+          >
+            <TextComponent text={AreaUnits?.id} family={'400'} size={'1.8'} />
             <Image
               source={arrDown}
               resizeMode="contain"
               style={styles.arrowIcon}
             />
-          </View>
+          </Touchable>
         </View>
-        <View style={styles.areaInputRow}>
-          <View style={styles.inputContainer}>
-            <TextInput
-              placeholder="0"
-              style={styles.input}
-              placeholderTextColor={'gray'}
-              value={minArea === '' ? '' : String(minArea)}
-              onChangeText={e => onChangeVal('minArea', e)}
-              // value={}
+        {AreaUnits.id != null && (
+          <>
+            <View style={styles.areaInputRow}>
+              <View style={styles.inputContainer}>
+                <TextInput
+                  placeholder="0"
+                  style={styles.input}
+                  placeholderTextColor={'gray'}
+                  value={minArea === '' ? '' : String(minArea)}
+                  onChangeText={e => onChangeVal('minArea', e)}
+                  // value={}
+                />
+              </View>
+              <TextComponent text={'TO'} family={'400'} size={'1.5'} />
+              <View style={styles.inputContainer}>
+                <TextInput
+                  placeholder="Any"
+                  style={styles.input}
+                  placeholderTextColor={'gray'}
+                  value={maxArea === '' ? '' : String(maxArea)}
+                  onChangeText={e => onChangeVal('maxArea', e)}
+                />
+              </View>
+            </View>
+            <RangeSlider
+              style={styles.slider}
+              min={MIN_AREA}
+              max={MAX_AREA}
+              step={1}
+              minRange={5}
+              low={minArea}
+              high={maxArea ?? 400}
+              onValueChanged={handleValueChangeOfArea}
+              renderLowValue={value => <Text style={styles.valueText}></Text>}
+              renderHighValue={value => <Text style={styles.valueText}></Text>}
+              renderThumb={Thumb}
+              renderRail={Rail}
+              renderRailSelected={RailSelected}
             />
-          </View>
-          <TextComponent text={'TO'} family={'400'} size={'1.5'} />
-          <View style={styles.inputContainer}>
-            <TextInput
-              placeholder="Any"
-              style={styles.input}
-              placeholderTextColor={'gray'}
-              value={maxArea === '' ? '' : String(maxArea)}
-              onChangeText={e => onChangeVal('maxArea', e)}
-            />
-          </View>
-        </View>
-        <RangeSlider
-          style={styles.slider}
-          min={MIN_AREA}
-          max={MAX_AREA}
-          step={1}
-          minRange={5}
-          low={minArea}
-          high={maxArea ?? 400}
-          onValueChanged={handleValueChangeOfArea}
-          renderLowValue={value => <Text style={styles.valueText}></Text>}
-          renderHighValue={value => <Text style={styles.valueText}></Text>}
-          renderThumb={Thumb}
-          renderRail={Rail}
-          renderRailSelected={RailSelected}
-        />
+          </>
+        )}
         <View style={styles.sizesContainer}>
           <MultiSelectButton
             items={sizes}
@@ -529,7 +536,9 @@ const FilterScreen = ({ navigation, route }) => {
           // activeTitle={'select Diet'}
           isModal={modalState}
           onPress={() => setModalState(null)}
-          onSelect={e => {}}
+          onSelect={e => {
+            onChangeVal('AreaUnits', e);
+          }}
           onBackPress={() => setModalState(null)}
         />
       )}

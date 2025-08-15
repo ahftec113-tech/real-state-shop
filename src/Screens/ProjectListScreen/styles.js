@@ -20,6 +20,7 @@ export const styles = StyleSheet.create({
     width: wp('45'),
     justifyContent: 'center',
     height: hp('5'),
+    display: 'none',
   },
   icon: {
     width: wp('4'),
@@ -33,7 +34,7 @@ export const styles = StyleSheet.create({
     width: wp('20'),
   },
   clearText: {
-    color: '#1e88e5',
+    color: 'white',
     fontSize: wp('4'),
     marginRight: wp('3'),
   },
@@ -41,11 +42,13 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginLeft: wp('13'),
+    width: wp('82'),
+    justifyContent: 'flex-end',
   },
   toggleIcon: {
-    width: wp('5'),
-    height: wp('5'),
-    tintColor: '#1e88e5',
+    width: wp('8'),
+    height: wp('8'),
+    // tintColor: '#1e88e5',
     marginLeft: wp('2'),
   },
   flatListContainer: {

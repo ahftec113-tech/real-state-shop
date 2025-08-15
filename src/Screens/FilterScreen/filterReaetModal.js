@@ -6,6 +6,7 @@ import {
   FlatList,
   StyleSheet,
   Image,
+  ScrollView,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { TextComponent } from '../../Components/TextComponent';
@@ -26,7 +27,7 @@ export default function FilterResetModal({
           <TextComponent styles={styles.value} text={item.value} />
         </View>
       </View>
-      <TouchableOpacity onPress={() => item.onDelete?.(item.id)}>
+      <TouchableOpacity onPress={() => item?.onDelete(item.id)}>
         <Image
           source={trash}
           resizeMode="contain"
@@ -39,7 +40,10 @@ export default function FilterResetModal({
   return (
     <Modal visible={visible} transparent animationType="fade">
       <View style={styles.overlay}>
-        <View style={styles.modalBox}>
+        <ScrollView
+          contentContainerStyle={styles.modalBox}
+          showsVerticalScrollIndicator={false}
+        >
           <TextComponent styles={styles.title} text={'Reset All?'} />
 
           {/* Buttons */}
@@ -63,9 +67,10 @@ export default function FilterResetModal({
             data={data}
             keyExtractor={item => item.id.toString()}
             renderItem={renderItem}
+            showsVerticalScrollIndicator={false}
             ItemSeparatorComponent={() => <View style={styles.separator} />}
           />
-        </View>
+        </ScrollView>
       </View>
     </Modal>
   );
@@ -77,12 +82,18 @@ const styles = StyleSheet.create({
     backgroundColor: '#00000055',
     justifyContent: 'center',
     alignItems: 'center',
+    alignContent: 'center',
+    verticalAlign: 'middle',
   },
   modalBox: {
     backgroundColor: 'white',
     padding: wp(4),
     borderRadius: wp(5),
     width: wp(80),
+    maxHeight: hp('80'),
+    verticalAlign: 'middle',
+    alignSelf: 'center',
+    marginVertical: hp('10'),
   },
   title: {
     textAlign: 'center',

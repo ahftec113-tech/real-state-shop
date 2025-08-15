@@ -55,8 +55,7 @@ const App = () => {
 
   return (
     <>
-    <MainNavigator /> 
-      {/* {isVisible === true ? Splash_Screen : <MainNavigator />} */}
+      {isVisible === true ? Splash_Screen : <MainNavigator />}
       {isloading && <Overlay />}
       {/* {modalType && <ImagePreviewComp visible={modalType} images={image} />}
       {isloading &&

@@ -14,7 +14,7 @@ const useFilterScreen = ({ navigate }, { params }) => {
 
   const [modalVisible, setModalVisible] = useState(false);
   const [modalState, setModalState] = useState(false);
-
+  const [modalStateFilter, setModalStateFilter] = useState(null);
   const MIN_PRICE = 0;
   const MAX_PRICE = 10000000;
 
@@ -22,10 +22,10 @@ const useFilterScreen = ({ navigate }, { params }) => {
   const MAX_AREA = 400;
 
   const initialFilterState = {
-    country: {},
-    city: {},
+    country: selectedCountry,
+    city: selectedCity,
+    type: selectedType,
     area: {},
-    type: {},
     bedRooms: {},
     bathRoom: {},
     subChildArea: {},
@@ -37,8 +37,8 @@ const useFilterScreen = ({ navigate }, { params }) => {
     maxArea: 4000,
     propertyType: {},
     AreaUnits: {
-      value: 'Sq. Ft.',
-      label: 'Square Feet',
+      id: null,
+      label: null,
     },
   };
 
@@ -81,7 +81,17 @@ const useFilterScreen = ({ navigate }, { params }) => {
 
   const onSearchFilter = () => {
     navigate('ProjectListScreen', {
-      url: `${getSearchProjectsUrl}country_id=${country?.id}&city_id=${city?.id}&area_id=${area?.id}&sub_area_id=${subArea?.id}&sub_child_area_id=${subChildArea?.id}&purpose_id=${type?.id}&searchPriceMin_val=${minPrice}&searchPriceMax_val=${maxPrice}&searchAreaMin_val=${minArea}&searchAreaMax_val=${maxArea}&searchAreaCustomUnit_val=sq.ft.&searchBeds_val=${bedRooms?.id}&searchBaths_val=${bathRoom?.id}&sortBy_val=high`,
+      url: `${getSearchProjectsUrl}country_id=${country?.id}&city_id=${
+        city?.id
+      }&area_id=${area?.id}&sub_area_id=${subArea?.id}&sub_child_area_id=${
+        subChildArea?.id
+      }&purpose_id=${type?.id}&searchAreaCustomUnit_val=${
+        AreaUnits?.id ?? undefined
+      }&searchPriceMin_val=${minPrice}&searchPriceMax_val=${maxPrice}&searchAreaMin_val=${minArea}&searchAreaMax_val=${
+        AreaUnits?.id ? areaRange?.sqYd ?? maxArea : undefined
+      }&searchBeds_val=${bedRooms?.id}&searchBaths_val=${
+        bathRoom?.id
+      }&sortBy_val=high`,
       country,
       city,
       type,
@@ -99,7 +109,7 @@ const useFilterScreen = ({ navigate }, { params }) => {
         label: formatKeyName(key), // key name, e.g., "bedRooms"
         value:
           value?.id || typeof value === 'object'
-            ? value?.name || value?.label || 'Not Selected'
+            ? value?.name || value?.label || value?.sqYd || 'Not Selected'
             : value.toString() ?? 'Not Selected',
         onDelete: () => {
           setFilterSelectedVal(prev => ({
@@ -113,10 +123,10 @@ const useFilterScreen = ({ navigate }, { params }) => {
 
   const resetAll = () =>
     setFilterSelectedVal({
-      country: {},
-      city: {},
+      country: selectedCountry,
+      city: selectedCity,
+      type: selectedType,
       area: {},
-      type: {},
       bedRooms: {},
       bathRoom: {},
       subChildArea: {},
@@ -128,8 +138,8 @@ const useFilterScreen = ({ navigate }, { params }) => {
       maxArea: 4000,
       propertyType: {},
       AreaUnits: {
-        value: 'Sq. Ft.',
-        label: 'Square Feet',
+        id: null,
+        label: null,
       },
     });
 
@@ -138,7 +148,7 @@ const useFilterScreen = ({ navigate }, { params }) => {
   };
 
   const selectTag = {
-    1: {},
+    1: AreaUnits,
   };
 
   return {
@@ -176,6 +186,8 @@ const useFilterScreen = ({ navigate }, { params }) => {
     attributesData: data?.data?.data,
     propertyType,
     AreaUnits,
+    setModalStateFilter,
+    modalStateFilter,
   };
 };
 

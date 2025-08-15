@@ -10,7 +10,7 @@ export const styles = StyleSheet.create({
   innerContainer: {
     width: wp('90'),
     alignSelf: 'center',
-    marginTop: hp('-7'),
+    marginTop: hp('-12'),
   },
   buttonWrap: {
     flexDirection: 'row',

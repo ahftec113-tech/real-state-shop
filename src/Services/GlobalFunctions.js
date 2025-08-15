@@ -1105,6 +1105,35 @@ function formatKeyName(key) {
   );
 }
 
+/**
+ * Convert a price range string like "20-30L" or "1.5-2Cr" into numeric min and max prices
+ * @param {string} rangeStr - Price range string (e.g., "20-30L", "1.5-2Cr")
+ * @returns {{ min: number, max: number }}
+ */
+function parsePriceRange(rangeStr) {
+  if (!rangeStr || typeof rangeStr !== 'string') {
+    return { min: 0, max: 0 };
+  }
+
+  // Detect unit
+  const isLakh = rangeStr.toLowerCase().includes('l');
+  const isCrore = rangeStr.toLowerCase().includes('cr');
+
+  // Remove unit and split into min/max
+  const numericPart = rangeStr.replace(/[^0-9.\-]/g, '');
+  const [minStr, maxStr] = numericPart.split('-');
+
+  // Convert to numbers
+  let multiplier = 1;
+  if (isLakh) multiplier = 100000;
+  if (isCrore) multiplier = 10000000;
+
+  const min = parseFloat(minStr) * multiplier;
+  const max = parseFloat(maxStr) * multiplier;
+
+  return { min, max };
+}
+
 export {
   getSingleCharacter,
   getProperLocation,
@@ -1164,4 +1193,5 @@ export {
   sendWhatsApp,
   formatPriceToPKStandard,
   formatKeyName,
+  parsePriceRange,
 };

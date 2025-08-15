@@ -21,6 +21,9 @@ import { TextComponent } from './TextComponent';
 import { imageUrl } from '../Utils/Urls';
 import useReduxStore from '../Hooks/UseReduxStore';
 import { favProject } from '../Redux/Action/FavProjectAction';
+import { Touchable } from './Touchable';
+import NavigationService from '../Services/NavigationService';
+import { formatPriceToPKStandard } from '../Services/GlobalFunctions';
 
 const PropertyCardComp = ({
   image,
@@ -40,7 +43,12 @@ const PropertyCardComp = ({
 
   const { favProjects } = getState('favProjects');
   return (
-    <View style={styles.cardContainer}>
+    <Touchable
+      style={styles.cardContainer}
+      onPress={() =>
+        NavigationService.navigate('ProjectDetailScreen', item?.id)
+      }
+    >
       <ImageBackground
         source={{ uri: imageUrl(image) }}
         style={styles.propertyImage}
@@ -52,7 +60,11 @@ const PropertyCardComp = ({
       <View style={styles.detailContainer}>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <TextComponent text="PKR " size={1.3} color={Colors.gray} />
-          <TextComponent text={price} size={1.5} family="bold" />
+          <TextComponent
+            text={formatPriceToPKStandard(price)}
+            size={1.5}
+            family="bold"
+          />
         </View>
 
         <TextComponent
@@ -114,7 +126,7 @@ const PropertyCardComp = ({
           </TouchableOpacity>
         </View>
       </View>
-    </View>
+    </Touchable>
   );
 };
 

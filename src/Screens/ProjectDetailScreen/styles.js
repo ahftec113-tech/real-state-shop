@@ -3,6 +3,68 @@ import { hp, wp } from '../../Hooks/useResponsive';
 import { Colors } from '../../Theme/Variables';
 
 export const styles = StyleSheet.create({
+  // tabel style
+
+  tableContainer: {
+    borderWidth: 1,
+    borderColor: '#ddd',
+    borderRadius: 8,
+    overflow: 'hidden',
+    marginVertical: hp('2'),
+    marginHorizontal: wp('4'),
+  },
+  tableHeader: {
+    backgroundColor: Colors.primaryColor,
+    paddingVertical: hp('1.5'),
+    paddingHorizontal: wp('3'),
+  },
+  tableHeaderText: {
+    color: '#fff',
+    fontSize: hp('1.3'),
+    fontWeight: 'bold',
+  },
+  tableRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingVertical: hp('1.5'),
+    paddingHorizontal: wp('3'),
+    borderBottomWidth: 1,
+    borderBottomColor: '#eee',
+  },
+  tableLabel: {
+    fontSize: hp('1.2'),
+    color: '#333',
+    fontWeight: '500',
+    flex: 1,
+  },
+  tableValue: {
+    fontSize: hp('1.2'),
+    color: '#333',
+    flex: 1,
+    textAlign: 'right',
+  },
+  tableLink: {
+    color: Colors.primaryColor,
+    fontWeight: 'bold',
+  },
+
+  //  furtes
+  featuresWrapper: {
+    marginVertical: hp('2'),
+  },
+  featuresRow: {
+    flexDirection: 'row',
+    marginTop: hp('1'),
+  },
+  featureCol: {
+    flex: 1,
+  },
+  linkText: {
+    color: Colors.primaryColor,
+    marginTop: hp('1'),
+  },
+
+  //  main View
   container: {
     flex: 1,
     backgroundColor: Colors.white,
@@ -66,6 +128,7 @@ export const styles = StyleSheet.create({
     borderRadius: 4,
     marginBottom: hp('1'),
     gap: wp('1'),
+    width: 'auto',
   },
   location: {
     paddingHorizontal: wp('4'),
@@ -100,22 +163,27 @@ export const styles = StyleSheet.create({
     marginTop: hp('3'),
     padding: wp('3'),
   },
-  featuresRow: {
+  featuresRowUpper: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    // justifyContent: 'space-between',
     marginVertical: hp('2'),
+    flexWrap: 'wrap',
   },
   featureCol: {
-    flex: 1,
+    // flex: 1,
     gap: hp('1'),
   },
   bottomButtons: {
     position: 'absolute',
-    bottom: hp('2'),
+    // bottom: hp('2'),
     left: wp('4'),
     right: wp('4'),
     flexDirection: 'row',
     justifyContent: 'space-between',
+    backgroundColor: 'white',
+    height: hp('8'),
+    paddingVertical: hp('2'),
+    bottom: 0,
   },
   callBtn: {
     flex: 1,

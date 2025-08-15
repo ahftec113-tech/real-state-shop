@@ -8,16 +8,24 @@ import savedSearchScreen from './savedSearchSCreen';
 import { Colors } from '../../Theme/Variables';
 import { wp } from '../../Hooks/useResponsive';
 import useFavorateScreen from './useFavorateScreen';
+import { useDrawer } from '../../Context/DrawerContext';
 
 const FavorateScreen = ({ navigation, route }) => {
   const myScreens = [
     { name: 'Favorites', component: favScreen },
     { name: 'Saved Searches', component: savedSearchScreen },
   ];
+  const { openDrawer } = useDrawer();
+
   return (
     <View style={{ flex: 1, backgroundColor: 'white' }}>
-      <HeaderComponent headerTitle={'Favorite and Saved'} isLeftIcon />
-      <DynamicTopBarNavigator
+      <HeaderComponent
+        headerTitle={'Favorite and Saved'}
+        isLeftIcon
+        onLeftIcon={openDrawer}
+      />
+      {favScreen({ navigation, route })}
+      {/* <DynamicTopBarNavigator
         screens={myScreens}
         navigatorProps={{
           initialRouteName: 'Favorites',
@@ -30,7 +38,7 @@ const FavorateScreen = ({ navigation, route }) => {
             },
           },
         }}
-      />
+      /> */}
     </View>
   );
 };

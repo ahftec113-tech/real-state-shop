@@ -23,6 +23,7 @@ export const DataNotFound = ({
         <Image
           source={noData ?? noDataImg}
           style={{ ...styles.noDataImage, ...imgStyles }}
+          tintColor={Colors.primaryColor}
         />
       )}
       <TextComponent

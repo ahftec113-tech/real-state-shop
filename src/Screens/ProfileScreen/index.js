@@ -5,7 +5,7 @@ import { TextComponent } from '../../Components/TextComponent';
 import ThemeButton from '../../Components/ThemeButton';
 import { CircleImage } from '../../Components/CircleImage';
 import { Colors } from '../../Theme/Variables';
-import { home } from '../../Assets';
+import { home, homeRed } from '../../Assets';
 import { profilesBottomBtn, profilesBtn } from '../../Utils/localDB';
 import { styles } from './styles';
 
@@ -62,7 +62,7 @@ const ProfileScreen = () => {
         <View style={styles.postAdContainer}>
           <View style={styles.postAdInner}>
             <Image
-              source={home}
+              source={homeRed}
               resizeMode="contain"
               style={styles.postAdImage}
             />

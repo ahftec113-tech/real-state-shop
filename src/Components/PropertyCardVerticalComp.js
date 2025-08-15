@@ -26,6 +26,7 @@ import {
   sendSMS,
   sendWhatsApp,
 } from '../Services/GlobalFunctions';
+import NavigationService from '../Services/NavigationService';
 
 const PropertyCardVerticalComp = ({
   image,
@@ -43,12 +44,20 @@ const PropertyCardVerticalComp = ({
   refetchKeys,
   refetch,
   item,
+  isNewProjects,
+  isDisable,
 }) => {
   const { dispatch, getState, queryClient } = useReduxStore();
 
   const { favProjects } = getState('favProjects');
   return (
-    <View style={{ ...styles.container, ...mainViewStyles }}>
+    <Touchable
+      style={{ ...styles.container, ...mainViewStyles }}
+      onPress={() =>
+        NavigationService.navigate('ProjectDetailScreen', item?.id)
+      }
+      disabled={isDisable}
+    >
       <Image source={{ uri: imageUrl(image) }} style={styles.image} />
       <View style={styles.infoContainer}>
         <View
@@ -59,46 +68,62 @@ const PropertyCardVerticalComp = ({
           }}
         >
           <Image source={logo} resizeMode="contain" style={styles.logo} />
-          <TouchableOpacity
-            onPress={() => {
-              dispatch(favProject(item?.id));
-              setTimeout(() => {
-                if (refetch) refetch();
-                if (refetchKeys) queryClient.invalidateQueries(['countries']);
-              }, 1000);
-            }}
-          >
-            <Image
-              source={
-                favProjects.find(id => id == item?.id) ? heartFilledLike : heart
-              }
-              style={styles.icon}
+          {!isNewProjects && (
+            <TouchableOpacity
+              onPress={() => {
+                dispatch(favProject(item?.id));
+                setTimeout(() => {
+                  if (refetch) refetch();
+                  if (refetchKeys) queryClient.invalidateQueries(['countries']);
+                }, 1000);
+              }}
+            >
+              <Image
+                source={
+                  favProjects.find(id => id == item?.id)
+                    ? heartFilledLike
+                    : heart
+                }
+                style={styles.icon}
+              />
+            </TouchableOpacity>
+          )}
+        </View>
+        {price && (
+          <View style={styles.priceRow}>
+            <TextComponent text="PKR " size={1.3} />
+            <TextComponent
+              text={formatPriceToPKStandard(price)}
+              size={1.5}
+              family="bold"
             />
-          </TouchableOpacity>
-        </View>
-        <View style={styles.priceRow}>
-          <TextComponent text="PKR " size={1.3} />
-          <TextComponent
-            text={formatPriceToPKStandard(price)}
-            size={1.5}
-            family="bold"
-          />
-        </View>
+          </View>
+        )}
         <TextComponent text={title} size={1.3} />
-        <View style={styles.row}>
-          <Image
-            source={propertyIcon}
-            resizeMode="contain"
-            style={styles.rowIcon}
-          />
-          <TextComponent text={type} size={1.3} />
-          <Image
-            source={propertyIcon}
-            resizeMode="contain"
-            style={styles.rowIcon}
-          />
-          <TextComponent text={area} size={1.3} />
-        </View>
+        {(type || area) && (
+          <View style={styles.row}>
+            {type && (
+              <>
+                <Image
+                  source={propertyIcon}
+                  resizeMode="contain"
+                  style={styles.rowIcon}
+                />
+                <TextComponent text={type} size={1.3} />
+              </>
+            )}
+            {area && (
+              <>
+                <Image
+                  source={propertyIcon}
+                  resizeMode="contain"
+                  style={styles.rowIcon}
+                />
+                <TextComponent text={area} size={1.3} />
+              </>
+            )}
+          </View>
+        )}
         <View style={styles.row}>
           <Image
             source={locationGray}
@@ -117,40 +142,42 @@ const PropertyCardVerticalComp = ({
             );
           })}
         </View>
-        <View style={styles.actionRow}>
-          <ThemeButton
-            title={'Call'}
-            image={callWhite}
-            isTheme
-            style={styles.callButton}
-            textStyle={styles.callButtonText}
-            imageStyle={styles.callButtonIcon}
-            onPress={() => makeCall(item?.phone_1)}
-          />
-          <ThemeButton
-            title={'SMS'}
-            isTransparent
-            style={{ ...styles.callButton, width: wp('10') }}
-            textStyle={styles.callButtonText}
-            onPress={() => sendSMS(item?.phone_1)}
-          />
-          <Touchable onPress={() => sendWhatsApp(item?.phone_1)}>
-            <Image
-              source={whatappIcon}
-              resizeMode="contain"
-              style={styles.socialIcon}
+        {!isNewProjects && (
+          <View style={styles.actionRow}>
+            <ThemeButton
+              title={'Call'}
+              image={callWhite}
+              isTheme
+              style={styles.callButton}
+              textStyle={styles.callButtonText}
+              imageStyle={styles.callButtonIcon}
+              onPress={() => makeCall(item?.phone_1)}
             />
-          </Touchable>
-          {/* <Touchable onPress={() => sendSMS(item?.phone_1)}>
+            <ThemeButton
+              title={'SMS'}
+              isTransparent
+              style={{ ...styles.callButton, width: wp('10') }}
+              textStyle={styles.callButtonText}
+              onPress={() => sendSMS(item?.phone_1)}
+            />
+            <Touchable onPress={() => sendWhatsApp(item?.phone_1)}>
+              <Image
+                source={whatappIcon}
+                resizeMode="contain"
+                style={styles.socialIcon}
+              />
+            </Touchable>
+            {/* <Touchable onPress={() => sendSMS(item?.phone_1)}>
             <Image
               source={shareIcon}
               resizeMode="contain"
               style={styles.socialIcon}
             />
           </Touchable> */}
-        </View>
+          </View>
+        )}
       </View>
-    </View>
+    </Touchable>
   );
 };
 export default PropertyCardVerticalComp;

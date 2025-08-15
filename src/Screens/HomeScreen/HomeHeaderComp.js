@@ -16,6 +16,7 @@ import { Colors } from '../../Theme/Variables';
 import {
   arrDown,
   arrowGreen,
+  arrRight,
   drawerIcon,
   homeBg,
   homeIcon,
@@ -35,6 +36,9 @@ const HomeHeaderComp = ({
   onAreaPress,
   type,
   setType,
+  filterAttributesData,
+  onSelectAttributeVal,
+  onSqFitPress,
 }) => {
   const [selectedId, setSelectedId] = useState(null);
   const { openDrawer } = useDrawer();
@@ -92,24 +96,21 @@ const HomeHeaderComp = ({
           size={'1.5'}
         />
         <Image
-          source={arrowGreen}
+          source={arrRight}
           resizeMode="contain"
           style={styles.searchIcon}
+          tintColor={Colors.primaryColor}
         />
       </View>
 
       <View style={styles.cardBox}>
         <View style={styles.propertyTabs}>
           <MultiSelectButton
-            items={[
-              { id: 1, label: 'Home' },
-              { id: 2, label: 'Plot' },
-              { id: 3, label: 'Commerical' },
-              { id: 4, label: 'Office' },
-            ]}
+            items={filterAttributesData}
             isGrayBg={true}
             textStyle={{ color: Colors.primaryColor }}
             selectedAlter={{ id: 1 }}
+            onSelectVal={(_, e) => onSelectAttributeVal(e)}
           />
         </View>
 
@@ -128,7 +129,7 @@ const HomeHeaderComp = ({
                   styles.card,
                   isSelected ? styles.selectedCard : styles.unselectedCard,
                 ]}
-                onPress={() => setSelectedId(item.id)}
+                onPress={() => onSqFitPress(item.sqYd)}
               >
                 <TextComponent
                   text={`${item.sqYd} Sq. Yd`}
@@ -157,8 +158,8 @@ const HomeHeaderComp = ({
 const styles = StyleSheet.create({
   bg: {
     width: wp('100'),
-    height: hp('50'),
-    top: hp('-7'),
+    height: hp('60'),
+    top: hp('-10'),
   },
   headerBar: {
     width: wp('95'),
@@ -166,7 +167,7 @@ const styles = StyleSheet.create({
     paddingVertical: hp('1'),
     alignSelf: 'center',
     borderRadius: 10,
-    marginTop: hp('10'),
+    marginTop: hp('15'),
     paddingHorizontal: wp('2'),
     alignItems: 'center',
     justifyContent: 'space-between',

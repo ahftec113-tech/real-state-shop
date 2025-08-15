@@ -27,6 +27,7 @@ import PropertyCardComp from '../../Components/PropertyCardComp';
 import { keyExtractor } from '../../Utils';
 import useHoemScreen from './useHomeScreen';
 import BtnModalComponent from '../../Components/BtnModalComp';
+import { parsePriceRange } from '../../Services/GlobalFunctions';
 const sizes = [
   { id: 1, sqYd: 120 },
   { id: 2, sqYd: 250 },
@@ -51,6 +52,9 @@ const HomeScreen = ({ navigation }) => {
     setSelectedCountry,
     type,
     setType,
+    dynamicNavigation,
+    filterAttributesData,
+    refetch,
   } = useHoemScreen(navigation);
 
   const renderItem = ({ item, index }) => {
@@ -81,13 +85,25 @@ const HomeScreen = ({ navigation }) => {
     >
       <HomeHeaderComp
         onOpenModal={() => {
-          setModalState(1);
+          // setModalState(1);
         }}
         city={selectedCity}
         area={selectedArea}
         onCityPress={() => {
           setModalState(2);
         }}
+        filterAttributesData={
+          Object.entries(
+            filterAttributesData?.data?.data?.data?.ProopertyType ?? {},
+          ).map(([key, value]) => ({ id: key, name: key })) ?? []
+        }
+        // filterAttributesData={
+        //   filterAttributesData?.data?.data?.data?.PropertyPurpose ?? []
+        // }
+        onSqFitPress={e => {
+          dynamicNavigation({ minArea: e });
+        }}
+        onSelectAttributeVal={e => dynamicNavigation({ purposeId: e?.id })}
         onAreaPress={() => {
           // setModalState(3);
           navigation.navigate('FilterScreen', {
@@ -117,12 +133,18 @@ const HomeScreen = ({ navigation }) => {
             isPrimaryColorStyle={true}
             textSize="1.2"
             isFixWidth={true}
+            onSelectVal={(_, e) =>
+              dynamicNavigation({
+                minPrice: parsePriceRange(e?.label)?.min,
+                maxPrice: parsePriceRange(e?.label)?.max,
+              })
+            }
           />
         </View>
 
         <View style={styles.recommendHeader}>
           <TextComponent text={'Our Recommandation'} fade />
-          <TextComponent text={'See all'} isThemeColor size={1.8} />
+          <TextComponent text={'See all'} isWhite size={1.8} />
         </View>
 
         <FlatList
@@ -134,6 +156,8 @@ const HomeScreen = ({ navigation }) => {
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
           scrollEnabled={false}
+          onRefresh={refetch}
+          refreshing={false}
         />
       </View>
       {modalState && (

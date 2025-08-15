@@ -1,7 +1,7 @@
 //  Images
 
 export { default as splash } from './Images/splash.png';
-export { default as splash2 } from './Images/budgimateSplash.png';
+export { default as splash2 } from './Images/realStateShopSplash.png';
 export { default as splashOne } from './Images/splashOne.png';
 export { default as splashTwo } from './Images/splashTwo.png';
 export { default as splashThree } from './Images/splashThree.png';
@@ -83,11 +83,17 @@ export { default as cardSend } from './Icons/cardSend.png';
 export { default as cardReceive } from './Icons/cardReceive.png';
 export { default as arrowRight } from './Icons/arrowRight.png';
 
+export { default as homeRed } from './Icons/homeRed.png';
+
+export { default as picIcon } from './Icons/picIcon.png';
+export { default as videoIcon } from './Icons/videoIcon.png';
+
 export { default as mapIcon } from './Icons/mapIcon.png';
 export { default as priceTagIcon } from './Icons/priceTagIcon.png';
 export { default as sortIcon } from './Icons/sortIcon.png';
 
 export { default as drawerEmpty } from './Icons/drawerEmpty.png';
+export { default as drawerFilled } from './Icons/drawerFilled.png';
 export { default as boxesfilled } from './Icons/boxesfilled.png';
 export { default as boxesEmpty } from './Icons/boxesEmpty.png';
 

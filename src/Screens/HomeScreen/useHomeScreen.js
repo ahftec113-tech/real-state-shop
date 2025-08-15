@@ -4,6 +4,8 @@ import {
   getCitriesUrl,
   getCountriesUrl,
   getCountryDataUrl,
+  getFilterAttibutesUrl,
+  getSearchProjectsUrl,
   homeDataUrl,
   searchByLocationUrl,
 } from '../../Utils/Urls';
@@ -14,7 +16,7 @@ import { errorMessage } from '../../Config/NotificationMessage';
 const useHoemScreen = ({ navigate }) => {
   const [modalState, setModalState] = useState(false);
 
-  const { data } = useQuery({
+  const { data, refetch } = useQuery({
     queryKey: ['homeData'],
     queryFn: () => API.get(homeDataUrl),
   });
@@ -39,6 +41,11 @@ const useHoemScreen = ({ navigate }) => {
   const [type, setType] = useState({ id: 1, label: 'Rent' });
 
   const { mutateAsync, isPending } = useLocationMutation();
+
+  const filterAttributesData = useQuery({
+    queryKey: ['filterattributes'],
+    queryFn: () => API.get(getFilterAttibutesUrl),
+  });
 
   // 1️⃣ Load countries on mount
   const {
@@ -208,13 +215,27 @@ const useHoemScreen = ({ navigate }) => {
     3: selectedArea,
   };
 
-  const onTypePress = () => {
+  const dynamicNavigation = ({
+    minPrice,
+    maxPrice,
+    purposeId,
+    minArea,
+    maxArea,
+  }) => {
     navigate('ProjectListScreen', {
-      url: `${getSearchProjectsUrl}country_id=${selectedCountry?.id}&city_id=${selectedCity?.id}&purpose_id=${type?.id}`,
-      country,
-      city,
-      type,
-      area,
+      url: `${getSearchProjectsUrl}country_id=${
+        selectedCountry?.id ?? null
+      }&city_id=${selectedCity?.id ?? null}&area_id=${
+        selectedArea?.id ?? null
+      }&purpose_id=${purposeId ?? null}&searchPriceMin_val=${
+        minPrice ?? null
+      }&searchPriceMax_val=${maxPrice ?? null}&searchAreaMin_val=${
+        minArea ?? null
+      }&searchAreaMax_val=${maxArea ?? null}`,
+      selectedType: type,
+      selectedCountry,
+      selectedCity,
+      selectedArea,
     });
   };
 
@@ -236,6 +257,9 @@ const useHoemScreen = ({ navigate }) => {
     setSelectedCountry,
     type,
     setType,
+    dynamicNavigation,
+    filterAttributesData,
+    refetch,
   };
 };
 
