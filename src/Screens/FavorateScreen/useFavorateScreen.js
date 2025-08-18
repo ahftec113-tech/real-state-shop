@@ -9,7 +9,7 @@ const useFavorateScreen = ({ addListener }) => {
   const { getState } = useReduxStore();
 
   const { favProjects } = getState('favProjects');
-  const { data, refetch } = useQuery({
+  const { data, refetch, isLoading } = useQuery({
     queryKey: ['favByLocalId'],
     queryFn: () =>
       API.get(getFavByLocalIdUrl + removeArryAndReturnDirectUrl(favProjects)),
@@ -23,6 +23,7 @@ const useFavorateScreen = ({ addListener }) => {
   return {
     favList: data?.data?.data,
     refetch,
+    isLoading,
   };
 };
 

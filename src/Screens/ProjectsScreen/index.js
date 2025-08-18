@@ -63,7 +63,6 @@ const ProjectsScreen = ({ navigation, route }) => {
           // refetch={refetch}
           item={item}
           isNewProjects={true}
-          isDisable={true}
         />
       );
     },
@@ -72,7 +71,7 @@ const ProjectsScreen = ({ navigation, route }) => {
 
   return (
     <View style={styles.container}>
-      <HeaderComponent headerTitle={'New Projects'} rightIconImg={PakFlag} />
+      <HeaderComponent headerTitle={'New Projects'} />
 
       {/* <View style={styles.switchRow}>
         <Image source={homeIcon} resizeMode="contain" style={styles.homeIcon} />
@@ -88,7 +87,7 @@ const ProjectsScreen = ({ navigation, route }) => {
         styles={styles.venturesText}
       />
 
-      <ScrollView
+      {/* <ScrollView
         contentContainerStyle={styles.scrollContent}
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -112,41 +111,40 @@ const ProjectsScreen = ({ navigation, route }) => {
             })
           }
         />
-      </ScrollView>
-
-      <FlatList
-        keyExtractor={keyExtractor}
-        renderItem={renderItem}
-        contentContainerStyle={styles.flatListContainer}
-        data={propertyListing}
-        showsVerticalScrollIndicator={false}
-        showsHorizontalScrollIndicator={false}
-        ListEmptyComponent={<DataNotFound />}
-        refreshing={false}
-        onRefresh={refetch}
-        ListFooterComponent={
-          propertyListing.length >= 9 &&
-          (isFetchingNextPage ? (
-            <ActivityIndicator size="small" color="gray" />
-          ) : (
-            <ThemeButton
-              title={'Load More'}
-              style={{
-                marginTop: hp('2'),
-                width: wp('30'),
-                height: hp('4'),
-                alignSelf: 'center',
-                marginBottom: hp('5'),
-              }}
-              textStyle={{ fontSize: hp('1.5') }}
-              onPress={async () => {
-                await fetchNextPage();
-                // afterFetchNextPage();
-              }}
-            />
-          )) // Show loading spinner at the bottom
-        }
-      />
+      </ScrollView> */}
+      {!isLoading && (
+        <FlatList
+          keyExtractor={keyExtractor}
+          renderItem={renderItem}
+          contentContainerStyle={styles.flatListContainer}
+          data={propertyListing}
+          showsVerticalScrollIndicator={false}
+          showsHorizontalScrollIndicator={false}
+          ListEmptyComponent={<DataNotFound />}
+          refreshing={false}
+          onRefresh={refetch}
+          ListFooterComponent={
+            propertyListing.length >= 9 &&
+            (isFetchingNextPage ? null : (
+              <ThemeButton
+                title={'Load More'}
+                style={{
+                  marginTop: hp('2'),
+                  width: wp('30'),
+                  height: hp('4'),
+                  alignSelf: 'center',
+                  marginBottom: hp('5'),
+                }}
+                textStyle={{ fontSize: hp('1.5') }}
+                onPress={async () => {
+                  await fetchNextPage();
+                  // afterFetchNextPage();
+                }}
+              />
+            )) // Show loading spinner at the bottom
+          }
+        />
+      )}
     </View>
   );
 };

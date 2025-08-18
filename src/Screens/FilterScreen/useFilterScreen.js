@@ -19,27 +19,36 @@ const useFilterScreen = ({ navigate }, { params }) => {
   const MAX_PRICE = 10000000;
 
   const MIN_AREA = 0;
-  const MAX_AREA = 400;
+  const MAX_AREA = 4000;
 
   const initialFilterState = {
-    country: selectedCountry,
-    city: selectedCity,
-    type: selectedType,
-    area: {},
-    bedRooms: {},
-    bathRoom: {},
-    subChildArea: {},
-    subArea: {},
+    country: selectedCountry?.id
+      ? selectedCountry
+      : {
+          id: 1,
+          name: 'Pakistan',
+          slug: 'pakistan',
+        },
+    city: selectedCity?.id
+      ? selectedCity
+      : {
+          id: 2,
+          name: 'Karachi',
+          slug: 'karachi',
+        },
+    type: selectedType?.id ? selectedType : { id: 1, label: 'Rent' },
+    area: null,
+    bedRooms: null,
+    bathRoom: null,
+    subChildArea: null,
+    subArea: null,
     minPrice: 0,
-    maxPrice: 10000000,
+    maxPrice: 100000000,
     areaRange,
     minArea: 0,
     maxArea: 4000,
-    propertyType: {},
-    AreaUnits: {
-      id: null,
-      label: null,
-    },
+    propertyType: null,
+    AreaUnits: null,
   };
 
   const [filterSelectedVal, setFilterSelectedVal] =
@@ -91,11 +100,13 @@ const useFilterScreen = ({ navigate }, { params }) => {
         AreaUnits?.id ? areaRange?.sqYd ?? maxArea : undefined
       }&searchBeds_val=${bedRooms?.id}&searchBaths_val=${
         bathRoom?.id
-      }&sortBy_val=high`,
+      }&sortBy_val=high&property_type_id=${propertyType?.id}`,
       country,
       city,
       type,
       area,
+      extraFilter: [type?.label],
+      isFilter: true,
     });
   };
 
@@ -121,28 +132,26 @@ const useFilterScreen = ({ navigate }, { params }) => {
     }
   });
 
-  const resetAll = () =>
+  const resetAll = () => {
     setFilterSelectedVal({
       country: selectedCountry,
       city: selectedCity,
-      type: selectedType,
-      area: {},
-      bedRooms: {},
-      bathRoom: {},
-      subChildArea: {},
-      subArea: {},
+      type: null,
+      area: null,
+      bedRooms: null,
+      bathRoom: null,
+      subChildArea: null,
+      subArea: null,
       minPrice: 0,
       maxPrice: 10000000,
-      areaRange,
+      areaRange: null,
       minArea: 0,
       maxArea: 4000,
-      propertyType: {},
-      AreaUnits: {
-        id: null,
-        label: null,
-      },
+      propertyType: null,
+      AreaUnits: null,
     });
-
+    setModalVisible(false);
+  };
   const arrySelector = {
     1: data?.data?.data?.AreaUnits,
   };

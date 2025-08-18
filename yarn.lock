@@ -5945,6 +5945,11 @@ react-native-image-crop-picker@^0.50.1:
   resolved "https://registry.yarnpkg.com/react-native-image-crop-picker/-/react-native-image-crop-picker-0.50.1.tgz#db627a378daa7cfc7500a6bc6188510bb2325f5a"
   integrity sha512-2xtyKLU08AFqjRb1hUsSanO2OK9aCtfjggKzVhq/GDSfOI+WRGhoElcMuKeQEi3ey6mivz7UNFOOvNCqGjzKBA==
 
+react-native-image-pan-zoom@^2.1.12:
+  version "2.1.12"
+  resolved "https://registry.yarnpkg.com/react-native-image-pan-zoom/-/react-native-image-pan-zoom-2.1.12.tgz#eb98bf56fb5610379bdbfdb63219cc1baca98fd2"
+  integrity sha512-BF66XeP6dzuANsPmmFsJshM2Jyh/Mo1t8FsGc1L9Q9/sVP8MJULDabB1hms+eAoqgtyhMr5BuXV3E1hJ5U5H6Q==
+
 react-native-iphone-screen-helper@^2.0.2:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/react-native-iphone-screen-helper/-/react-native-iphone-screen-helper-2.1.2.tgz#6b376f71616080294c1b39c2fe064120ffdc79bf"

@@ -24,6 +24,8 @@ import useReduxStore from '../Hooks/UseReduxStore';
 import NavigationService from '../Services/NavigationService';
 import { imageUrl } from '../Utils/Urls';
 import { favProject } from '../Redux/Action/FavProjectAction';
+import { types } from '../Redux/types';
+import { Touchable } from './Touchable';
 
 const { width } = Dimensions.get('window');
 
@@ -62,6 +64,13 @@ const ImageSliderComp = ({ media = [], onBack, onLike, item }) => {
 
   const { dispatch, getState, queryClient } = useReduxStore();
 
+  const onImagePress = () => {
+    dispatch({
+      payload: media,
+      type: types.openModal,
+    });
+  };
+
   const { favProjects } = getState('favProjects');
 
   return (
@@ -71,7 +80,7 @@ const ImageSliderComp = ({ media = [], onBack, onLike, item }) => {
         data={processedMedia}
         keyExtractor={(_, index) => index.toString()}
         renderItem={({ item, index }) => (
-          <View style={{ width }}>
+          <Touchable style={{ width }} onPress={onImagePress}>
             {item.type === 'image' ? (
               <Image
                 source={{ uri: imageUrl(item.url) }}
@@ -88,7 +97,7 @@ const ImageSliderComp = ({ media = [], onBack, onLike, item }) => {
                 controls
               />
             )}
-          </View>
+          </Touchable>
         )}
         horizontal
         pagingEnabled

@@ -11,6 +11,7 @@ console.log('Redux Thunk:', thunk); // 👈 should log: function thunk(...)
 import AuthReducer from './AuthReducer';
 import loadingReducer from './loadingReducer';
 import FavoriteReducer from './FavoriteReducer';
+import ImagePrevReducer from './ImagePrevReducer';
 
 const onBoardPersistConfig = {
   key: 'onboarding',
@@ -35,6 +36,7 @@ const rootReducer = combineReducers({
   Auth: persistReducer(AuthPersistConfig, AuthReducer),
   favProjects: persistReducer(FavProjecctConfig, FavoriteReducer),
   isloading: loadingReducer,
+  modalState: ImagePrevReducer,
 });
 
 const persistedReducer = persistReducer(

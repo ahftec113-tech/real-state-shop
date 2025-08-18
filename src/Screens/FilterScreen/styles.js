@@ -32,7 +32,7 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginTop: hp('1'),
-    marginLeft: wp('35'),
+    marginLeft: wp('50'),
   },
   cityRow: {
     flexDirection: 'row',

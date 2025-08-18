@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   FlatList,
   ActivityIndicator,
+  ScrollView,
 } from 'react-native';
 import React, { memo, useCallback } from 'react';
 import { HeaderComponent } from '../../Components/HeaderComp';
@@ -56,7 +57,7 @@ const ProjectListScreen = ({ navigation, route }) => {
     //   name: 'Sort',
     // },
     {
-      name: route?.params?.city?.name ?? 'Not Selected',
+      name: route?.params?.city?.name ?? 'Karachi',
       image: arrDown,
     },
   ];
@@ -103,31 +104,37 @@ const ProjectListScreen = ({ navigation, route }) => {
     [projectList],
   );
 
+  console.log('slkdbvlkdsblkvbsdklvbdskbkv', route?.params?.extraFilter);
+
   return (
-    <View style={{ flex: 1, backgroundColor: 'white' }}>
+    <View style={{ flex: 1 }}>
       <HeaderComponent headerTitle={'Projects'} isBack />
-      <View
-        style={{
+      <ScrollView
+        contentContainerStyle={{
           flexDirection: 'row',
           alignItems: 'center',
           paddingLeft: wp('4'),
         }}
       >
         <MultiSelectButton
-          items={filterArry}
+          items={[
+            ...filterArry,
+            ...route?.params?.extraFilter?.filter(res => res != null),
+          ]}
           isPrimaryColorStyle
           btnStyle={{ backgroundColor: 'white' }}
-          onSelectVal={() =>
-            navigation.navigate('FilterScreen', {
-              selectedType: {},
-              selectedCountry: {},
-              selectedCity: {},
-              selectedArea: {},
-            })
-          }
+          onSelectVal={() => {
+            if (route?.params?.isFilter) navigation.goBack();
+            else
+              navigation.navigate('FilterScreen', {
+                selectedType: {},
+                selectedCountry: {},
+                selectedCity: {},
+                selectedArea: {},
+              });
+          }}
         />
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}></View>
-      </View>
+      </ScrollView>
       <View
         style={{
           flexDirection: 'row',
@@ -157,7 +164,7 @@ const ProjectListScreen = ({ navigation, route }) => {
           <TouchableOpacity onPress={() => setListType(1)}>
             <Image
               source={listType == 1 ? drawerFilled : drawerEmpty} // List icon
-              style={styles.toggleIcon}
+              style={{ ...styles.toggleIcon, height: hp('7'), width: wp('9') }}
               resizeMode="contain"
             />
           </TouchableOpacity>
@@ -169,75 +176,75 @@ const ProjectListScreen = ({ navigation, route }) => {
           </TouchableOpacity>
         </View>
       </View>
-      {listType == 1 && (
-        <FlatList
-          keyExtractor={keyExtractor}
-          renderItem={renderItem}
-          contentContainerStyle={styles.flatListContainer}
-          data={projectList}
-          showsVerticalScrollIndicator={false}
-          showsHorizontalScrollIndicator={false}
-          ListEmptyComponent={<DataNotFound />}
-          ListFooterComponent={
-            projectList.length >= 9 &&
-            (isFetchingNextPage ? (
-              <ActivityIndicator size="small" color="gray" />
-            ) : (
-              <ThemeButton
-                title={'Load More'}
-                style={{
-                  marginTop: hp('2'),
-                  width: wp('30'),
-                  height: hp('4'),
-                  alignSelf: 'center',
-                  marginBottom: hp('5'),
-                }}
-                textStyle={{ fontSize: hp('1.5') }}
-                onPress={async () => {
-                  await fetchNextPage();
-                  // afterFetchNextPage();
-                }}
-              />
-            )) // Show loading spinner at the bottom
-          }
-        />
-      )}
-      {listType == 2 && (
-        <FlatList
-          keyExtractor={keyExtractor}
-          renderItem={renderItem}
-          contentContainerStyle={{
-            ...styles.flatListContainer,
-            paddingHorizontal: wp('5'),
-          }}
-          data={projectList}
-          showsVerticalScrollIndicator={false}
-          showsHorizontalScrollIndicator={false}
-          ListEmptyComponent={<DataNotFound />}
-          numColumns={2}
-          ListFooterComponent={
-            projectList.length >= 9 &&
-            (isFetchingNextPage ? (
-              <ActivityIndicator size="small" color="gray" />
-            ) : (
-              <ThemeButton
-                title={'Load More'}
-                style={{
-                  marginTop: hp('2'),
-                  width: wp('30'),
-                  height: hp('4'),
-                  alignSelf: 'center',
-                  marginBottom: hp('5'),
-                }}
-                textStyle={{ fontSize: hp('1.5') }}
-                onPress={async () => {
-                  await fetchNextPage();
-                  // afterFetchNextPage();
-                }}
-              />
-            )) // Show loading spinner at the bottom
-          }
-        />
+      {!isLoading && (
+        <>
+          {listType == 1 && (
+            <FlatList
+              keyExtractor={keyExtractor}
+              renderItem={renderItem}
+              contentContainerStyle={styles.flatListContainer}
+              data={projectList}
+              showsVerticalScrollIndicator={false}
+              showsHorizontalScrollIndicator={false}
+              ListEmptyComponent={<DataNotFound />}
+              ListFooterComponent={
+                projectList.length >= 9 &&
+                (isFetchingNextPage ? null : (
+                  <ThemeButton
+                    title={'Load More'}
+                    style={{
+                      marginTop: hp('2'),
+                      width: wp('30'),
+                      height: hp('4'),
+                      alignSelf: 'center',
+                      marginBottom: hp('5'),
+                    }}
+                    textStyle={{ fontSize: hp('1.5') }}
+                    onPress={async () => {
+                      await fetchNextPage();
+                      // afterFetchNextPage();
+                    }}
+                  />
+                )) // Show loading spinner at the bottom
+              }
+            />
+          )}
+          {listType == 2 && (
+            <FlatList
+              keyExtractor={keyExtractor}
+              renderItem={renderItem}
+              contentContainerStyle={{
+                ...styles.flatListContainer,
+                paddingHorizontal: wp('5'),
+              }}
+              data={projectList}
+              showsVerticalScrollIndicator={false}
+              showsHorizontalScrollIndicator={false}
+              ListEmptyComponent={<DataNotFound />}
+              numColumns={2}
+              ListFooterComponent={
+                projectList.length >= 9 &&
+                (isFetchingNextPage ? null : (
+                  <ThemeButton
+                    title={'Load More'}
+                    style={{
+                      marginTop: hp('2'),
+                      width: wp('30'),
+                      height: hp('4'),
+                      alignSelf: 'center',
+                      marginBottom: hp('5'),
+                    }}
+                    textStyle={{ fontSize: hp('1.5') }}
+                    onPress={async () => {
+                      await fetchNextPage();
+                      // afterFetchNextPage();
+                    }}
+                  />
+                )) // Show loading spinner at the bottom
+              }
+            />
+          )}
+        </>
       )}
     </View>
   );

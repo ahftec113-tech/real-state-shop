@@ -91,7 +91,7 @@ const PropertyCardVerticalComp = ({
         </View>
         {price && (
           <View style={styles.priceRow}>
-            <TextComponent text="PKR " size={1.3} />
+            <TextComponent text="PKR " size={1.5} family={'300'} />
             <TextComponent
               text={formatPriceToPKStandard(price)}
               size={1.5}
@@ -99,7 +99,7 @@ const PropertyCardVerticalComp = ({
             />
           </View>
         )}
-        <TextComponent text={title} size={1.3} />
+        <TextComponent text={title} size={1.3} family={'300'} />
         {(type || area) && (
           <View style={styles.row}>
             {type && (
@@ -109,7 +109,7 @@ const PropertyCardVerticalComp = ({
                   resizeMode="contain"
                   style={styles.rowIcon}
                 />
-                <TextComponent text={type} size={1.3} />
+                <TextComponent text={type} size={1.3} family={'300'} />
               </>
             )}
             {area && (
@@ -119,7 +119,7 @@ const PropertyCardVerticalComp = ({
                   resizeMode="contain"
                   style={styles.rowIcon}
                 />
-                <TextComponent text={area} size={1.3} />
+                <TextComponent text={area} size={1.3} family={'300'} />
               </>
             )}
           </View>
@@ -130,7 +130,7 @@ const PropertyCardVerticalComp = ({
             resizeMode="contain"
             style={styles.rowIcon}
           />
-          <TextComponent text={location} size={1.3} />
+          <TextComponent text={location} size={1.3} family={'300'} />
         </View>
         <View style={styles.tagRow}>
           {tag.map((res, index) => {
@@ -184,10 +184,16 @@ export default PropertyCardVerticalComp;
 
 const styles = StyleSheet.create({
   container: {
-    width: wp('90'),
+    // width: wp('90'),
     alignSelf: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
+    backgroundColor: 'white',
+    paddingVertical: hp('1'),
+    paddingHorizontal: wp('2'),
+    borderRadius: 20,
+    borderWidth: 0.5,
+    borderColor: Colors.primaryColor,
   },
   image: {
     width: wp('35'),

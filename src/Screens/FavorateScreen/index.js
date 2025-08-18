@@ -20,7 +20,7 @@ const FavorateScreen = ({ navigation, route }) => {
   return (
     <View style={{ flex: 1, backgroundColor: 'white' }}>
       <HeaderComponent
-        headerTitle={'Favorite and Saved'}
+        headerTitle={'Favorites'}
         isLeftIcon
         onLeftIcon={openDrawer}
       />

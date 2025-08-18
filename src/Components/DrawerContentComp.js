@@ -185,6 +185,7 @@ const DrawerContentComp = ({ closeDrawer, selectScreenName }) => {
             text={res?.name}
             size={'1.5'}
             isWhite={Boolean(res?.key == (routeName?.name ?? selectedState))}
+            family={'300'}
           />
         </Touchable>
       ))}
@@ -213,6 +214,7 @@ const DrawerContentComp = ({ closeDrawer, selectScreenName }) => {
             text={res?.name}
             size={'1.5'}
             isWhite={Boolean(res?.key == selectedState)}
+            family={'300'}
           />
         </Touchable>
       ))}
@@ -241,6 +243,7 @@ const DrawerContentComp = ({ closeDrawer, selectScreenName }) => {
             text={res?.name}
             size={'1.5'}
             isWhite={Boolean(res?.key == selectedState)}
+            family={'300'}
           />
         </Touchable>
       ))}
@@ -287,5 +290,6 @@ const styles = StyleSheet.create({
   sectionTitle: {
     marginVertical: hp('2'),
     marginLeft: wp('4'),
+    fontWeight: 'bold',
   },
 });

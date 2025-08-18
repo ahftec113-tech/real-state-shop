@@ -5,12 +5,14 @@ import { splash2 } from './src/Assets';
 import { hp, wp } from './src/Hooks/useResponsive';
 import useReduxStore from './src/Hooks/UseReduxStore';
 import Overlay from './src/Components/Overlay';
+import ImagePreviewComp from './src/Components/ImagePreviewComp';
 
 const App = () => {
   const [isVisible, setIsVisible] = useState(true);
 
   const { getState, dispatch } = useReduxStore();
   const { isloading } = getState('isloading');
+  const { image, modalType } = getState('modalState');
 
   const Hide_Splash_Screen = () => {
     setIsVisible(false);
@@ -18,7 +20,7 @@ const App = () => {
 
   // console.log('load', isloading);
   const time = () => {
-    return 3000;
+    return 2000;
   };
 
   useEffect(async () => {
@@ -56,6 +58,7 @@ const App = () => {
   return (
     <>
       {isVisible === true ? Splash_Screen : <MainNavigator />}
+      {modalType && <ImagePreviewComp visible={modalType} images={image} />}
       {isloading && <Overlay />}
       {/* {modalType && <ImagePreviewComp visible={modalType} images={image} />}
       {isloading &&

@@ -29,7 +29,10 @@ const useProjectsScreen = ({ navigate }, { params }) => {
     getNextPageParam: (lastPage, pages) => (pages?.length ?? 0) + 1,
   });
 
-  const list = data?.pages.flatMap(page => page.data?.data) || [];
+  const list =
+    data?.pages
+      .flatMap(page => page.data?.data)
+      .filter(res => res?.country_name != undefined) || [];
 
   console.log(
     'sdjjvblskdvbklsdbvksdbfsdffdsfdsklvbsdklvbdsklvbkldsvbkldvbkld',

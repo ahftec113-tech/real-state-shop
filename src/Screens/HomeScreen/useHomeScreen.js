@@ -12,6 +12,7 @@ import {
 import API from '../../Utils/helperFunc';
 import { useEffect, useState } from 'react';
 import { errorMessage } from '../../Config/NotificationMessage';
+import { formatPriceRange } from '../../Services/GlobalFunctions';
 
 const useHoemScreen = ({ navigate }) => {
   const [modalState, setModalState] = useState(false);
@@ -221,21 +222,28 @@ const useHoemScreen = ({ navigate }) => {
     purposeId,
     minArea,
     maxArea,
+    propertyTypeID,
   }) => {
     navigate('ProjectListScreen', {
       url: `${getSearchProjectsUrl}country_id=${
         selectedCountry?.id ?? null
       }&city_id=${selectedCity?.id ?? null}&area_id=${
         selectedArea?.id ?? null
-      }&purpose_id=${purposeId ?? null}&searchPriceMin_val=${
+      }&property_type_id=${purposeId?.id ?? null}&searchPriceMin_val=${
         minPrice ?? null
       }&searchPriceMax_val=${maxPrice ?? null}&searchAreaMin_val=${
         minArea ?? null
-      }&searchAreaMax_val=${maxArea ?? null}`,
+      }&searchAreaMax_val=${maxArea ?? null}&purpose_id=${propertyTypeID?.id}`,
       selectedType: type,
       selectedCountry,
       selectedCity,
       selectedArea,
+      extraFilter: [
+        minPrice && formatPriceRange(minPrice, maxPrice),
+        purposeId?.name && purposeId?.name,
+        minArea && `${minArea} Sq. Yd`,
+        type?.label,
+      ],
     });
   };
 

@@ -210,10 +210,11 @@ export const styles = StyleSheet.create({
   primaryColorStye: isSelected => ({
     fontSize: hp('1.2'),
     color: isSelected ? 'white' : Colors.primaryColor,
+    fontWeight: '400',
   }),
   imageStyle: isSelected => ({
     width: wp('4'),
-    height: hp('3'),
+    height: hp('2'),
     tintColor: isSelected ? 'white' : Colors.primaryColor,
   }),
 });

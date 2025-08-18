@@ -126,7 +126,7 @@ const FilterScreen = ({ navigation, route }) => {
         rightText={'Reset'}
         rightTextStyle={{ color: 'red' }}
         onRightPress={() => {
-          setModalVisible(true);
+          resetAll();
         }}
       />
       <ScrollView
@@ -145,7 +145,6 @@ const FilterScreen = ({ navigation, route }) => {
             <MultiSelectButton
               items={[
                 { id: 1, label: 'Rent' },
-                { id: 2, label: 'Sell' },
                 { id: 3, label: 'Buy' },
               ]}
               isPrimaryColorStyle={true}
@@ -177,6 +176,7 @@ const FilterScreen = ({ navigation, route }) => {
               text={country?.name ?? 'Not selected'}
               fade
               size={'1.5'}
+              family={'400'}
             />
           </View>
           <Image
@@ -209,6 +209,7 @@ const FilterScreen = ({ navigation, route }) => {
               text={city?.name ?? 'Not selected'}
               fade
               size={'1.5'}
+              family={'400'}
             />
           </View>
           <Image
@@ -241,6 +242,7 @@ const FilterScreen = ({ navigation, route }) => {
               text={area?.name ?? 'Not selected'}
               fade
               size={'1.5'}
+              family={'400'}
             />
           </View>
           <Image
@@ -277,6 +279,7 @@ const FilterScreen = ({ navigation, route }) => {
               text={subArea?.name ?? 'Not selected'}
               fade
               size={'1.5'}
+              family={'400'}
             />
           </View>
           <Image
@@ -313,6 +316,7 @@ const FilterScreen = ({ navigation, route }) => {
               text={subChildArea?.name ?? 'Not selected'}
               fade
               size={'1.5'}
+              family={'400'}
             />
           </View>
           <Image
@@ -431,7 +435,7 @@ const FilterScreen = ({ navigation, route }) => {
             />
           </Touchable>
         </View>
-        {AreaUnits.id != null && (
+        {AreaUnits?.id != null && (
           <>
             <View style={styles.areaInputRow}>
               <View style={styles.inputContainer}>
@@ -521,12 +525,12 @@ const FilterScreen = ({ navigation, route }) => {
           onPress={onSearchFilter}
         />
       </ScrollView>
-      <FilterResetModal
+      {/* <FilterResetModal
         visible={modalVisible}
         onClose={() => setModalVisible(false)}
         data={filters}
         onConfirm={resetAll}
-      />
+      /> */}
 
       {modalState && (
         <BtnModalComponent

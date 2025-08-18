@@ -1134,6 +1134,33 @@ function parsePriceRange(rangeStr) {
   return { min, max };
 }
 
+/**
+ * Convert numeric min and max prices back into a formatted string
+ * @param {number} min - Minimum price
+ * @param {number} max - Maximum price
+ * @returns {string} Formatted string (e.g., "20 - 35 L", "1.5 - 2 Cr")
+ */
+function formatPriceRange(min, max) {
+  if (typeof min !== 'number' || typeof max !== 'number') {
+    return '';
+  }
+
+  const formatValue = value => {
+    if (value >= 10000000) {
+      // Crore
+      return (value / 10000000).toFixed(value % 10000000 === 0 ? 0 : 1) + ' Cr';
+    } else if (value >= 100000) {
+      // Lakh
+      return (value / 100000).toFixed(value % 100000 === 0 ? 0 : 1) + ' L';
+    } else {
+      // Plain number
+      return value.toString();
+    }
+  };
+
+  return `${formatValue(min)} - ${formatValue(max)}`;
+}
+
 export {
   getSingleCharacter,
   getProperLocation,
@@ -1194,4 +1221,5 @@ export {
   formatPriceToPKStandard,
   formatKeyName,
   parsePriceRange,
+  formatPriceRange,
 };

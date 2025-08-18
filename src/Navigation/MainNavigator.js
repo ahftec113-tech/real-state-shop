@@ -43,7 +43,12 @@ function MainNavigator() {
          
           </>
         )} */}
+        <Stack.Screen name="LoginScreen" component={Screens.LoginScreen} />
 
+        <Stack.Screen
+          name="RegisterScreen"
+          component={Screens.RegisterScreen}
+        />
         <Stack.Screen name="MybottomTabs" component={MybottomTabs} />
         <Stack.Screen
           name="ProjectDetailScreen"
@@ -64,13 +69,6 @@ function MainNavigator() {
           component={Screens.ProjectsScreen}
         />
         <Stack.Screen name="HomeScreen" component={Screens.HomeScreen} />
-
-        <Stack.Screen name="LoginScreen" component={Screens.LoginScreen} />
-
-        <Stack.Screen
-          name="RegisterScreen"
-          component={Screens.RegisterScreen}
-        />
       </Stack.Navigator>
     </NavigationContainer>
   );

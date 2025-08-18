@@ -57,6 +57,13 @@ const HomeScreen = ({ navigation }) => {
     refetch,
   } = useHoemScreen(navigation);
 
+  console.log(
+    'lksdlksdbkldsnbklsdnklnskldvnlksdnvlkdsnlvknsdklvnkds',
+    Object.entries(
+      filterAttributesData?.data?.data?.data?.ProopertyType ?? {},
+    ).map(([key, value]) => ({ id: value[0]?.parent_type_id, name: key })),
+  );
+
   const renderItem = ({ item, index }) => {
     // const isEven = index % 2 === 0;
     // const isLastItem = index === yourData.length - 1;
@@ -92,18 +99,33 @@ const HomeScreen = ({ navigation }) => {
         onCityPress={() => {
           setModalState(2);
         }}
-        filterAttributesData={
-          Object.entries(
-            filterAttributesData?.data?.data?.data?.ProopertyType ?? {},
-          ).map(([key, value]) => ({ id: key, name: key })) ?? []
-        }
         // filterAttributesData={
-        //   filterAttributesData?.data?.data?.data?.PropertyPurpose ?? []
+        //   Object.entries(
+        //     filterAttributesData?.data?.data?.data?.ProopertyType ?? {},
+        //   ).map(([key, value]) => ({ id: value?.parent_type_id, name: key })) ??
+        //   []
         // }
+        filterAttributesData={[
+          { id: 1, parent_type_id: 1, type: 'Home', name: 'House' },
+          {
+            id: 2,
+            parent_type_id: 1,
+            type: 'Home',
+            name: 'Flat',
+          },
+          {
+            id: 9,
+            parent_type_id: 2,
+            type: 'Plots',
+            name: 'Commercial Plot',
+          },
+        ]}
         onSqFitPress={e => {
-          dynamicNavigation({ minArea: e });
+          dynamicNavigation({ minArea: e, propertyTypeID: type });
         }}
-        onSelectAttributeVal={e => dynamicNavigation({ purposeId: e?.id })}
+        onSelectAttributeVal={e =>
+          dynamicNavigation({ purposeId: e, propertyTypeID: type })
+        }
         onAreaPress={() => {
           // setModalState(3);
           navigation.navigate('FilterScreen', {
@@ -117,7 +139,7 @@ const HomeScreen = ({ navigation }) => {
         setType={e => setType(e)}
       />
       <View style={styles.innerContainer}>
-        <TextComponent text={'Search by Budget'} fade />
+        <TextComponent text={'Search by Budget'} fade family={'300'} />
         <View style={styles.buttonWrap}>
           <MultiSelectButton
             items={[
@@ -131,7 +153,7 @@ const HomeScreen = ({ navigation }) => {
               { id: 8, label: '5 - 10+ Cr' },
             ]}
             isPrimaryColorStyle={true}
-            textSize="1.2"
+            textSize="1.3"
             isFixWidth={true}
             onSelectVal={(_, e) =>
               dynamicNavigation({
@@ -143,7 +165,7 @@ const HomeScreen = ({ navigation }) => {
         </View>
 
         <View style={styles.recommendHeader}>
-          <TextComponent text={'Our Recommandation'} fade />
+          <TextComponent text={'Our Recommandation'} fade family={'300'} />
           <TextComponent text={'See all'} isWhite size={1.8} />
         </View>
 

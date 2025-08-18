@@ -59,19 +59,20 @@ const PropertyCardComp = ({
 
       <View style={styles.detailContainer}>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <TextComponent text="PKR " size={1.3} color={Colors.gray} />
+          <TextComponent text="PKR " size={1.7} family={'400'} />
           <TextComponent
             text={formatPriceToPKStandard(price)}
-            size={1.5}
+            size={1.7}
             family="bold"
           />
         </View>
 
         <TextComponent
           text={title}
-          size={1.4}
+          size={1.5}
           numberOfLines={1}
           styles={{ marginTop: hp('0.5') }}
+          family={'300'}
         />
 
         <View style={[styles.infoRow, { marginVertical: hp('1') }]}>
@@ -89,7 +90,9 @@ const PropertyCardComp = ({
           )}
           <View style={styles.iconTextRow}>
             <Image source={SqFitIcon} style={styles.icon} />
-            <Text style={styles.iconText}>{area} (SQ. FT.)</Text>
+            <Text style={styles.iconText} numberOfLines={1}>
+              {area} (SQ. FT.)
+            </Text>
           </View>
         </View>
 
@@ -169,6 +172,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     // justifyContent: 'space-between',
     alignItems: 'center',
+    width: wp('38'),
+    // backgroundColor: 'red',
+    overflow: 'hidden',
   },
   iconTextRow: {
     flexDirection: 'row',
@@ -182,8 +188,8 @@ const styles = StyleSheet.create({
     marginLeft: wp('1'),
   },
   iconText: {
-    color: Colors.gray,
-    fontSize: hp('1.4'),
+    // color: Colors.gray,
+    fontSize: hp('1.5'),
   },
   tagsRow: {
     flexDirection: 'row',
@@ -203,6 +209,7 @@ const styles = StyleSheet.create({
   },
   tagText: {
     color: Colors.primaryColor,
-    fontSize: hp('1'),
+    fontSize: hp('1.2'),
+    fontWeight: '400',
   },
 });

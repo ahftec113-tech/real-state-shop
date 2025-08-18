@@ -10,7 +10,7 @@ import PropertyCardVerticalComp from '../../Components/PropertyCardVerticalComp'
 import { hp } from '../../Hooks/useResponsive';
 
 const favScreen = ({ navigation, route }) => {
-  const { favList, refetch } = useFavorateScreen(navigation, route);
+  const { favList, refetch, isLoading } = useFavorateScreen(navigation, route);
   const renderItem = useCallback(
     ({ item, index }) => {
       // const isEven = index % 2 === 0;
@@ -41,15 +41,19 @@ const favScreen = ({ navigation, route }) => {
 
   return (
     <View style={{ flex: 1 }}>
-      <FlatList
-        keyExtractor={keyExtractor}
-        renderItem={renderItem}
-        contentContainerStyle={styles.flatListContainer}
-        data={favList}
-        showsVerticalScrollIndicator={false}
-        showsHorizontalScrollIndicator={false}
-        ListEmptyComponent={<DataNotFound />}
-      />
+      {!isLoading && (
+        <FlatList
+          keyExtractor={keyExtractor}
+          renderItem={renderItem}
+          contentContainerStyle={styles.flatListContainer}
+          data={favList}
+          showsVerticalScrollIndicator={false}
+          showsHorizontalScrollIndicator={false}
+          ListEmptyComponent={
+            <DataNotFound title={'No favorates Available yet!'} subTitle={''} />
+          }
+        />
+      )}
     </View>
   );
 };

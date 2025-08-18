@@ -38,7 +38,12 @@ export default function FilterResetModal({
   );
 
   return (
-    <Modal visible={visible} transparent animationType="fade">
+    <Modal
+      visible={visible}
+      transparent
+      animationType="fade"
+      style={{ flex: 1 }}
+    >
       <View style={styles.overlay}>
         <ScrollView
           contentContainerStyle={styles.modalBox}
@@ -78,22 +83,23 @@ export default function FilterResetModal({
 
 const styles = StyleSheet.create({
   overlay: {
-    flex: 1,
     backgroundColor: '#00000055',
     justifyContent: 'center',
     alignItems: 'center',
     alignContent: 'center',
     verticalAlign: 'middle',
+    flex: 1,
+    textAlignVertical: 'center',
   },
   modalBox: {
     backgroundColor: 'white',
     padding: wp(4),
     borderRadius: wp(5),
     width: wp(80),
-    maxHeight: hp('80'),
+    maxHeight: hp('60'),
     verticalAlign: 'middle',
     alignSelf: 'center',
-    marginVertical: hp('10'),
+    marginVertical: hp('20'),
   },
   title: {
     textAlign: 'center',

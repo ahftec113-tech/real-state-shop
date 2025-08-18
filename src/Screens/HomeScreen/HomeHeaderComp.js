@@ -67,7 +67,6 @@ const HomeHeaderComp = ({
         <MultiSelectButton
           items={[
             { id: 1, label: 'Rent' },
-            { id: 2, label: 'Sell' },
             { id: 3, label: 'Buy' },
           ]}
           isPrimaryColorStyle={true}
@@ -84,16 +83,18 @@ const HomeHeaderComp = ({
           resizeMode="contain"
         />
         <TextComponent
-          text={area?.area_name ?? '...'}
+          text={area?.area_name ?? 'Type location here...'}
           onPress={onAreaPress}
           styles={styles.input}
           size={'1.5'}
+          family={'400'}
         />
         <TextComponent text={'|'} family={'bold'} />
         <TextComponent
           text={city?.name ?? 'karachi'}
           onPress={onCityPress}
           size={'1.5'}
+          family={'400'}
         />
         <Image
           source={arrRight}
@@ -109,8 +110,8 @@ const HomeHeaderComp = ({
             items={filterAttributesData}
             isGrayBg={true}
             textStyle={{ color: Colors.primaryColor }}
-            selectedAlter={{ id: 1 }}
-            onSelectVal={(_, e) => onSelectAttributeVal(e)}
+            selectedAlter={{ id: 111 }}
+            onSelectVal={(_, e) => onSelectAttributeVal(e, type)}
           />
         </View>
 
@@ -129,7 +130,7 @@ const HomeHeaderComp = ({
                   styles.card,
                   isSelected ? styles.selectedCard : styles.unselectedCard,
                 ]}
-                onPress={() => onSqFitPress(item.sqYd)}
+                onPress={() => onSqFitPress(item.sqYd, type)}
               >
                 <TextComponent
                   text={`${item.sqYd} Sq. Yd`}
@@ -139,13 +140,13 @@ const HomeHeaderComp = ({
                   size={1.5}
                   family={'bold'}
                 />
-                <TextComponent
+                {/* <TextComponent
                   text="Houses"
                   styles={styles.subText}
                   isWhite={isSelected}
                   isThemeColor={!isSelected}
                   size={1.2}
-                />
+                /> */}
               </TouchableOpacity>
             );
           })}
@@ -174,7 +175,7 @@ const styles = StyleSheet.create({
   },
   iconSmall: {
     width: wp('5'),
-    height: hp('1.5'),
+    height: hp('3'),
   },
   homeIcon: {
     width: wp('30'),

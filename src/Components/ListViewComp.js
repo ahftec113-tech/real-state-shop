@@ -61,7 +61,7 @@ export default function ListViewScreen({ navigation, route }) {
 
   function searchFun(e) {
     var text = e;
-    if (text) {
+    if (text && data?.data?.data?.length > 0) {
       // Inserted text is not blank
       // Filter the masterDataSource and update FilteredDataSource
       const newData = data?.data?.data.filter(function (item) {
@@ -74,7 +74,7 @@ export default function ListViewScreen({ navigation, route }) {
       setFilterData(newData);
       setText(text);
     } else {
-      setFilterData(data?.data?.data);
+      setFilterData(data?.data?.data ?? []);
       setText(text);
     }
   }
@@ -83,14 +83,20 @@ export default function ListViewScreen({ navigation, route }) {
     <View style={styles.mainView}>
       <View>
         <View style={styles.headerMain}>
-          <Touchable onPress={() => navigation.goBack()}>
+          <Touchable
+            onPress={() => {
+              navigation.goBack();
+              if (isMultiSelect) onSelectValue(selectedList);
+              else onSelectValue(...selectedList);
+            }}
+          >
             <Image
               source={arrLeft}
               style={styles.arrBack}
               tintColor={Colors.backgroundTheme}
             />
           </Touchable>
-          <TextComponent
+          {/* <TextComponent
             text={'Save'}
             styles={styles.saveText}
             onPress={() => {
@@ -98,7 +104,7 @@ export default function ListViewScreen({ navigation, route }) {
               if (isMultiSelect) onSelectValue(selectedList);
               else onSelectValue(...selectedList);
             }}
-          />
+          /> */}
         </View>
         <View style={styles.searchMain}>
           <Image
@@ -139,46 +145,46 @@ export default function ListViewScreen({ navigation, route }) {
         /> */}
         {data?.data?.data != null &&
           data?.data?.data?.length > 0 &&
-          (filterData.length >= 0 && text != '' ? filterData : data?.data?.data)?.map(
-            (item, index) => (
-              <TouchableOpacity
-                key={index}
-                onPress={() => toggleAllergy(item)}
+          (filterData.length >= 0 && text != ''
+            ? filterData
+            : data?.data?.data
+          )?.map((item, index) => (
+            <TouchableOpacity
+              key={index}
+              onPress={() => toggleAllergy(item)}
+              style={{
+                backgroundColor: selectedList?.filter(
+                  res => res?.id == item?.id,
+                )[0]?.id
+                  ? Colors.backgroundTheme
+                  : Colors.white,
+                ...styles.allergiesBtns,
+              }}
+            >
+              <Text
                 style={{
-                  backgroundColor: selectedList?.filter(
-                    res => res?.id == item?.id,
-                  )[0]?.id
-                    ? Colors.backgroundTheme
-                    : Colors.white,
-                  ...styles.allergiesBtns,
+                  color: selectedList?.filter(res => res?.id == item?.id)[0]?.id
+                    ? 'white'
+                    : 'black',
                 }}
               >
-                <Text
+                {item?.name}
+              </Text>
+              {Boolean(
+                selectedList?.filter(res => res?.id == item?.id)[0]?.id,
+              ) && (
+                <Image
+                  source={crossWhite}
+                  resizeMode="contain"
                   style={{
-                    color: selectedList?.filter(res => res?.id == item?.id)[0]
-                      ?.id
-                      ? 'white'
-                      : 'black',
+                    width: wp('3'),
+                    height: hp('5'),
+                    marginLeft: wp('3'),
                   }}
-                >
-                  {item?.name}
-                </Text>
-                {Boolean(
-                  selectedList?.filter(res => res?.id == item?.id)[0]?.id,
-                ) && (
-                  <Image
-                    source={crossWhite}
-                    resizeMode="contain"
-                    style={{
-                      width: wp('3'),
-                      height: hp('5'),
-                      marginLeft: wp('3'),
-                    }}
-                  />
-                )}
-              </TouchableOpacity>
-            ),
-          )}
+                />
+              )}
+            </TouchableOpacity>
+          ))}
       </ScrollView>
     </View>
   );
