@@ -16,6 +16,7 @@ export const sizes = [
   { id: 3, sqYd: 500 },
 ];
 export const bedroomsArry = [
+  { id: 'All', label: 'All' },
   { id: 'studio', label: 'studio' },
   { id: 1, label: 1 },
   { id: 2, label: 2 },
@@ -29,12 +30,10 @@ export const bedroomsArry = [
   { id: '10+', label: '10+' },
 ];
 export const bathroomsArry = [
+  { id: 'All', label: 'All' },
   { id: 1, label: 1 },
   { id: 2, label: 2 },
   { id: 3, label: 3 },
-  { id: 4, label: 4 },
-  { id: 5, label: 5 },
-  { id: 6, label: '6+' },
 ];
 export const profilesBtn = [
   { id: 1, label: 'Saved Searches', icon: saveGray },

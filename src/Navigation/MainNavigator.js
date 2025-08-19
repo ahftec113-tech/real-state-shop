@@ -43,13 +43,13 @@ function MainNavigator() {
          
           </>
         )} */}
+        <Stack.Screen name="MybottomTabs" component={MybottomTabs} />
         <Stack.Screen name="LoginScreen" component={Screens.LoginScreen} />
 
         <Stack.Screen
           name="RegisterScreen"
           component={Screens.RegisterScreen}
         />
-        <Stack.Screen name="MybottomTabs" component={MybottomTabs} />
         <Stack.Screen
           name="ProjectDetailScreen"
           component={Screens.ProjectDetailScreen}

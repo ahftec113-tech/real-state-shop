@@ -48,10 +48,10 @@ const ProjectListScreen = ({ navigation, route }) => {
   console.log('dsbklsdbvklsdbvbsdklvbsdlbvlds', route?.params);
 
   const filterArry = [
-    {
-      image: filterIcon,
-      name: 'Filter',
-    },
+    // {
+    //   image: filterIcon,
+    //   name: 'Filter',
+    // },
     // {
     //   image: sortIcon,
     //   name: 'Sort',

@@ -20,7 +20,7 @@ export const styles = StyleSheet.create({
   },
   tableHeaderText: {
     color: '#fff',
-    fontSize: hp('1.3'),
+    fontSize: hp('1.58'),
     fontWeight: 'bold',
   },
   tableRow: {
@@ -32,13 +32,13 @@ export const styles = StyleSheet.create({
     borderBottomColor: '#eee',
   },
   tableLabel: {
-    fontSize: hp('1.2'),
+    fontSize: hp('1.5'),
     color: '#333',
     fontWeight: '500',
     flex: 1,
   },
   tableValue: {
-    fontSize: hp('1.2'),
+    fontSize: hp('1.5'),
     color: '#333',
     flex: 1,
     textAlign: 'right',

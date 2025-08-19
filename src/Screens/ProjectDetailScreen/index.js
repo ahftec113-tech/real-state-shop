@@ -138,7 +138,7 @@ const ProjectDetailScreen = ({ navigation, route }) => {
     return (
       <View style={styles.featuresWrapper}>
         {/* Section Title */}
-        <TextComponent text={title} size="1.4" family="600" />
+        <TextComponent text={title} size="1.8" family="600" />
 
         {/* Features in Two Columns */}
         <View style={styles.featuresRowUpper}>
@@ -147,7 +147,7 @@ const ProjectDetailScreen = ({ navigation, route }) => {
               <TextComponent
                 key={idx}
                 text={item}
-                size="1.2"
+                size="1.3"
                 styles={{ marginRight: wp('6') }}
                 family={'300'}
               />
@@ -155,7 +155,7 @@ const ProjectDetailScreen = ({ navigation, route }) => {
           </View>
           <View style={styles.featureCol}>
             {col2.map((item, idx) => (
-              <TextComponent key={idx} text={item} size="1.2" family={'300'} />
+              <TextComponent key={idx} text={item} size="1.3" family={'300'} />
             ))}
           </View>
         </View>
@@ -165,7 +165,7 @@ const ProjectDetailScreen = ({ navigation, route }) => {
           <TouchableOpacity>
             <TextComponent
               text={moreText}
-              size="1.2"
+              size="1.5"
               family="500"
               styles={styles.linkText}
             />
@@ -202,12 +202,12 @@ const ProjectDetailScreen = ({ navigation, route }) => {
           >
             <TextComponent
               text={projectDetails?.type_and_purpose}
-              size="1.8"
-              family={'500'}
+              // size="1.8"
+              family={'bold'}
             />
             <TextComponent
               text={formatDateToCustomFormat(projectDetails?.created_date)}
-              size="1.4"
+              size="1.8"
               family={'300'}
             />
           </View>
@@ -225,7 +225,7 @@ const ProjectDetailScreen = ({ navigation, route }) => {
         {/* Location */}
         <TextComponent
           text={projectDetails?.project_name}
-          size="1.4"
+          size="1.5"
           family="500"
           styles={styles.location}
         />
@@ -240,7 +240,7 @@ const ProjectDetailScreen = ({ navigation, route }) => {
               />
               <TextComponent
                 text={projectDetails?.total_bedrooms}
-                size="1.2"
+                size="1.5"
                 family={'300'}
               />
             </View>
@@ -254,7 +254,7 @@ const ProjectDetailScreen = ({ navigation, route }) => {
               />
               <TextComponent
                 text={projectDetails?.total_bathrooms}
-                size="1.2"
+                size="1.5"
                 family={'300'}
               />
             </View>
@@ -268,7 +268,7 @@ const ProjectDetailScreen = ({ navigation, route }) => {
               />
               <TextComponent
                 text={projectDetails?.area_with_type}
-                size="1.2"
+                size="1.5"
                 family={'300'}
               />
             </View>
@@ -327,7 +327,7 @@ const ProjectDetailScreen = ({ navigation, route }) => {
             alignSelf: 'center',
             marginTop: hp('1'),
             textAlign: 'justify',
-            fontSize: hp('1.3'),
+            fontSize: hp('1.5'),
             color: 'gray',
           }}
           contentWidth={hp('90')}

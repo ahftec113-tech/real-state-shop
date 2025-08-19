@@ -124,7 +124,7 @@ const FilterScreen = ({ navigation, route }) => {
         isBack
         // style={{ backgroundColor: 'red' }}
         rightText={'Reset'}
-        rightTextStyle={{ color: 'red' }}
+        rightTextStyle={{ color: 'red', fontSize: hp('2') }}
         onRightPress={() => {
           resetAll();
         }}
