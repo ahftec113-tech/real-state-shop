@@ -85,6 +85,7 @@ export const MultiSelectButton = ({
                     ),
               )
             : {}),
+          ...btnStyle,
         }}
         textStyle={{
           ...styles.btnText(

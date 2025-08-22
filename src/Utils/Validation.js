@@ -5,11 +5,11 @@ const passwordSchema = {
   password: yup
     .string()
     .required('Please Enter your password.')
-    .max(25, 'Password must be less than 25 characters.')
-    .matches(
-      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
-      'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character',
-    ),
+    .max(25, 'Password must be less than 25 characters.'),
+  // .matches(
+  //   /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+  //   'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character',
+  // ),
   confirm_password: yup
     .string()
     .required('Confirm password is required.')
@@ -31,7 +31,7 @@ const signUpschema = yup.object().shape({
       'Please enter valid email.',
     ),
 
-  first_name: yup
+  full_name: yup
     .string()
     .required('Please enter your first name.')
     .max(100, 'Name must be less than 100 characters.')

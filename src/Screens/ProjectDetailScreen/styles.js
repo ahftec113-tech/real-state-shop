@@ -172,6 +172,9 @@ export const styles = StyleSheet.create({
   featureCol: {
     // flex: 1,
     gap: hp('1'),
+    // flexDirection: 'row',
+    // alignItems: 'center',
+    // backgroundColor: 'red',
   },
   bottomButtons: {
     position: 'absolute',
@@ -197,5 +200,21 @@ export const styles = StyleSheet.create({
     width: wp('12'),
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  ownerView: {
+    width: wp('90'),
+    paddingVertical: hp('2'),
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 0.5,
+    borderRadius: 10,
+    alignSelf: 'center',
+    marginVertical: hp('2'),
+  },
+  ownerImg: {
+    width: wp('30'),
+    height: hp('10'),
+    // backgroundColor: 'red',
+    marginVertical: hp('1'),
   },
 });

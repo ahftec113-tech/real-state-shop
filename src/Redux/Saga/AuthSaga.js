@@ -49,7 +49,7 @@ export const loginThunk =
         password,
         userLoginProcess_val: 'user_login',
       });
-
+      console.log('lskdbvlksdbklvbsdsdfsdfklbvklsdbvksd', data);
       if (ok) {
         dispatch(updateAuth(data));
       } else {
@@ -73,7 +73,7 @@ export const registerThunk =
   async dispatch => {
     dispatch(loadingTrue());
     try {
-      const { email, password } = datas;
+      const { email, password, full_name } = datas;
       //   const result = await emailLogin(datas);
       //   const { data, ok } = { data: result, ok: true };
 
@@ -83,13 +83,14 @@ export const registerThunk =
 
       //     if (jwtToken) {
       const { data, ok } = await registerService({
+        user_name: full_name,
         email,
         password,
         userLoginProcess_val: 'user_register',
       });
 
       if (ok) {
-        dispatch(updateAuth(data));
+        dispatch(loginThunk({ datas }));
       } else {
         errorMessage(data?.message);
       }

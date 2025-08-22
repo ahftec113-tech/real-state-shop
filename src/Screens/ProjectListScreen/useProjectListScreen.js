@@ -32,12 +32,7 @@ const useProjectListScreen = ({ navigate }, { params }) => {
 
   const list = data?.pages.flatMap(page => page.data?.data) || [];
 
-  console.log(
-    'sdjjvblskdvbklsdbvksdbklvbsdklvbdsklvbkldsvbkldvbkld',
-    data?.pages.flatMap(page => page),
-    `${params?.url}&per_page=${100}`,
-    data?.pages,
-  );
+  console.log('sdjjvblskdvbklsdbvksdbklvbsdklvbdsklvbkldsvbkldvbkld', params);
 
   return {
     projectList: list ?? [],

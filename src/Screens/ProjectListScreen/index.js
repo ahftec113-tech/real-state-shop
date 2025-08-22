@@ -59,6 +59,7 @@ const ProjectListScreen = ({ navigation, route }) => {
     {
       name: route?.params?.city?.name ?? 'Karachi',
       image: arrDown,
+      id: route?.params?.city?.name ?? 'Karachi',
     },
   ];
 
@@ -84,6 +85,7 @@ const ProjectListScreen = ({ navigation, route }) => {
           mainViewStyles={{ marginTop: hp('1') }}
           // refetch={refetch}
           item={item}
+          area_name={item?.area_name}
         />
       ) : (
         <PropertyCardComp
@@ -119,7 +121,12 @@ const ProjectListScreen = ({ navigation, route }) => {
         <MultiSelectButton
           items={[
             ...filterArry,
-            ...route?.params?.extraFilter?.filter(res => res != null),
+            ...route?.params?.extraFilter
+              ?.filter(res => res != null)
+              .map(res => ({
+                id: res,
+                name: res,
+              })),
           ]}
           isPrimaryColorStyle
           btnStyle={{ backgroundColor: 'white' }}

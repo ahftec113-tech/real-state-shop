@@ -16,7 +16,7 @@ const useFilterScreen = ({ navigate }, { params }) => {
   const [modalState, setModalState] = useState(false);
   const [modalStateFilter, setModalStateFilter] = useState(null);
   const MIN_PRICE = 0;
-  const MAX_PRICE = 10000000;
+  const MAX_PRICE = 100000000;
 
   const MIN_AREA = 0;
   const MAX_AREA = 4000;

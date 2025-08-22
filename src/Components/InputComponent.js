@@ -155,9 +155,8 @@ const styles = StyleSheet.create({
     marginVertical: hp('1'),
     alignItems: 'center',
     flexDirection: 'row',
-    borderColor: Colors.white,
+    borderColor: Colors.gray,
     marginTop: hp('1'),
-    backgroundColor: Colors.white,
     paddingHorizontal: wp('4'),
   },
   input: isSecure => ({
@@ -166,10 +165,11 @@ const styles = StyleSheet.create({
     // paddingHorizontal: wp('2'),
     // paddingLeft: wp('3'),
     fontWeight: '400',
+    color: 'black',
   }),
   eyeContainer: {
-    width: 24,
-    height: 24,
+    width: 15,
+    height: 15,
     // top: '30%',
     right: '5%',
     // marginRight: 10,
@@ -185,6 +185,6 @@ const styles = StyleSheet.create({
   inputIcon: {
     // marginLeft: hp('2'),
     // width: wp('7'),
-    flex: 0.7,
+    flex: 0.3,
   },
 });

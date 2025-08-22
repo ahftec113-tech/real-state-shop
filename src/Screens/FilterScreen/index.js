@@ -43,6 +43,7 @@ import {
 import FilterREsetModal from './filterReaetModal';
 import FilterResetModal from './filterReaetModal';
 import BtnModalComponent from '../../Components/BtnModalComp';
+import { formatPriceToPKStandard } from '../../Services/GlobalFunctions';
 
 const FilterScreen = ({ navigation, route }) => {
   const {
@@ -396,6 +397,17 @@ const FilterScreen = ({ navigation, route }) => {
             />
           </View>
         </View>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            // backgroundColor: 'red',
+          }}
+        >
+          <TextComponent text={formatPriceToPKStandard(minPrice)} />
+          <TextComponent text={formatPriceToPKStandard(maxPrice)} />
+        </View>
         <RangeSlider
           style={styles.slider}
           min={MIN_PRICE}
@@ -518,13 +530,13 @@ const FilterScreen = ({ navigation, route }) => {
             onSelectVal={(_, e) => onChangeVal('bathRoom', e)}
           />
         </View>
-        <ThemeButton
-          title={'Show Ads'}
-          isTheme
-          style={styles.showAdsButton}
-          onPress={onSearchFilter}
-        />
       </ScrollView>
+      <ThemeButton
+        title={'Show Ads'}
+        isTheme
+        style={styles.showAdsButton}
+        onPress={onSearchFilter}
+      />
       {/* <FilterResetModal
         visible={modalVisible}
         onClose={() => setModalVisible(false)}

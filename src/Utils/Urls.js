@@ -33,8 +33,8 @@ export const aboutUrl = 'https://theappforcowboys.com/about_us';
 
 export const MapAPIKey = 'AIzaSyAu-nEBbiOahfUyeMc8Lc1gTTKfete_wnQ';
 
-export const registerUrl = '/user_login_process';
-export const loginUrl = '/user_login_process';
+export const registerUrl = '/register';
+export const loginUrl = '/login';
 
 export const homeDataUrl = '/home';
 export const getCountryDataUrl = '/indexProcess';

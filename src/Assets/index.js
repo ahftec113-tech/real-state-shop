@@ -16,8 +16,9 @@ export { default as onboardOne } from './Images/onboardOne.png';
 export { default as onboardTwo } from './Images/onboardTwo.png';
 export { default as onboardThree } from './Images/onboardThree.png';
 
-export { default as LoginBg } from './Images/LoginBg.png';
+export { default as LoginBg } from './Images/loginBg.png';
 export { default as HomeBg } from './Images/HomeBg.png';
+export { default as welcomeBg } from './Images/welcomeBg.png';
 
 //  Icons
 

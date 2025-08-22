@@ -12,7 +12,7 @@ const Stack = createNativeStackNavigator();
 function MainNavigator() {
   const { getState } = useReduxStore();
   //   const { onboarding } = getState('onboarding');
-  //   const { isLogin, userData } = getState('Auth');
+  const { isLogin, userData } = getState('Auth');
   return (
     <NavigationContainer
       ref={ref => {
@@ -27,29 +27,32 @@ function MainNavigator() {
           headerShown: false,
         }}
       >
-        {/* {!isLogin && (
+        {!isLogin && (
           <>
-            {!onboarding && (
+            {/* {!onboarding && (
               <Stack.Screen
                 name="OnBoardScreen"
                 component={Screens.OnBoardScreen}
               />
-            )}
+            )} */}
+            <Stack.Screen
+              name="WelcomeScreen"
+              component={Screens.WelcomeScreen}
+            />
             <Stack.Screen name="LoginScreen" component={Screens.LoginScreen} />
             <Stack.Screen
               name="RegisterScreen"
               component={Screens.RegisterScreen}
             />
-         
           </>
-        )} */}
+        )}
+        {/* <Stack.Screen name="LoginScreen" component={Screens.LoginScreen} /> */}
         <Stack.Screen name="MybottomTabs" component={MybottomTabs} />
-        <Stack.Screen name="LoginScreen" component={Screens.LoginScreen} />
 
-        <Stack.Screen
+        {/* <Stack.Screen
           name="RegisterScreen"
           component={Screens.RegisterScreen}
-        />
+        /> */}
         <Stack.Screen
           name="ProjectDetailScreen"
           component={Screens.ProjectDetailScreen}

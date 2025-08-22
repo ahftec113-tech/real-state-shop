@@ -16,7 +16,7 @@ import { hp, wp } from '../Hooks/useResponsive';
 import { Colors } from '../Theme/Variables';
 import { TextComponent } from './TextComponent';
 import { Touchable } from './Touchable';
-import { imageUrl } from '../Utils/Urls';
+import { getSearchProjectsUrl, imageUrl } from '../Utils/Urls';
 import useReduxStore from '../Hooks/UseReduxStore';
 import { favProject } from '../Redux/Action/FavProjectAction';
 import {
@@ -46,10 +46,19 @@ const PropertyCardVerticalComp = ({
   item,
   isNewProjects,
   isDisable,
+  area_name,
 }) => {
   const { dispatch, getState, queryClient } = useReduxStore();
 
   const { favProjects } = getState('favProjects');
+
+  const onTagPress = () => {
+    NavigationService.navigate('ProjectListScreen', {
+      url: `${getSearchProjectsUrl}area_id=${item?.area_id ?? null}`,
+      selectedArea: item?.area_name,
+      extraFilter: [item?.area_name],
+    });
+  };
   return (
     <Touchable
       style={{ ...styles.container, ...mainViewStyles }}
@@ -133,14 +142,10 @@ const PropertyCardVerticalComp = ({
           <TextComponent text={location} size={1.3} family={'300'} />
         </View>
         <View style={styles.tagRow}>
-          {tag.map((res, index) => {
-            return (
-              <View key={index.toString()} style={styles.tag}>
-                <Image source={checkBoxIcon} style={styles.icon} />
-                <Text style={styles.tagText}>{res}</Text>
-              </View>
-            );
-          })}
+          <Touchable style={styles.tag} onPress={() => onTagPress()}>
+            <Image source={checkBoxIcon} style={styles.icon} />
+            <Text style={styles.tagText}>{area_name}</Text>
+          </Touchable>
         </View>
         {!isNewProjects && (
           <View style={styles.actionRow}>

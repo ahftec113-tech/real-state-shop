@@ -17,6 +17,7 @@ const ThemeButton = ({
   isTransparent,
   isTopImg,
   topImgStyles,
+  isWhite,
 }) => {
   const topImgStyle = {
     alignItems: 'center',
@@ -36,6 +37,8 @@ const ThemeButton = ({
             ? Colors.primaryColor
             : isTransparent
             ? 'transparent'
+            : isWhite
+            ? Colors.white
             : Colors.backgroundTheme,
           borderColor: isTransparent ? Colors.primaryColor : 'transperent',
           borderWidth: isTransparent ? 1 : 0,
@@ -71,7 +74,11 @@ const ThemeButton = ({
           styles.text,
           {
             marginLeft: image ? wp('1') : 0,
-            color: isTransparent ? Colors.primaryColor : Colors.white,
+            color: isTransparent
+              ? Colors.primaryColor
+              : isWhite
+              ? Colors.primaryColor
+              : Colors.white,
             ...textStyle,
           },
         ]}

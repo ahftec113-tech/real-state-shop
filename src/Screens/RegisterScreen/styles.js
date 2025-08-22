@@ -7,17 +7,15 @@ export const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
   },
-  logoImage: {
-    width: wp('40'),
-    marginTop: hp('10'),
-    height: hp('8'),
-    alignSelf: 'center',
+  logInMain: {
+    paddingHorizontal: wp('4'),
+    alignItems: 'center',
   },
   signInText: {
-    textAlign: 'left',
     // marginTop: hp('-1.5'),
     fontSize: hp('2.5'),
     fontWeight: '700',
+    textAlign: 'center',
   },
   loginTop: {
     // alignItems: 'flex-start',
@@ -59,15 +57,13 @@ export const styles = StyleSheet.create({
     // marginBottom: hp('1'),
   },
   logInMain: {
-    paddingHorizontal: wp('3.5'),
-    justifyContent: 'center',
-    position: 'relative',
-    paddingBottom: hp('15'),
+    paddingHorizontal: wp('4'),
+    alignItems: 'center',
   },
   buttonStyle: {
     borderRadius: 10,
     height: hp('5'),
-    width: wp('86'),
+    width: wp('90'),
     alignSelf: 'flex-end',
     // marginTop: hp('3'),
   },
@@ -90,7 +86,7 @@ export const styles = StyleSheet.create({
   dontHaveText: {
     fontSize: hp('1.5'),
     fontWeight: '400',
-    color: Colors.white,
+    color: Colors.black,
     marginRight: wp('4'),
   },
   signUpText: {

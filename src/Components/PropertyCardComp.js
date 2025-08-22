@@ -18,7 +18,7 @@ import {
   SqFitIcon,
 } from '../Assets';
 import { TextComponent } from './TextComponent';
-import { imageUrl } from '../Utils/Urls';
+import { getSearchProjectsUrl, imageUrl } from '../Utils/Urls';
 import useReduxStore from '../Hooks/UseReduxStore';
 import { favProject } from '../Redux/Action/FavProjectAction';
 import { Touchable } from './Touchable';
@@ -40,6 +40,14 @@ const PropertyCardComp = ({
   refetch,
 }) => {
   const { dispatch, getState, queryClient } = useReduxStore();
+
+  const dynamicNavigation = () => {
+    NavigationService.navigate('ProjectListScreen', {
+      url: `${getSearchProjectsUrl}area_id=${item?.area_id ?? null}`,
+      selectedArea: item?.area_name,
+      extraFilter: [item?.area_name],
+    });
+  };
 
   const { favProjects } = getState('favProjects');
   return (
@@ -97,13 +105,13 @@ const PropertyCardComp = ({
         </View>
 
         <View style={styles.tagsRow}>
-          <View style={styles.tag}>
+          <Touchable style={styles.tag} onPress={() => dynamicNavigation()}>
             <Image
               source={checkBoxIcon}
               style={{ ...styles.icon, height: hp('2'), marginLeft: 0 }}
             />
             <Text style={styles.tagText}>{tag1}</Text>
-          </View>
+          </Touchable>
           <View style={{ ...styles.tag, marginTop: hp('0.5') }}>
             <Image
               source={checkBoxIcon}

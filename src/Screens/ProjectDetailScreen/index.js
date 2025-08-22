@@ -38,6 +38,8 @@ import { WebView } from 'react-native-webview';
 import { Touchable } from '../../Components/Touchable';
 import { keyExtractor } from '../../Utils';
 import PropertyCardComp from '../../Components/PropertyCardComp';
+import { imageUrl } from '../../Utils/Urls';
+import { MultiSelectButton } from '../../Components/MultiSelectButton';
 
 const media = [
   'https://example.com/image1.jpg',
@@ -46,7 +48,14 @@ const media = [
 ];
 
 const ProjectDetailScreen = ({ navigation, route }) => {
-  const { projectDetails } = useProjectDetailScreen(navigation, route);
+  const {
+    projectDetails,
+    similarProjects,
+    readMoreTitleState,
+    readMoreTitle,
+    setSelectedTab,
+    selectedTab,
+  } = useProjectDetailScreen(navigation, route);
   const detailsData = [
     { label: 'Type', value: projectDetails?.area_type ?? 'Not available' },
     {
@@ -144,18 +153,57 @@ const ProjectDetailScreen = ({ navigation, route }) => {
         <View style={styles.featuresRowUpper}>
           <View style={styles.featureCol}>
             {col1.map((item, idx) => (
-              <TextComponent
-                key={idx}
-                text={item}
-                size="1.3"
-                styles={{ marginRight: wp('6') }}
-                family={'300'}
-              />
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  // justifyContent: 'space-between',
+                }}
+              >
+                <Image
+                  source={{ uri: imageUrl(item?.icon) }}
+                  resizeMode="contain"
+                  style={{
+                    width: wp('3'),
+                    height: hp('3'),
+                    marginRight: wp('1'),
+                  }}
+                />
+                <TextComponent
+                  key={idx}
+                  text={`${item?.name}: ${item?.value}`}
+                  size="1.3"
+                  styles={{ marginRight: wp('4') }}
+                  family={'300'}
+                />
+              </View>
             ))}
           </View>
           <View style={styles.featureCol}>
             {col2.map((item, idx) => (
-              <TextComponent key={idx} text={item} size="1.3" family={'300'} />
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  // justifyContent: 'space-between',
+                }}
+              >
+                <Image
+                  source={{ uri: imageUrl(item?.icon) }}
+                  resizeMode="contain"
+                  style={{
+                    width: wp('3'),
+                    height: hp('3'),
+                    marginRight: wp('1'),
+                  }}
+                />
+                <TextComponent
+                  key={idx}
+                  text={`${item?.name} ${item?.value}`}
+                  size="1.3"
+                  family={'300'}
+                />
+              </View>
             ))}
           </View>
         </View>
@@ -175,6 +223,13 @@ const ProjectDetailScreen = ({ navigation, route }) => {
     );
   };
 
+  const topBarArry = [
+    { id: 'Features&Amenitites', name: 'Features & Amenitites' },
+    { id: 'details', name: 'Details' },
+    { id: 'description', name: 'Description' },
+    { id: 'listedby', name: 'Listed By' },
+  ];
+
   return (
     // <ScrollView  contentContainerStyle={{flex:1,paddingBottom:hp('10'),backgroundColor:"white"}} showsVerticalScrollIndicator={false} >
 
@@ -191,26 +246,16 @@ const ProjectDetailScreen = ({ navigation, route }) => {
           item={projectDetails}
         />
         {/* Price */}
+        <TextComponent
+          text={projectDetails?.project_name}
+          size="1.8"
+          family="500"
+          styles={styles.location}
+          numberOfLines={readMoreTitleState ? 10 : 2}
+          onPress={() => readMoreTitle()}
+        />
         <View style={styles.priceWrapper}>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              marginVertical: hp('1'),
-            }}
-          >
-            <TextComponent
-              text={projectDetails?.type_and_purpose}
-              // size="1.8"
-              family={'bold'}
-            />
-            <TextComponent
-              text={formatDateToCustomFormat(projectDetails?.created_date)}
-              size="1.8"
-              family={'300'}
-            />
-          </View>
+          {/* Location */}
           {projectDetails?.price && (
             <View style={styles.priceBadge}>
               <TextComponent text="PKR" isWhite family={'200'} />
@@ -221,14 +266,38 @@ const ProjectDetailScreen = ({ navigation, route }) => {
               />
             </View>
           )}
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              marginVertical: hp('1'),
+            }}
+          >
+            <View>
+              <TextComponent
+                text={projectDetails?.type_and_purpose}
+                // size="1.8"
+                family={'bold'}
+              />
+              <TextComponent
+                text={projectDetails?.area_name}
+                // size="1.8"
+                family={'bold'}
+                styles={{
+                  textDecorationLine: 'underline',
+                }}
+                isThemeColor
+              />
+            </View>
+            <TextComponent
+              text={formatDateToCustomFormat(projectDetails?.created_date)}
+              size="1.8"
+              family={'300'}
+            />
+          </View>
         </View>
-        {/* Location */}
-        <TextComponent
-          text={projectDetails?.project_name}
-          size="1.5"
-          family="500"
-          styles={styles.location}
-        />
+
         {/* Stats */}
         <View style={styles.statsRow}>
           {projectDetails?.total_bedrooms && (
@@ -274,6 +343,26 @@ const ProjectDetailScreen = ({ navigation, route }) => {
             </View>
           )}
         </View>
+        <ScrollView
+          contentContainerStyle={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            paddingHorizontal: wp('3'),
+            marginVertical: hp('2'),
+            overflow: 'scroll',
+          }}
+          showsHorizontalScrollIndicator={false}
+        >
+          <MultiSelectButton
+            items={topBarArry}
+            isPrimaryColorStyle
+            selectedAlter={selectedTab}
+            onSelectVal={(_, e) => setSelectedTab(e)}
+            btnStyle={{
+              marginRight: wp('1'),
+            }}
+          />
+        </ScrollView>
         {/* Description */}
         {/* {projectDetails?.feature_amenitie && (
           <TextComponent
@@ -290,7 +379,8 @@ const ProjectDetailScreen = ({ navigation, route }) => {
             styles={styles.linkText}
           />
         </TouchableOpacity> */}
-        {projectDetails?.feature_amenitie &&
+        {selectedTab?.id == 'Features&Amenitites' &&
+          projectDetails?.feature_amenitie &&
           projectDetails?.feature_amenitie?.length > 0 && (
             <FeaturesAmenities
               features={projectDetails?.feature_amenitie}
@@ -310,32 +400,59 @@ const ProjectDetailScreen = ({ navigation, route }) => {
               })}
           </View>
         </View> */}
-        <DetailsTable details={detailsData} />
-        <View
-          style={{
-            ...styles.tableHeader,
-            borderRadius: 10,
-            width: wp('90'),
-            alignSelf: 'center',
-          }}
-        >
-          <Text style={styles.tableHeaderText}>Description</Text>
-        </View>
-        <RenderHtml
-          baseStyle={{
-            width: wp('90'),
-            alignSelf: 'center',
-            marginTop: hp('1'),
-            textAlign: 'justify',
-            fontSize: hp('1.5'),
-            color: 'gray',
-          }}
-          contentWidth={hp('90')}
-          source={source}
-          enableExperimentalMarginCollapsing={true}
-          // allowedStyles={true}
-          enableCSSInlineProcessing={true}
-        />
+
+        {selectedTab?.id == 'details' && <DetailsTable details={detailsData} />}
+
+        {selectedTab?.id == 'description' && (
+          <>
+            <View
+              style={{
+                ...styles.tableHeader,
+                borderRadius: 10,
+                width: wp('90'),
+                alignSelf: 'center',
+              }}
+            >
+              <Text style={styles.tableHeaderText}>Description</Text>
+            </View>
+            <RenderHtml
+              baseStyle={{
+                width: wp('90'),
+                alignSelf: 'center',
+                marginTop: hp('1'),
+                textAlign: 'justify',
+                fontSize: hp('1.8'),
+                color: 'gray',
+              }}
+              contentWidth={hp('90')}
+              source={source}
+              enableExperimentalMarginCollapsing={true}
+              // allowedStyles={true}
+              enableCSSInlineProcessing={true}
+            />
+          </>
+        )}
+        {selectedTab?.id == 'listedby' && (
+          <View style={styles.ownerView}>
+            <TextComponent text={'Listing Provided By'} family={'600'} />
+            {projectDetails?.real_estate_logo && (
+              <Image
+                source={{ uri: imageUrl(projectDetails?.real_estate_logo) }}
+                resizeMode="contain"
+                style={styles.ownerImg}
+              />
+            )}
+            <TextComponent
+              text={projectDetails?.real_estate_name}
+              family={'400'}
+            />
+            <TextComponent
+              text={`Agent: ${projectDetails?.contact_person}`}
+              family={'400'}
+            />
+          </View>
+        )}
+
         <View
           style={{
             ...styles.tableHeader,
@@ -387,15 +504,32 @@ const ProjectDetailScreen = ({ navigation, route }) => {
             borderRadius: 10,
           }}
         />
-        <FlatList
-          // data={[1, 2, 3, 4]}
-          data={projectDetails?.similar_projects}
-          renderItem={renderItem}
-          numColumns={2}
-          showsHorizontalScrollIndicator={false}
-          keyExtractor={keyExtractor}
-          contentContainerStyle={{ paddingHorizontal: wp('4') }}
-        />
+
+        {similarProjects && similarProjects.length > 0 && (
+          <>
+            <View
+              style={{
+                ...styles.tableHeader,
+                borderRadius: 10,
+                width: wp('90'),
+                alignSelf: 'center',
+                marginBottom: hp('2'),
+              }}
+            >
+              <Text style={styles.tableHeaderText}>Related Projects</Text>
+            </View>
+
+            <FlatList
+              // data={[1, 2, 3, 4]}
+              data={similarProjects}
+              renderItem={renderItem}
+              numColumns={2}
+              showsHorizontalScrollIndicator={false}
+              keyExtractor={keyExtractor}
+              contentContainerStyle={{ paddingHorizontal: wp('4') }}
+            />
+          </>
+        )}
       </ScrollView>
 
       {/* Bottom Buttons */}

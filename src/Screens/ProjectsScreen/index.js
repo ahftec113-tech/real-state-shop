@@ -55,7 +55,7 @@ const ProjectsScreen = ({ navigation, route }) => {
           type={item?.type_and_purpose}
           area={item?.area_with_type}
           location={`${item?.city_name} - ${item?.country_name}`}
-          //   tag={['Residential Plot']}
+          area_name={item?.area_name}
           onCallPress={() => console.log('Call pressed')}
           onWhatsappPress={() => console.log('WhatsApp pressed')}
           onSharePress={() => console.log('Share pressed')}

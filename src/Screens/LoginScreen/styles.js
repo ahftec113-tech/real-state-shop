@@ -4,10 +4,8 @@ import { Colors } from '../../Theme/Variables';
 
 export const styles = StyleSheet.create({
   logInMain: {
-    // paddingHorizontal: wp('3.5'),
-    justifyContent: 'center',
-    position: 'relative',
-    marginTop: hp('2'),
+    paddingHorizontal: wp('4'),
+    alignItems: 'center',
   },
   ImgBg: {
     flex: 1,
@@ -81,8 +79,7 @@ export const styles = StyleSheet.create({
     height: hp('9'),
   },
   signInText: {
-    textAlign: 'left',
-    marginTop: hp('-1.5'),
+    marginTop: hp('5'),
     fontSize: hp('2.5'),
     fontWeight: '500',
   },
@@ -127,6 +124,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     paddingBottom: hp('2'),
     // position: 'absolute',
+    marginTop: hp('5'),
     // left: 0,
     // right: 0,
     // bottom: hp('2')
@@ -134,8 +132,7 @@ export const styles = StyleSheet.create({
   dontHaveText: {
     fontSize: hp('1.5'),
     fontWeight: '400',
-    color: Colors.white,
-    marginRight: wp('4'),
+    marginRight: wp('2'),
   },
   signUpText: {
     color: Colors.primaryColor,

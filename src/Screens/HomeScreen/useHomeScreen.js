@@ -233,7 +233,7 @@ const useHoemScreen = ({ navigate }) => {
         minPrice ?? null
       }&searchPriceMax_val=${maxPrice ?? null}&searchAreaMin_val=${
         minArea ?? null
-      }&searchAreaMax_val=${maxArea ?? null}&purpose_id=${propertyTypeID?.id}`,
+      }&searchAreaMax_val=${maxArea ?? null}&purpose_id=${type?.id}`,
       selectedType: type,
       selectedCountry,
       selectedCity,

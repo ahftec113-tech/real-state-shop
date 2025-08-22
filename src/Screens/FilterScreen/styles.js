@@ -11,7 +11,7 @@ export const styles = StyleSheet.create({
   scrollContent: {
     flexGrow: 1,
     paddingHorizontal: wp('3'),
-    paddingBottom: hp('10'),
+    paddingBottom: hp('18'),
   },
   topHomeCompContainer: {
     backgroundColor: 'white',
@@ -169,5 +169,9 @@ export const styles = StyleSheet.create({
   },
   showAdsButton: {
     marginTop: hp('5'),
+    position: 'absolute',
+    bottom: hp('10'),
+    width: wp('90'),
+    alignSelf: 'center',
   },
 });
