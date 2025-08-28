@@ -39,8 +39,13 @@ import NavigationService from '../Services/NavigationService';
 import { useDrawer } from '../Context/DrawerContext';
 import { privacyUrl, termsUrl } from '../Utils/Urls';
 import { openBrowser } from '@swan-io/react-native-browser';
+import useReduxStore from '../Hooks/UseReduxStore';
+import { logOutAuth } from '../Redux/Action/AuthAction';
 
 const DrawerContentComp = ({ closeDrawer, selectScreenName }) => {
+  const { getState, dispatch } = useReduxStore();
+  const { isLogin } = getState('Auth');
+
   const getRouteName = NavigationService.getCurrentRoute();
   const routeName = getRouteName.getCurrentRoute();
   console.log('getRouteNamegetRouteNamegetRouteNamegetRouteName', routeName);
@@ -118,7 +123,13 @@ const DrawerContentComp = ({ closeDrawer, selectScreenName }) => {
       icon: termGray,
       url: termsUrl,
     },
-    // { id: 5, key: 'logout', name: 'Logout', icon: logOutGray },
+    isLogin && {
+      id: 5,
+      key: 'logout',
+      name: 'Logout',
+      icon: logOutGray,
+      onPress: () => dispatch(logOutAuth()),
+    },
   ];
 
   return (
@@ -229,7 +240,12 @@ const DrawerContentComp = ({ closeDrawer, selectScreenName }) => {
         <Touchable
           key={res.id}
           style={styles.menuItem(Boolean(res?.key == selectedState))}
-          onPress={() => handleOnPress(res.url)}
+          onPress={() => {
+            closeDrawer();
+            if (res?.onPress) {
+              res?.onPress();
+            } else handleOnPress(res.url);
+          }}
         >
           <Image
             source={res.icon}

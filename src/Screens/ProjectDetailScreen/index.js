@@ -55,6 +55,7 @@ const ProjectDetailScreen = ({ navigation, route }) => {
     readMoreTitle,
     setSelectedTab,
     selectedTab,
+    dynamicNavigation,
   } = useProjectDetailScreen(navigation, route);
   const detailsData = [
     { label: 'Type', value: projectDetails?.area_type ?? 'Not available' },
@@ -281,13 +282,18 @@ const ProjectDetailScreen = ({ navigation, route }) => {
                 family={'bold'}
               />
               <TextComponent
-                text={projectDetails?.area_name}
+                text={
+                  projectDetails?.area_2 != null
+                    ? projectDetails?.sub_area_name
+                    : projectDetails?.area_name
+                }
                 // size="1.8"
                 family={'bold'}
                 styles={{
                   textDecorationLine: 'underline',
                 }}
                 isThemeColor
+                onPress={() => dynamicNavigation()}
               />
             </View>
             <TextComponent

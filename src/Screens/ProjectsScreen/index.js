@@ -28,7 +28,7 @@ import ThemeButton from '../../Components/ThemeButton';
 import { keyExtractor } from '../../Utils';
 import { DataNotFound } from '../../Components/DataNotFound';
 
-const ProjectsScreen = ({ navigation, route }) => {
+const MyProjectsScreen = ({ navigation, route }) => {
   const {
     isFetchingNextPage,
     fetchNextPage,
@@ -149,4 +149,4 @@ const ProjectsScreen = ({ navigation, route }) => {
   );
 };
 
-export default memo(ProjectsScreen);
+export default memo(MyProjectsScreen);

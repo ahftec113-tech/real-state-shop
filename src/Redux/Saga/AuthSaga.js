@@ -15,7 +15,7 @@ import {
   // logOutFirebase,
   loginService,
   registerService,
-  updateProfileServices,
+  updateProfileService,
 } from '../../Services/AuthServices';
 import { errorMessage, successMessage } from '../../Config/NotificationMessage';
 import NavigationService from '../../Services/NavigationService';
@@ -121,7 +121,8 @@ export const logoutThunk = () => async dispatch => {
 export const updateProfileThunk = profileData => async dispatch => {
   dispatch(loadingTrue());
   try {
-    const { ok, data } = await updateProfileServices(profileData);
+    const { ok, data } = await updateProfileService(profileData);
+    console.log('lskdbvklsdbvklsdbkvlsldkvklds', data);
     if (ok) {
       dispatch({ type: types.UpdateProfile, payload: data.data });
       // successMessage('Your profile has been updated');

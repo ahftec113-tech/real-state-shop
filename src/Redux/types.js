@@ -31,4 +31,7 @@ export const types = {
   isChatNotifyFalse: 'isChatNotifyFalse',
   clearFavorites: 'clearFavorites',
   toggleFavorite: 'toggleFavorite',
+  saveDraft: 'saveDraft',
+  deleteDraft: 'deleteDraft',
+  clearDrafts: 'clearDrafts',
 };

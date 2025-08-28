@@ -35,6 +35,8 @@ export const MapAPIKey = 'AIzaSyAu-nEBbiOahfUyeMc8Lc1gTTKfete_wnQ';
 
 export const registerUrl = '/register';
 export const loginUrl = '/login';
+export const updateProfileUrl = '/user_dashboard/updateProfile';
+export const quotaDataUrl = '/user_dashboard/packageDetail';
 
 export const homeDataUrl = '/home';
 export const getCountryDataUrl = '/indexProcess';
@@ -56,6 +58,14 @@ export const getProjectDetailUrl = '/projectDetail/';
 export const createGoalUrl = '/goals/store';
 
 export const newProjectsUrl = 'newProjects';
+
+export const addProjectUrl = 'user_dashboard/insertProject';
+export const updateProjectUrl = 'user_dashboard/editProject/';
+
+export const getMyProjectUrl = 'user_dashboard/all-listing';
+export const getMyProjectDetailUrl = 'user_dashboard/projectDetail/';
+
+export const newAgentListUrl = '/agency-list';
 
 export const VerifyUserUrl = '/verify';
 export const allAssociatesUrl = '/setup/associations';

@@ -12,6 +12,9 @@ import { PERMISSIONS, RESULTS, check, request } from 'react-native-permissions';
 import { MapAPIKey } from '../Utils/Urls';
 import { store } from '../Redux/Reducer';
 import { femaleImg, maleImg } from '../Assets';
+import { launchImageLibrary } from 'react-native-image-picker';
+
+import { pick, keepLocalCopy, types } from '@react-native-documents/picker';
 // import Intl from 'intl';
 
 const getSingleCharacter = text => {
@@ -526,51 +529,41 @@ const getIdsFromArry = (arry, key) => {
 };
 
 //GET IMAGE From Mobile
-const uploadFromGalary = async isMulti => {
-  const imageData = await ImageCropPicker.openPicker({
-    cropping: true,
-    width: 300, // set desired resolution
-    height: 300,
-    // compressImageQuality: 0.8,
-    multiple: isMulti ?? false,
+const uploadFromGalary = async (isMulti, type) => {
+  return new Promise((resolve, reject) => {
+    launchImageLibrary(
+      {
+        mediaType: 'photo', // 'photo' | 'video' | 'mixed'
+        selectionLimit: isMulti ? 15 : 1, // 0 = unlimited
+      },
+      response => {
+        if (response.didCancel) {
+          console.log('User cancelled picker');
+          resolve(null);
+        } else if (response.errorCode) {
+          console.log('ImagePicker Error:', response.errorMessage);
+          reject(response.errorMessage);
+        } else if (response.assets && response.assets.length > 0) {
+          const mappedData = response.assets.map(res => ({
+            uri:
+              Platform.OS === 'ios'
+                ? res?.uri?.replace('file://', '')
+                : res?.uri,
+            name:
+              res?.fileName ||
+              (res?.type?.startsWith('video') ? 'video.mp4' : 'photo.jpg'),
+            type: res?.type,
+            // orientation removed because videos don't need it
+          }));
+
+          resolve(isMulti ? mappedData : mappedData[0]);
+        } else {
+          resolve(null);
+        }
+      },
+    );
   });
-
-  const getOrientation = (width, height) => {
-    if (width > height) return 'landscape';
-    if (height > width) return 'portrait';
-    return 'square';
-  };
-
-  if (Array.isArray(imageData)) {
-    return imageData.map(res => ({
-      uri: Platform.OS === 'ios' ? res?.sourceURL : res?.path,
-      name: res?.filename || 'photo.jpg',
-      type: res?.mime,
-      orientation: getOrientation(res?.width, res?.height),
-    }));
-  } else {
-    const {
-      height,
-      width,
-      size,
-      path,
-      filename,
-      sourceURL,
-      localIdentifier,
-      mime,
-    } = imageData;
-    const uri = Platform.OS === 'ios' ? sourceURL : path;
-    const fileName = filename || 'photo.jpg';
-
-    return {
-      uri,
-      name: fileName,
-      type: mime,
-      orientation: getOrientation(width, height),
-    };
-  }
 };
-
 //GET IMAGE From Mobile
 const uploadFromCamera = async isMulti => {
   const imageData = await ImageCropPicker.openCamera({
@@ -611,6 +604,25 @@ const uploadFromCamera = async isMulti => {
       type: mime,
       orientation,
     };
+  }
+};
+
+const pickDocument = async () => {
+  try {
+    const res = await pick({
+      type: [types.allFiles], // you can restrict to pdf: [DocumentPicker.types.pdf]
+    });
+
+    console.log('Picked file:', res);
+    return res;
+    // res will have:
+    // uri, name, type (mime), size
+  } catch (err) {
+    // if (isCancel(err)) {
+    //   console.log('User cancelled document picker');
+    // } else {
+    //   throw err;
+    // }
   }
 };
 
@@ -1161,6 +1173,23 @@ function formatPriceRange(min, max) {
   return `${formatValue(min)} - ${formatValue(max)}`;
 }
 
+const getFileExtension = path => {
+  if (!path) return null;
+  return path.split('.').pop();
+};
+
+/**
+ * Convert numbers into percentage used
+ * @param {number} total - The total available number
+ * @param {number} used - The used number
+ * @returns {number} - Percentage of used (0–100)
+ */
+const getUsedPercentage = (total, used) => {
+  if (!total || total <= 0) return 0; // prevent divide by zero
+  const percentage = (used / total) * 100;
+  return Math.min(Math.max(Math.round(percentage), 0), 100);
+  // ensures value stays between 0 and 100
+};
 export {
   getSingleCharacter,
   getProperLocation,
@@ -1222,4 +1251,7 @@ export {
   formatKeyName,
   parsePriceRange,
   formatPriceRange,
+  pickDocument,
+  getFileExtension,
+  getUsedPercentage,
 };

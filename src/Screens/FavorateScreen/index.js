@@ -19,11 +19,7 @@ const FavorateScreen = ({ navigation, route }) => {
 
   return (
     <View style={{ flex: 1, backgroundColor: 'white' }}>
-      <HeaderComponent
-        headerTitle={'Favorites'}
-        isLeftIcon
-        onLeftIcon={openDrawer}
-      />
+      <HeaderComponent headerTitle={'Favorites'} isBack />
       {favScreen({ navigation, route })}
       {/* <DynamicTopBarNavigator
         screens={myScreens}

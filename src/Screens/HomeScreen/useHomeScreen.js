@@ -88,7 +88,7 @@ const useHoemScreen = ({ navigate }) => {
   });
 
   useEffect(() => {
-    if (citiesData?.data?.data) {
+    if (Array.isArray(citiesData?.data?.data)) {
       setCities(citiesData.data?.data || []);
       const karachi = citiesData?.data?.data?.filter(
         res => res?.slug === 'karachi',

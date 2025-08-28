@@ -46,17 +46,26 @@ function MainNavigator() {
             />
           </>
         )}
-        {/* <Stack.Screen name="LoginScreen" component={Screens.LoginScreen} /> */}
         <Stack.Screen name="MybottomTabs" component={MybottomTabs} />
+        <Stack.Screen
+          name="FavorateScreen"
+          component={Screens.FavorateScreen}
+        />
+        <Stack.Screen
+          name="CreateListingScreen"
+          component={Screens.CreateListingScreen}
+        />
+        <Stack.Screen name="QuotaScreen" component={Screens.QuotaScreen} />
+        <Stack.Screen
+          name="EditProfileScreen"
+          component={Screens.EditProfileScreen}
+        />
 
-        {/* <Stack.Screen
-          name="RegisterScreen"
-          component={Screens.RegisterScreen}
-        /> */}
         <Stack.Screen
           name="ProjectDetailScreen"
           component={Screens.ProjectDetailScreen}
         />
+        <Stack.Screen name="DraftAdScreen" component={Screens.DraftAdScreen} />
         <Stack.Screen
           name="ProjectListScreen"
           component={Screens.ProjectListScreen}

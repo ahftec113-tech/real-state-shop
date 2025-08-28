@@ -5,6 +5,7 @@ import {
   loginUrl,
   logoutUrl,
   registerUrl,
+  updateProfileUrl,
 } from '../Utils/Urls';
 import API from '../Utils/helperFunc';
 
@@ -22,6 +23,11 @@ const loginService = param => API.post(loginUrl, param);
  * The `registerService` function sends a POST request to a specified URL with the provided parameter.
  */
 const registerService = param => API.post(registerUrl, param);
+
+/**
+ * The `registerService` function sends a POST request to a specified URL with the provided parameter.
+ */
+const updateProfileService = param => API.post(updateProfileUrl, param);
 
 /**
  * The `logoutService` function is an asynchronous function that sends a GET request to the `logoutUrl`
@@ -47,4 +53,5 @@ export {
   registerService,
   logoutService,
   fcmRegService,
+  updateProfileService,
 };

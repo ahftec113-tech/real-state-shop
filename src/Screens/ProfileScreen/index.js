@@ -8,11 +8,15 @@ import { Colors } from '../../Theme/Variables';
 import { home, homeRed } from '../../Assets';
 import { profilesBottomBtn, profilesBtn } from '../../Utils/localDB';
 import { styles } from './styles';
+import useProfileScreen from './useProfileScreen';
+import { Touchable } from '../../Components/Touchable';
 
-const ProfileScreen = () => {
+const ProfileScreen = ({ navigation }) => {
+  const { userData } = useProfileScreen();
+
   const CircleBtnComp = ({ item }) => {
     return (
-      <View style={styles.circleBtn}>
+      <Touchable style={styles.circleBtn} onPress={item?.onPress}>
         <Image
           source={item?.icon}
           resizeMode="contain"
@@ -25,7 +29,7 @@ const ProfileScreen = () => {
           fade
           styles={styles.circleBtnText}
         />
-      </View>
+      </Touchable>
     );
   };
 
@@ -39,14 +43,16 @@ const ProfileScreen = () => {
         {/* Profile Info */}
         <View style={styles.profileRow}>
           <View style={styles.profileInfo}>
-            <TextComponent text={'ALi hassan'} />
-            <ThemeButton title={'Basic'} style={styles.basicBtn} isTheme />
+            <TextComponent text={userData?.name} family={'bold'} />
+            <ThemeButton
+              title={userData?.name}
+              style={styles.basicBtn}
+              isTheme
+            />
           </View>
           <CircleImage
             uri
-            image={
-              'https://images.pexels.com/photos/31515057/pexels-photo-31515057.jpeg'
-            }
+            image={'https://cdn-icons-png.flaticon.com/512/3135/3135715.png'}
             size={0.15}
           />
         </View>
@@ -77,6 +83,7 @@ const ProfileScreen = () => {
             isWhite
             family={'400'}
             styles={styles.postAdText}
+            onPress={() => navigation.navigate('CreateListingScreen')}
           />
         </View>
 
@@ -91,6 +98,7 @@ const ProfileScreen = () => {
                 isTransparent
                 style={styles.bottomBtn}
                 textStyle={{ color: Colors.gray }}
+                onPress={res?.onPress}
               />
             );
           })}

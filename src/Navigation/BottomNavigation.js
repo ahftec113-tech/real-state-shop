@@ -42,6 +42,11 @@ import {
   ProfileGreen,
   ProfileGray,
   heartGray,
+  plusBlue,
+  plusCircle,
+  plusWhite,
+  plusGray,
+  buildingGray,
 } from '../Assets';
 import { types } from '../Redux/types';
 import useReduxStore from '../Hooks/UseReduxStore';
@@ -86,7 +91,8 @@ const tabarComponent = (
 const Tab = createBottomTabNavigator();
 
 function MybottomTabs() {
-  //   const { getState, dispatch } = useReduxStore();
+  const { getState, dispatch } = useReduxStore();
+  const { isLogin } = getState('Auth');
 
   //   const { isChatNotify } = getState('isChatNotify');
 
@@ -137,22 +143,24 @@ function MybottomTabs() {
         options={tabarComponent('Projects', ProjectGray, ProjectGreen)}
         component={Screens.ProjectsScreen}
       />
-      {/* <Tab.Screen
-        name="MyLocationScreen"
-        options={tabarComponent('Locations', discoverGray, discoverGreen)}
-        component={Screens.ProjectsScreen}
-      /> */}
       <Tab.Screen
-        name="FavouriteScreen"
-        options={tabarComponent('Favourite', heartGray, heartGreen)}
-        component={Screens.FavorateScreen}
+        name="MyLocationScreen"
+        options={tabarComponent('Add', plusGray, plusGray)}
+        component={
+          isLogin ? Screens.CreateListingScreen : Screens.WelcomeScreen
+        }
+      />
+      <Tab.Screen
+        name="MyProjectsScreen"
+        options={tabarComponent('My ads', buildingGray, buildingGray)}
+        component={isLogin ? Screens.MyProjectsScreen : Screens.WelcomeScreen}
       />
 
-      {/* <Tab.Screen
+      <Tab.Screen
         name="Profile"
         options={tabarComponent('Profile', ProfileGray, ProfileGreen)}
-        component={Screens.ProfileScreen}
-      /> */}
+        component={isLogin ? Screens.ProfileScreen : Screens.WelcomeScreen}
+      />
     </Tab.Navigator>
   );
 }

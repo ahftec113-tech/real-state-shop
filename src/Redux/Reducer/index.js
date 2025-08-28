@@ -12,6 +12,7 @@ import AuthReducer from './AuthReducer';
 import loadingReducer from './loadingReducer';
 import FavoriteReducer from './FavoriteReducer';
 import ImagePrevReducer from './ImagePrevReducer';
+import draftReducer from './DraftAdsReducer';
 
 const onBoardPersistConfig = {
   key: 'onboarding',
@@ -30,11 +31,17 @@ const FavProjecctConfig = {
   storage: AsyncStorage,
   whitelist: ['favProjects'],
 };
+const DraftAdsConfig = {
+  key: 'DraftAds',
+  storage: AsyncStorage,
+  whitelist: ['DraftAds'],
+};
 
 const rootReducer = combineReducers({
   // onboarding: persistReducer(onBoardPersistConfig, onboardingReducer),
   Auth: persistReducer(AuthPersistConfig, AuthReducer),
   favProjects: persistReducer(FavProjecctConfig, FavoriteReducer),
+  DraftAds: persistReducer(DraftAdsConfig, draftReducer),
   isloading: loadingReducer,
   modalState: ImagePrevReducer,
 });

@@ -1,3 +1,4 @@
+import { Linking } from 'react-native';
 import {
   aboutGray,
   callGray,
@@ -5,10 +6,15 @@ import {
   heartGray,
   homeGray,
   logOutGray,
+  quotaGray,
   saveGray,
   settingGray,
   termGray,
 } from '../Assets';
+import NavigationService from '../Services/NavigationService';
+import { aboutUrl, privacyUrl } from './Urls';
+import { store } from '../Redux/Reducer';
+import { logOutUser } from '../Redux/Action/AuthAction';
 
 export const sizes = [
   { id: 1, sqYd: 120 },
@@ -36,19 +42,55 @@ export const bathroomsArry = [
   { id: 3, label: 3 },
 ];
 export const profilesBtn = [
-  { id: 1, label: 'Saved Searches', icon: saveGray },
-  { id: 2, label: 'Favorites', icon: heartGray },
-  { id: 3, label: 'Drafts', icon: draftGray },
-  { id: 4, label: 'My Properties', icon: homeGray },
-  { id: 5, label: 'My Quota & Credits', icon: saveGray },
-  { id: 6, label: 'Settings', icon: settingGray },
+  {
+    id: 1,
+    label: 'Edit Profile',
+    icon: saveGray,
+    onPress: () => NavigationService.navigate('EditProfileScreen'),
+  },
+  {
+    id: 2,
+    label: 'Favorites',
+    icon: heartGray,
+    onPress: () => NavigationService.navigate('FavorateScreen'),
+  },
+  {
+    id: 3,
+    label: 'Drafts',
+    icon: draftGray,
+    onPress: () => NavigationService.navigate('DraftAdScreen'),
+  },
+  {
+    id: 5,
+    label: 'My Quota & Credits',
+    icon: quotaGray,
+    onPress: () => NavigationService.navigate('QuotaScreen'),
+  },
 ];
 export const profilesBottomBtn = [
-  { id: 1, label: 'Invite Friends', icon: saveGray },
-  { id: 2, label: 'Feedback', icon: heartGray },
-  { id: 3, label: 'Contact Us', icon: callGray },
-  { id: 4, label: 'About Us', icon: aboutGray },
-  { id: 4, label: 'Terms & Privacy', icon: termGray },
-  { id: 5, label: 'Log Out', icon: logOutGray },
+  {
+    id: 1,
+    label: 'Invite Friends',
+    icon: saveGray,
+    onPress: () => Linking.openURL('https://www.realstateshop.com/'),
+  },
+  {
+    id: 4,
+    label: 'About Us',
+    icon: aboutGray,
+    onPress: () => Linking.openURL(aboutUrl),
+  },
+  {
+    id: 4,
+    label: 'Terms & Privacy',
+    icon: termGray,
+    onPress: () => Linking.openURL(privacyUrl),
+  },
+  {
+    id: 5,
+    label: 'Log Out',
+    icon: logOutGray,
+    onPress: () => store.dispatch(logOutUser()),
+  },
   // { id: 6, label: 'Settings', icon: settingGray },
 ];

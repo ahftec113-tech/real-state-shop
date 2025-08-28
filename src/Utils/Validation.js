@@ -136,17 +136,7 @@ const editProfileScheme = yup.object().shape({
     .matches(/^[A-Za-z ]*$/, 'Please enter valid name.')
     .min(2, 'Name must be atleast 2 characters.')
     .max(50, 'Name must be of 50 characters.'),
-  last_name: yup.string().required('Please enter your last name.'),
-  company_name: yup
-    .string()
-    .required('Please enter your Company Name.')
-    .max(100, 'Name must be less than 100 characters.')
-    .min(2, 'Name must be atleast 2 characters.')
-    .max(50, 'Name must be of 50 characters.'),
-  email: yup
-    .string()
-    .email('Email must be valid.')
-    .required('Please enter your email.'),
+  password: yup.string(),
 });
 const demoKitSchema = yup.object().shape({
   email: yup

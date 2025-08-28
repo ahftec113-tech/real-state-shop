@@ -3,12 +3,14 @@ import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import {
   callWhite,
   checkBoxIcon,
+  editIcon,
   heart,
   heartFilledLike,
   locationGray,
   propertyIcon,
   shareIcon,
   SqFitIcon,
+  trash,
   whatappIcon,
 } from '../Assets';
 import ThemeButton from './ThemeButton';
@@ -27,6 +29,7 @@ import {
   sendWhatsApp,
 } from '../Services/GlobalFunctions';
 import NavigationService from '../Services/NavigationService';
+import { deleteDraftProject } from '../Redux/Action/DraftAction';
 
 const PropertyCardVerticalComp = ({
   image,
@@ -47,6 +50,8 @@ const PropertyCardVerticalComp = ({
   isNewProjects,
   isDisable,
   area_name,
+  isEdit,
+  isDraft,
 }) => {
   const { dispatch, getState, queryClient } = useReduxStore();
 
@@ -62,12 +67,20 @@ const PropertyCardVerticalComp = ({
   return (
     <Touchable
       style={{ ...styles.container, ...mainViewStyles }}
-      onPress={() =>
-        NavigationService.navigate('ProjectDetailScreen', item?.id)
-      }
+      onPress={() => {
+        if (isDraft)
+          NavigationService.navigate('CreateListingScreen', {
+            id: item?.id,
+            isDraft: true,
+          });
+        else NavigationService.navigate('ProjectDetailScreen', item?.id);
+      }}
       disabled={isDisable}
     >
-      <Image source={{ uri: imageUrl(image) }} style={styles.image} />
+      <Image
+        source={{ uri: isDraft ? image?.uri : imageUrl(image) }}
+        style={styles.image}
+      />
       <View style={styles.infoContainer}>
         <View
           style={{
@@ -77,7 +90,7 @@ const PropertyCardVerticalComp = ({
           }}
         >
           <Image source={logo} resizeMode="contain" style={styles.logo} />
-          {!isNewProjects && (
+          {!isNewProjects && !isEdit && !isDraft && (
             <TouchableOpacity
               onPress={() => {
                 dispatch(favProject(item?.id));
@@ -96,6 +109,31 @@ const PropertyCardVerticalComp = ({
                 style={styles.icon}
               />
             </TouchableOpacity>
+          )}
+          {isEdit && (
+            <Touchable
+              onPress={() =>
+                NavigationService.navigate('CreateListingScreen', {
+                  id: item?.id,
+                  isEdit: true,
+                })
+              }
+            >
+              <Image
+                source={editIcon}
+                resizeMode="contain"
+                style={{ width: wp('5'), height: hp('3') }}
+              />
+            </Touchable>
+          )}
+          {isDraft && (
+            <Touchable onPress={() => dispatch(deleteDraftProject(item?.id))}>
+              <Image
+                source={trash}
+                resizeMode="contain"
+                style={{ width: wp('5'), height: hp('3') }}
+              />
+            </Touchable>
           )}
         </View>
         {price && (

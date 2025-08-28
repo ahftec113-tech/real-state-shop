@@ -168,7 +168,7 @@ export default function ListViewScreen({ navigation, route }) {
                     : 'black',
                 }}
               >
-                {item?.name}
+                {item?.name ?? item?.agency_name}
               </Text>
               {Boolean(
                 selectedList?.filter(res => res?.id == item?.id)[0]?.id,

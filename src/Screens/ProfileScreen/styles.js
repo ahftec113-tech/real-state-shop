@@ -23,9 +23,9 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   basicBtn: {
-    width: 'auto',
     borderRadius: 20,
     paddingVertical: hp('0.5'),
+    paddingHorizontal: wp('-30'),
   },
   circleBtnContainer: {
     flexDirection: 'row',

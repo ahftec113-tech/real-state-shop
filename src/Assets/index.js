@@ -84,6 +84,14 @@ export { default as cardSend } from './Icons/cardSend.png';
 export { default as cardReceive } from './Icons/cardReceive.png';
 export { default as arrowRight } from './Icons/arrowRight.png';
 
+export { default as uploadVideoLink } from './Icons/uploadVideoLink.png';
+export { default as docAttachments } from './Icons/docAttachments.png';
+
+export { default as quotaGray } from './Icons/quotaGray.png';
+
+export { default as unChecked } from './Icons/unChecked.png';
+export { default as checked } from './Icons/checked.png';
+
 export { default as homeRed } from './Icons/homeRed.png';
 
 export { default as picIcon } from './Icons/picIcon.png';
